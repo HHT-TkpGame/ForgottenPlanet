@@ -106,7 +106,8 @@ public class MatchingManager : MonoBehaviour
             Debug.Log("Success" + request.downloadHandler.text);
             string res = request.downloadHandler.text;
             RoomData roomData = JsonUtility.FromJson<RoomData>(res);
-            SaveRoomId(roomData.room_id);
+            RoomId = roomData.room_id;
+            IsCommander = roomData.is_commander;
             Debug.Log("RoomId : " + roomData.room_id + "/is_commander : " + roomData.is_commander);
             
             //部屋のプレイヤーの数を一定間隔で見に行く
@@ -141,11 +142,9 @@ public class MatchingManager : MonoBehaviour
         public int room_id;
         public bool is_commander;//指示役かどうか（役職振り分け）
     }
+    public static bool IsCommander { get; private set; }
     public static int RoomId { get; private set; }
-    void SaveRoomId(int roomId)
-    {
-        RoomId = roomId;
-    }
+    
     [System.Serializable]
     class PlayerCount
     {
