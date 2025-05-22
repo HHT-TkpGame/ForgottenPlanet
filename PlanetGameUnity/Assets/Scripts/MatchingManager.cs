@@ -7,24 +7,35 @@ using UnityEngine.UI;
 
 public class MatchingManager : MonoBehaviour
 {
+    TMP_InputField inputField;
     const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     const string MATCH_API_ENDPOINT = "/api/match";
     
     
     void Start()
     {
-        
+        inputField = GameObject.Find("Keyword").GetComponent<TMP_InputField>();
     }
     void Update()
     {
         
     }
-    bool isWaiting;
-    public void SendKeyword(string keyword)
+    bool isWaiting;//マッチ待機中か
+    const int CHARACTER_LIMIT = 10;//合言葉の文字数上限
+    /// <summary>
+    /// InputFieldから読み取った合言葉で部屋を探す
+    /// </summary>
+    public void SendKeyword()
     {
+        if(inputField.text.Length == 0 && inputField.text.Length <= CHARACTER_LIMIT)
+        {
+            Debug.Log("入力エラー");
+            return;
+        }
+        //マッチ待機中なら実行しない
         if (!isWaiting)
         {
-            StartCoroutine(FindRoom(keyword, PlayerIdManager.Id/*"takape"*/, BASE_URI + MATCH_API_ENDPOINT));
+            StartCoroutine(FindRoom(inputField.text, PlayerIdManager.Id, BASE_URI + MATCH_API_ENDPOINT));
         }
     }
     const float REQUEST_INTERVAL = 1f;
@@ -34,16 +45,16 @@ public class MatchingManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator GetPlayerCountInRoomLoop()
     {
-        while (true) 
+        while (isWaiting) 
         {
             yield return StartCoroutine(GetPlayerCountInRoom(BASE_URI + "/api/room/" + RoomId + "/playerCount"));
-
+            Debug.Log("マッチ待機中");
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }
     }
-    int playerCount;
+    const int MAX_PLAYER_COUNT = 2;
     /// <summary>
-    /// 参加した部屋の人数を取得する
+    /// 参加した部屋の人数を取得し、2人だったらシーン遷移する
     /// </summary>
     /// <param name="uri"></param>
     /// <returns></returns>
@@ -54,7 +65,13 @@ public class MatchingManager : MonoBehaviour
         yield return request.SendWebRequest();
         if(request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log(request.downloadHandler.text);
+            string json = request.downloadHandler.text;
+            PlayerCount res = JsonUtility.FromJson<PlayerCount>(json);
+            Debug.Log(res.player_count);
+            if(res.player_count == MAX_PLAYER_COUNT)
+            {
+                SceneChangeManager.SceneChange("InGameScene");
+            }
         }
         else
         {
@@ -109,8 +126,8 @@ public class MatchingManager : MonoBehaviour
     [System.Serializable]
     class MatchData
     {
-        public string keyword;
-        public string player_id;
+        public string keyword;//マッチングに使う合言葉
+        public string player_id;//自分のID
 
         public MatchData(string keyword, string player_id)
         {
@@ -122,7 +139,7 @@ public class MatchingManager : MonoBehaviour
     class RoomData
     {
         public int room_id;
-        public bool is_commander;
+        public bool is_commander;//指示役かどうか（役職振り分け）
     }
     public static int RoomId { get; private set; }
     void SaveRoomId(int roomId)
@@ -132,6 +149,6 @@ public class MatchingManager : MonoBehaviour
     [System.Serializable]
     class PlayerCount
     {
-        public int playerCount;
+        public int player_count;//自分の入っている部屋の人数
     }
 }

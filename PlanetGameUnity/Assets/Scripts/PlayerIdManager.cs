@@ -8,7 +8,10 @@ public class PlayerIdManager : MonoBehaviour
     public static string Id { get; private set; }
     private void Awake()
     {
-        Id = GetId(GetOrCreatePlayerId());
+        //テスト用
+        Id = System.Guid.NewGuid().ToString();
+        //本番用
+        //Id = GetId(GetOrCreatePlayerId());
     }
     string GetId(PlayerId playerId)
     {

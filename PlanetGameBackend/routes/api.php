@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiTestController;
+use App\Http\Controllers\RoomStatusController;
+use App\Http\Controllers\PositionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -96,7 +98,7 @@ Route::post('/match', function (Request $request) {
 });
 
 //指定された部屋のプレイヤーの人数を取得（一定間隔おきに呼び出す）
-Route::get(('/room/{roomId}/playerCount', [RoomStatusController::class, 'getPlayerCountInRoom']);
+Route::get('/room/{roomId}/playerCount', [RoomStatusController::class, 'getPlayerCountInRoom']);
 
 //自分の座標をポストして更新する（探索側）
 Route::post('/room/{roomId}/position', [PositionController::class, 'updatePosition']);
