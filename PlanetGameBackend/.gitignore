@@ -1,0 +1,44 @@
+# OSやIDEの設定ファイル
+.DS_Store
+.idea
+*.sublime-project
+*.sublime-workspace
+
+# Composerの依存
+/vendor/
+
+# Node.js系の依存とログ
+/node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Laravelキャッシュ・ストレージ
+/public/storage
+/storage/*.key
+/storage/app/public
+/public/hot
+/public/build
+.phpunit.result.cache
+
+# Laravel設定ファイル
+.env*
+Homestead.yaml
+Homestead.json
+
+# Vagrant
+/.vagrant
+
+# Laravel 旧バージョン互換（12では不要な場合は削除可）
+bootstrap/compiled.php
+app/storage/
+
+# public_htmlをpublicの代わりに使っている場合
+public_html/storage
+public_html/hot
+
+# その他ツール類
+.phpactor.json
+auth.json
+
+# 独自に追加されたもの（使用していなければ削除可）
+/storage/pail
