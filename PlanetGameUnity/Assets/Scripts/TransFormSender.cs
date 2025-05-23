@@ -28,6 +28,7 @@ public class TransformSender : MonoBehaviour
             speed = SPEED;
         }
         target.transform.Translate(speed * Time.deltaTime,0,0);
+        target.transform.Rotate(0,50*Time.deltaTime,0);
     }
 
     const float REQUEST_INTERVAL = 0.5f;
@@ -36,15 +37,15 @@ public class TransformSender : MonoBehaviour
         while (true)
         {
             yield return StartCoroutine(SendTransform(BASE_URI + "/api/room/" + 
-                MatchingManager.RoomId + "/position", target.transform.position));
+                MatchingManager.RoomId + "/position", target.transform.position, target.transform.eulerAngles.y));
 
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }
     }
-    IEnumerator SendTransform(string uri, Vector3 pos)
+    IEnumerator SendTransform(string uri, Vector3 pos, float rotY)
     {
         Debug.Log(uri);
-        string json = JsonUtility.ToJson(new PlayerTransform(PlayerIdManager.Id, pos.x, pos.y, pos.z));
+        string json = JsonUtility.ToJson(new PlayerTransform(PlayerIdManager.Id, pos.x, pos.y, pos.z, rotY));
         byte[] rawData = Encoding.UTF8.GetBytes(json);
         UnityWebRequest request = new UnityWebRequest(uri, "POST");
         request.uploadHandler = new UploadHandlerRaw(rawData);

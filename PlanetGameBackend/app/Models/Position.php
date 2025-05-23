@@ -16,6 +16,7 @@ class Position extends Model
         'x',
         'y',
         'z',
+	'rot_y',
     ];
 
     // created_at, updated_at ‚ğg‚í‚È‚¢ê‡

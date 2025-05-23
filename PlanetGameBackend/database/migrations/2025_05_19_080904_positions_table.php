@@ -18,6 +18,7 @@ return new class extends Migration
         $table->float('x');
         $table->float('y');
         $table->float('z');
+	$table->float('rot_y');
         $table->timestamps();
 
         $table->unique(['room_id', 'player_id']);

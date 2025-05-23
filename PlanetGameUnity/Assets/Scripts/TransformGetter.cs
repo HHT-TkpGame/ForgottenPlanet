@@ -18,6 +18,7 @@ public class TransformGetter : MonoBehaviour
     {
         if (!MatchingManager.IsCommander) { return; }
         target.transform.position = targetPos;
+        target.transform.eulerAngles = new Vector3(0, rotY, 0);
     }
     const float REQUEST_INTERVAL = 0.5f;
     IEnumerator GetTransformLoop()
@@ -30,6 +31,7 @@ public class TransformGetter : MonoBehaviour
         }
     }
     Vector3 targetPos;
+    float rotY;
     IEnumerator GetTransform(string uri)
     {
         Debug.Log(uri);
@@ -43,6 +45,7 @@ public class TransformGetter : MonoBehaviour
             PlayerTransform json = JsonUtility.FromJson<PlayerTransform>(res);
             Debug.Log(json.x + json.y + json.z);
             targetPos = new Vector3(json.x, json.y, json.z);
+            rotY = json.rot_y;
         }
         else
         {

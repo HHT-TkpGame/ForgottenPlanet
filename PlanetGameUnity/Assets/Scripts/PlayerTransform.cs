@@ -6,11 +6,13 @@ public class PlayerTransform
     public float x;
     public float y;
     public float z;
-    public PlayerTransform(string playerId, float posX, float posY, float posZ)
+    public float rot_y;
+    public PlayerTransform(string playerId, float posX, float posY, float posZ, float rotY)
     {
         player_id = playerId;
         x = posX;
         y = posY;
         z = posZ;
+        rot_y = rotY;
     }
 }
