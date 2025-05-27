@@ -15,23 +15,17 @@ public class TransformSender : MonoBehaviour
         StartCoroutine(SendTransformLoop());
     }
     const float SPEED = 3f;
-    float speed = SPEED;
+    
     void Update()
     {
         if(MatchingManager.IsCommander) { return; }
-        if(target.transform.position.x > 5)
-        {
-            speed = -SPEED;
-        }
-        else if(target.transform.position.x < -5)
-        {
-            speed = SPEED;
-        }
-        target.transform.Translate(speed * Time.deltaTime,0,0);
-        target.transform.Rotate(0,50*Time.deltaTime,0);
+        float y = Input.GetAxis("Horizontal") * SPEED;
+        float z = Input.GetAxis("Vertical") * SPEED;
+        target.transform.Translate(0 ,0, z * Time.deltaTime);
+        target.transform.Rotate(0, y * Time.deltaTime * 50,0);
     }
 
-    const float REQUEST_INTERVAL = 0.5f;
+    const float REQUEST_INTERVAL = 0.3f;
     IEnumerator SendTransformLoop()
     {
         while (true)
@@ -56,6 +50,11 @@ public class TransformSender : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log(request.downloadHandler.text);
+        }
+        else if (request.responseCode == 404)
+        {
+            Debug.Log("’ÊM‚ªØ’f‚³‚ê‚Ü‚µ‚½");
+            NetworkStateManager.SetState(NetworkStateManager.NetworkState.Disconnected);
         }
         else
         {

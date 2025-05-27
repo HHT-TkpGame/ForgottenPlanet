@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiTestController;
 use App\Http\Controllers\RoomStatusController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\PositionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -106,4 +107,6 @@ Route::post('/room/{roomId}/position', [PositionController::class, 'updatePositi
 //プレイヤーの座標を取得する（通信室側）
 Route::get('/room/{roomId}/position', [PositionController::class, 'getPosition']);
 
+//プレイヤーから明示的に通信切断されたときにルームを削除する
+Route::delete('room/{roomId}', [RoomController::class, 'deleteRoom']);
 ?>

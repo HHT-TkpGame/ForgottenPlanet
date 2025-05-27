@@ -103,6 +103,7 @@ public class MatchingManager : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
+            NetworkStateManager.SetState(NetworkStateManager.NetworkState.Connected);
             Debug.Log("Success" + request.downloadHandler.text);
             string res = request.downloadHandler.text;
             RoomData roomData = JsonUtility.FromJson<RoomData>(res);

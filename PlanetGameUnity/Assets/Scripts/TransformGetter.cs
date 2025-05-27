@@ -20,7 +20,7 @@ public class TransformGetter : MonoBehaviour
         target.transform.position = targetPos;
         target.transform.eulerAngles = new Vector3(0, rotY, 0);
     }
-    const float REQUEST_INTERVAL = 0.5f;
+    const float REQUEST_INTERVAL = 0.3f;
     IEnumerator GetTransformLoop()
     {
         while (true)
@@ -46,6 +46,11 @@ public class TransformGetter : MonoBehaviour
             Debug.Log(json.x + json.y + json.z);
             targetPos = new Vector3(json.x, json.y, json.z);
             rotY = json.rot_y;
+        }
+        else if(request.responseCode == 404)
+        {
+            Debug.Log("í êMÇ™êÿífÇ≥ÇÍÇ‹ÇµÇΩ");
+            NetworkStateManager.SetState(NetworkStateManager.NetworkState.Disconnected);
         }
         else
         {

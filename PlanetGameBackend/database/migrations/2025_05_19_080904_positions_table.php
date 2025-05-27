@@ -22,6 +22,9 @@ return new class extends Migration
         $table->timestamps();
 
         $table->unique(['room_id', 'player_id']);
+
+	//外部キー制約と、カスケード削除
+	$table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
 	});  
       }
 
