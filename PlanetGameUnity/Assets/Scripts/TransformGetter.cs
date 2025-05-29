@@ -23,7 +23,7 @@ public class TransformGetter : MonoBehaviour
     const float REQUEST_INTERVAL = 0.3f;
     IEnumerator GetTransformLoop()
     {
-        while (true)
+        while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
             yield return StartCoroutine(GetTransform(BASE_URI+"/api/room/"+MatchingManager.RoomId + "/position"));
             Debug.Log("GetPos");
@@ -47,7 +47,7 @@ public class TransformGetter : MonoBehaviour
             targetPos = new Vector3(json.x, json.y, json.z);
             rotY = json.rot_y;
         }
-        else if(request.responseCode == 404)
+        else if (request.responseCode == 404)
         {
             Debug.Log("í êMÇ™êÿífÇ≥ÇÍÇ‹ÇµÇΩ");
             NetworkStateManager.SetState(NetworkStateManager.NetworkState.Disconnected);

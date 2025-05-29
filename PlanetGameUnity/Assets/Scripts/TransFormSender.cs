@@ -28,7 +28,7 @@ public class TransformSender : MonoBehaviour
     const float REQUEST_INTERVAL = 0.3f;
     IEnumerator SendTransformLoop()
     {
-        while (true)
+        while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
             yield return StartCoroutine(SendTransform(BASE_URI + "/api/room/" + 
                 MatchingManager.RoomId + "/position", target.transform.position, target.transform.eulerAngles.y));

@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiTestController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\PlayerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -109,4 +110,8 @@ Route::get('/room/{roomId}/position', [PositionController::class, 'getPosition']
 
 //プレイヤーから明示的に通信切断されたときにルームを削除する
 Route::delete('room/{roomId}', [RoomController::class, 'deleteRoom']);
+
+//最後のリクエストの時間を更新して、クライアントが生きていることを伝えるapi
+Route::post('player/heartbeat', [PlayerController::class, 'heartbeat']);
+
 ?>
