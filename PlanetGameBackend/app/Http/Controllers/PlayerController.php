@@ -11,7 +11,7 @@ class PlayerController extends Controller
     //クライアントの最後に通信された時間を更新するメソッド（クライアントから定期的に呼び出す）
     public function heartbeat(Request $request){
     $validated = $request->validate([
-	    'room_id' => 'required|integer',
+	    'room_id' => 'required|integer|exists:rooms,id',
 	    'player_id' => 'required|string',
 	]);
 	

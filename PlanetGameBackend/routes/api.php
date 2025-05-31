@@ -5,6 +5,7 @@ use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\ChatMessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -114,4 +115,9 @@ Route::delete('room/{roomId}', [RoomController::class, 'deleteRoom']);
 //最後のリクエストの時間を更新して、クライアントが生きていることを伝えるapi
 Route::post('player/heartbeat', [PlayerController::class, 'heartbeat']);
 
+//チャットを送信
+Route::post('room/{roomId}/chat', [ChatMessageController::class, 'store']);
+
+//チャットを取得
+Route::get('room/{roomId}/chat', [ChatMessageController::class, 'fetch']);
 ?>
