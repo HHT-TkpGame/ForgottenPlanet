@@ -47,11 +47,6 @@ public class TransformGetter : MonoBehaviour
             targetPos = new Vector3(json.x, json.y, json.z);
             rotY = json.rot_y;
         }
-        else if (request.responseCode == 404)
-        {
-            Debug.Log("’ÊM‚ªØ’f‚³‚ê‚Ü‚µ‚½");
-            NetworkStateManager.SetState(NetworkStateManager.NetworkState.Disconnected);
-        }
         else
         {
             Debug.Log(request.error);
