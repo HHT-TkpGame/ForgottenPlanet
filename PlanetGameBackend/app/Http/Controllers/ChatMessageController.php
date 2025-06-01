@@ -41,6 +41,6 @@ class ChatMessageController extends Controller
             'player_id', 'message', 'sent_at',
         ]);
 
-        return response()->json($messages);
+        return response()->json(['messages' => $messages]);
     }
 }
