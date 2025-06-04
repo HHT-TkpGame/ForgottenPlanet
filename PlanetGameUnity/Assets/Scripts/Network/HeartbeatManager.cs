@@ -43,6 +43,11 @@ public class HeartbeatManager : MonoBehaviour
             NetworkStateManager.SetState(NetworkStateManager.NetworkState.Connected);
             Debug.Log(request.downloadHandler.text);
         }
+        else if (request.responseCode == 404)
+        {
+            Debug.Log("’ÊM‚ªØ’f‚³‚ê‚Ü‚µ‚½");
+            NetworkStateManager.SetState(NetworkStateManager.NetworkState.Disconnected);
+        }
         else
         {
             Debug.Log(request.error);
