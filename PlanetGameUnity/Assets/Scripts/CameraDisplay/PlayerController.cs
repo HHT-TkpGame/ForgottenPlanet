@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
     {
-
+        if (!MatchingManager.IsCommander) { return; }
         input = GetComponent<PlayerInput>();
         characterController = GetComponent<CharacterController>();
         currentRot = transform.eulerAngles;
@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="context"></param>
     public void OnMove(InputAction.CallbackContext context)
     {
+        if (!MatchingManager.IsCommander) { return; }
         if (finSetUp)
         {
             //Debug.Log("ddd");
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
     }
     public void OnLook(InputAction.CallbackContext context)
     {
+        if (!MatchingManager.IsCommander) { return; }
         if (finSetUp)
         {
             lookAxis = context.ReadValue<Vector2>();
@@ -59,6 +61,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!MatchingManager.IsCommander) { return; }
         Move();
     }
 
@@ -78,6 +81,7 @@ public class PlayerController : MonoBehaviour
 	}
     void Look()
     {
+        if (!MatchingManager.IsCommander) { return; }
         //デッドゾーンを作る
 
         float rot_Y=lookAxis.x;
