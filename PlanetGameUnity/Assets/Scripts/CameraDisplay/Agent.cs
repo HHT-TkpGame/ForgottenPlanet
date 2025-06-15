@@ -3,11 +3,17 @@ using UnityEngine.InputSystem;
 
 public class Agent : MonoBehaviour,I_PlayerDefaultFunctions
 {
+	//サーバーに送るAgentがどこにいるのかを保持するプロパティ
+	public Vector3 AgentPos=>gameObject.transform.position;
+	public float AgentRot_Y=>gameObject.transform.eulerAngles.y;
+
+
+
 	[SerializeField, Header("カメラ")] GameObject cameraObj;
 
 	CharacterController characterController;
 
-	I_PlayerDefaultFunctions i_function;
+	//I_PlayerDefaultFunctions i_function;
 
 	Vector2 moveAxis;
 	Vector2 lookAxis;
@@ -32,9 +38,15 @@ public class Agent : MonoBehaviour,I_PlayerDefaultFunctions
 		cameraObj.transform.SetParent(transform);
 		cameraObj.transform.eulerAngles = Vector3.zero;
 
+		//初期位置に配置
+		//transform.position = Vector3.zero;
+
 		finSetUp = true;
 	}
-
+	public void SetStartPos(Vector3 pos)
+	{
+		transform.position = pos;
+	}
 
 	public void Move(Vector2 moveAxis)
 	{

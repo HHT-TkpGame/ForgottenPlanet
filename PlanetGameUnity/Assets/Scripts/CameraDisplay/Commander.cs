@@ -33,7 +33,15 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		cameraObj.transform.SetParent(transform);
 		cameraObj.transform.eulerAngles = Vector3.zero;
 
+		//‰ŠúˆÊ’u‚É”z’u
+		//transform.position= Vector3.zero;
+
 		finSetUp = true;
+	}
+
+	public void SetStartPos(Vector3 pos)
+	{
+		transform.position = pos;
 	}
 
 	
