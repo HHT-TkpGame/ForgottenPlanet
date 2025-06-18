@@ -4,25 +4,14 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class TransformSender : MonoBehaviour
+public class TransformSender : MonoBehaviour, ITransformStrategy.ITransformSenderStrategy
 {
     [SerializeField] GameObject target;
     const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (MatchingManager.IsCommander) { return; }
-        StartCoroutine(SendTransformLoop());
-    }
-    const float SPEED = 3f;
     
-    void Update()
+    public void Initialize()
     {
-        if(MatchingManager.IsCommander) { return; }
-        float y = Input.GetAxis("Horizontal") * SPEED;
-        float z = Input.GetAxis("Vertical") * SPEED;
-        target.transform.Translate(0 ,0, z * Time.deltaTime);
-        target.transform.Rotate(0, y * Time.deltaTime * 50,0);
+        StartCoroutine(SendTransformLoop());
     }
 
     const float REQUEST_INTERVAL = 0.3f;
