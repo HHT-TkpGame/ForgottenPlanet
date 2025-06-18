@@ -5,6 +5,7 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 {
 
 	[SerializeField, Header("カメラ")] GameObject cameraObj;
+	[SerializeField, Header("初期位置")] Transform startPos; 
 
 	CharacterController characterController;
 
@@ -29,9 +30,12 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
     {
 		characterController = GetComponent<CharacterController>();
 
+		cameraObj.transform.position = startPos.position;
+
 		//カメラを自分の子供にする
 		cameraObj.transform.SetParent(transform);
 		cameraObj.transform.eulerAngles = Vector3.zero;
+
 
 		//初期位置に配置
 		//transform.position= Vector3.zero;
@@ -39,9 +43,9 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		finSetUp = true;
 	}
 
-	public void SetStartPos(Vector3 pos)
+	public void SetStartPos()
 	{
-		transform.position = pos;
+		transform.position = startPos.position;
 	}
 
 	

@@ -18,7 +18,8 @@ public class PlayerManager : MonoBehaviour
 	InputAction moveAct;
 	InputAction lookAct;
 
-    Vector3 StartPos=Vector3.zero;
+
+    
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -39,22 +40,30 @@ public class PlayerManager : MonoBehaviour
 		}
 
         i_function.Init();
-        //i_function.SetStartPos(StartPos);
+        i_function.SetStartPos();
 		i_camTrans?.Init();
 	}
 
     float a = 0;
-    float b = 0;
+    float b = 180;
+    const int COUNT = 1;
+    float count=COUNT;
     // Update is called once per frame
     void Update()
     {
         i_function.Move(moveAct.ReadValue<Vector2>());
         i_function.Look(lookAct.ReadValue<Vector2>());
 
-        //a += 0.1f;
-        b += 0.1f;
-        //引数はサーバー関係
-        //第一引数はVector3のPosition第二引数はFloatのRotation
-        i_camTrans?.SetCameraTransform(new Vector3(0, a, 0), b);
+
+        count-=Time.deltaTime;
+        if (count < 0)
+        {
+            a += 0.1f;
+            //b += 0.1f;
+            //引数はサーバー関係
+            //第一引数はVector3のPosition第二引数はFloatのRotation
+            i_camTrans?.SetCameraTransform(new Vector3(a, 0, 0), b);
+            count = COUNT;
+        }
     }
 }
