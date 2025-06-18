@@ -15,33 +15,113 @@ MonoBehaviour:
   DataList:
   - Truth: 1
     TruthName: theRampageOfAI
+    IdNo1: 1
+    IdNo2: 2
+    IdNo3: 3
+    IdNo4: 4
+    IdNo5: 5
+  - Truth: 1
+    TruthName: theRampageOfAI
+    IdNo1: 6
+    IdNo2: 7
+    IdNo3: 8
+    IdNo4: 9
+    IdNo5: 10
+  - Truth: 1
+    TruthName: theRampageOfAI
+    IdNo1: 11
+    IdNo2: 12
+    IdNo3: 13
+    IdNo4: 14
+    IdNo5: 15
   - Truth: 2
-    TruthName: theRampageOfAI
+    TruthName: AlienInvasion
+    IdNo1: 1
+    IdNo2: 2
+    IdNo3: 3
+    IdNo4: 4
+    IdNo5: 5
+  - Truth: 2
+    TruthName: AlienInvasion
+    IdNo1: 6
+    IdNo2: 7
+    IdNo3: 8
+    IdNo4: 9
+    IdNo5: 10
+  - Truth: 2
+    TruthName: AlienInvasion
+    IdNo1: 11
+    IdNo2: 12
+    IdNo3: 13
+    IdNo4: 14
+    IdNo5: 15
   - Truth: 3
-    TruthName: theRampageOfAI
+    TruthName: ExtremeWeather
+    IdNo1: 1
+    IdNo2: 2
+    IdNo3: 3
+    IdNo4: 4
+    IdNo5: 5
+  - Truth: 3
+    TruthName: ExtremeWeather
+    IdNo1: 6
+    IdNo2: 7
+    IdNo3: 8
+    IdNo4: 9
+    IdNo5: 10
+  - Truth: 3
+    TruthName: ExtremeWeather
+    IdNo1: 11
+    IdNo2: 12
+    IdNo3: 13
+    IdNo4: 14
+    IdNo5: 15
   - Truth: 4
-    TruthName: AlienInvasion
+    TruthName: Pandemic
+    IdNo1: 1
+    IdNo2: 2
+    IdNo3: 3
+    IdNo4: 4
+    IdNo5: 5
+  - Truth: 4
+    TruthName: Pandemic
+    IdNo1: 6
+    IdNo2: 7
+    IdNo3: 8
+    IdNo4: 9
+    IdNo5: 10
+  - Truth: 4
+    TruthName: Pandemic
+    IdNo1: 11
+    IdNo2: 12
+    IdNo3: 13
+    IdNo4: 14
+    IdNo5: 15
   - Truth: 5
-    TruthName: AlienInvasion
+    TruthName: PoliticalTurmoil
+    IdNo1: 1
+    IdNo2: 2
+    IdNo3: 3
+    IdNo4: 4
+    IdNo5: 5
+  - Truth: 5
+    TruthName: PoliticalTurmoil
+    IdNo1: 6
+    IdNo2: 7
+    IdNo3: 8
+    IdNo4: 9
+    IdNo5: 10
+  - Truth: 5
+    TruthName: PoliticalTurmoil
+    IdNo1: 11
+    IdNo2: 12
+    IdNo3: 13
+    IdNo4: 14
+    IdNo5: 15
   - Truth: 6
-    TruthName: AlienInvasion
-  - Truth: 7
-    TruthName: ExtremeWeather
-  - Truth: 8
-    TruthName: ExtremeWeather
-  - Truth: 9
-    TruthName: ExtremeWeather
-  - Truth: 10
-    TruthName: Pandemic
-  - Truth: 11
-    TruthName: Pandemic
-  - Truth: 12
-    TruthName: Pandemic
-  - Truth: 13
-    TruthName: PoliticalTurmoil
-  - Truth: 14
-    TruthName: PoliticalTurmoil
-  - Truth: 15
-    TruthName: PoliticalTurmoil
-  - Truth: 16
     TruthName: DistortionOfDimensions
+    IdNo1: 1
+    IdNo2: 2
+    IdNo3: 3
+    IdNo4: 4
+    IdNo5: 5

@@ -42,7 +42,10 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         currentRot = transform.eulerAngles;
 
-        cameraObj.transform.eulerAngles=Vector3.zero;
+		cameraObj.transform.position = transform.position;
+
+		cameraObj.transform.SetParent(transform);
+		cameraObj.transform.eulerAngles=Vector3.zero;
 
         finSetUp = true;
     }
