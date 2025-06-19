@@ -6,11 +6,13 @@ using UnityEngine.Networking;
 
 public class TransformSender : MonoBehaviour, ITransformStrategy.ITransformSenderStrategy
 {
-    [SerializeField] GameObject target;
+    ITransformProvider iTransformProvider;
+    [SerializeField] Agent agent;
     const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     
     public void Initialize()
     {
+        iTransformProvider = agent;
         StartCoroutine(SendTransformLoop());
     }
 
@@ -19,8 +21,9 @@ public class TransformSender : MonoBehaviour, ITransformStrategy.ITransformSende
     {
         while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
+            Debug.Log(iTransformProvider);
             yield return StartCoroutine(SendTransform(BASE_URI + "/api/room/" + 
-                MatchingManager.RoomId + "/position", target.transform.position, target.transform.eulerAngles.y));
+                MatchingManager.RoomId + "/position", iTransformProvider.AgentPos, iTransformProvider.AgentRotY));
 
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }

@@ -11,7 +11,8 @@ public class AgentBodyCamera : MonoBehaviour,I_BodyCamTrans
     }
     public void SetCameraTransform(Vector3 cameraPos, float cameraRot_Y)
     {
-        transform.position=new Vector3(cameraPos.x+transform.position.x,cameraPos.y + transform.position.y,cameraPos.z+transform.position.z);
+        transform.position = cameraPos;
+        Debug.Log(transform.position);
         //transform.position = cameraPos;
         transform.eulerAngles = new Vector3(0, cameraRot_Y, 0);
     }

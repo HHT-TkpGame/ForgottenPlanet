@@ -6,6 +6,8 @@ public class PlayerManager : MonoBehaviour
 {
     I_PlayerDefaultFunctions i_function;
     I_BodyCamTrans i_camTrans;
+    ITransformStrategy.ITransformGetterStrategy iTransformGetter;
+    [SerializeField] TransformGetter transformGetter;
 
     [SerializeField,Header("どっちのプレイヤーを使うか")]bool isCommander;
 
@@ -28,11 +30,11 @@ public class PlayerManager : MonoBehaviour
 		moveAct = input.actions["Move"];
 		lookAct = input.actions["Look"];
 
-		if (isCommander)
+		if (MatchingManager.IsCommander)
         {
             i_function = commander;
             i_camTrans = bodyCamera;
-
+            iTransformGetter = transformGetter;
         }
         else
         {
@@ -53,17 +55,9 @@ public class PlayerManager : MonoBehaviour
     {
         i_function.Move(moveAct.ReadValue<Vector2>());
         i_function.Look(lookAct.ReadValue<Vector2>());
-
-
-        count-=Time.deltaTime;
-        if (count < 0)
-        {
-            a += 0.1f;
-            //b += 0.1f;
-            //引数はサーバー関係
-            //第一引数はVector3のPosition第二引数はFloatのRotation
-            i_camTrans?.SetCameraTransform(new Vector3(a, 0, 0), b);
-            count = COUNT;
-        }
+        
+        //引数はサーバー関係
+        //第一引数はVector3のPosition第二引数はFloatのRotation
+        i_camTrans?.SetCameraTransform(iTransformGetter.Pos, iTransformGetter.RotY);
     }
 }
