@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class MatchingManager : MonoBehaviour
 {
+    StarTrailController starTrailController;
     TMP_InputField inputField;
     const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     const string MATCH_API_ENDPOINT = "/api/match";
@@ -14,6 +15,7 @@ public class MatchingManager : MonoBehaviour
     
     void Start()
     {
+        starTrailController = GameObject.Find("StarTrailParticle").GetComponent<StarTrailController>();
         inputField = GameObject.Find("Keyword").GetComponent<TMP_InputField>();
     }
     void Update()
@@ -110,7 +112,8 @@ public class MatchingManager : MonoBehaviour
             RoomId = roomData.room_id;
             IsCommander = roomData.is_commander;
             Debug.Log("RoomId : " + roomData.room_id + "/is_commander : " + roomData.is_commander);
-            
+
+            starTrailController.TransitionToHyperDrive();
             //部屋のプレイヤーの数を一定間隔で見に行く
             StartCoroutine(GetPlayerCountInRoomLoop());
         }

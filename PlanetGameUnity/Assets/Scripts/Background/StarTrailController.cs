@@ -27,7 +27,7 @@ public class StarTrailController : MonoBehaviour
         trail = particle.trails;
         SetSpeedAndTrail(START_SPEED, START_TRAIL);
     }
-    void TransitionToHyperDrive()
+    public void TransitionToHyperDrive()
     {
         isHyperDriving = true;
         SetSpeedAndTrail(MAX_SPEED, MAX_TRAIL);
@@ -41,12 +41,6 @@ public class StarTrailController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if(count > 0) { return; }
-            count++;
-            TransitionToHyperDrive();
-        }
         if (isHyperDriving)
         {
             if (cam.fieldOfView < MAX_FOV)
