@@ -34,9 +34,9 @@ public class TransformGetter : MonoBehaviour, ITransformStrategy.ITransformGette
         {
             string res = request.downloadHandler.text;
             PlayerTransform json = JsonUtility.FromJson<PlayerTransform>(res);
-            Debug.Log(json.x + json.y + json.z);
             Pos = new Vector3(json.x, json.y, json.z);
             RotY = json.rot_y;
+            Debug.Log("pos:" + Pos + " / rotY:" + RotY);
         }
         else
         {
