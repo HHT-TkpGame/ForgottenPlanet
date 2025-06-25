@@ -30,8 +30,8 @@ public class GenerateScriptableObjectMenu : EditorWindow
 		scriptableObjectName = EditorGUILayout.TextField("scriptableObjectName", scriptableObjectName);
 
 		//GASから取得したCSVデータを保存するファイル名と自動生成するScriptableObjectのスクリプトとパスを設定
-		outPutCsvFilePath = Application.dataPath + "/Scripts/SpreadSheet/" + scriptableObjectName + ".csv";
-		outPutCSFilePath = Application.dataPath + "/Scripts/SpreadSheet/" + scriptableObjectName + ".cs";
+		outPutCsvFilePath = Application.dataPath + "/Scripts/SpreadSheet/Editor/" + scriptableObjectName + ".csv";
+		outPutCSFilePath = Application.dataPath + "/Scripts/SpreadSheet/Editor/" + scriptableObjectName + ".cs";
 
 		if (GUILayout.Button("GenerateScriptableObject"))
 		{

@@ -14,7 +14,7 @@ public class PlanetTruthList : ScriptableObject
     public void LoadCsvData()
     {
         DataList = new List<PlanetTruth>();
-        var filePath="C:/Users/fanta/PlanetGame2/PlanetGameUnity/Assets/Scripts/SpreadSheet/PlanetTruth.csv";
+        var filePath="C:/Users/fanta/PlanetGame2/PlanetGameUnity/Assets/Scripts/SpreadSheet/Editor/PlanetTruth.csv";
         string[,] data = GenerateScriptableObjectMenu.LoadCsvAs2DArray(filePath);
         for (int i = 2; i < data.GetLength(0); i++)
         {
