@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Position extends Model
 {
-// ƒe[ƒuƒ‹–¼iLaravel‚Ì–½–¼‹K‘¥‚É]‚Á‚Ä‚¢‚ê‚Î•s—v‚¾‚ªA–¾¦‚µ‚Ä‚àOKj
+// ãƒ†ãƒ¼ãƒ–ãƒ«åï¼ˆLaravelã®å‘½åè¦å‰‡ã«å¾“ã£ã¦ã„ã‚Œã°ä¸è¦ã ãŒã€æ˜ç¤ºã—ã¦ã‚‚OKï¼‰
     protected $table = 'positions';
 
-    // •¡”‘ã“ü‚ğ‹–‰Â‚·‚éƒJƒ‰ƒ€
+    // è¤‡æ•°ä»£å…¥ã‚’è¨±å¯ã™ã‚‹ã‚«ãƒ©ãƒ 
     protected $fillable = [
         'room_id',
         'player_id',
@@ -19,6 +19,6 @@ class Position extends Model
 	'rot_y',
     ];
 
-    // created_at, updated_at ‚ğg‚í‚È‚¢ê‡
+    // created_at, updated_at ã‚’ä½¿ã‚ãªã„å ´åˆ
     public $timestamps = false;
 }

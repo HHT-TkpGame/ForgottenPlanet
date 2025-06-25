@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chat_messages', function (Blueprint $table) {
-        $table->id();
-	//カスケード削除定義
-	$table->foreignId('room_id')->constrained()->onDelete('cascade');
-	$table->string('player_id');
-	$table->text('message');
-        $table->timestamp('sent_at');
+        Schema::create('role_select', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chat_messages');
+        Schema::dropIfExists('role_select');
     }
 };

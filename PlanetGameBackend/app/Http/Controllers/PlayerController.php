@@ -8,14 +8,14 @@ use App\Models\Player;
 
 class PlayerController extends Controller
 {
-    //ƒNƒ‰ƒCƒAƒ“ƒg‚ÌÅŒã‚É’ÊM‚³‚ê‚½ŽžŠÔ‚ðXV‚·‚éƒƒ\ƒbƒhiƒNƒ‰ƒCƒAƒ“ƒg‚©‚ç’èŠú“I‚ÉŒÄ‚Ño‚·j
-    public function heartbeat(Request $request){
+    //ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã®æœ€å¾Œã«é€šä¿¡ã•ã‚ŒãŸæ™‚é–“ã‚’æ›´æ–°ã™ã‚‹ãƒ¡ã‚½ãƒƒãƒ‰ï¼ˆã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã‹ã‚‰å®šæœŸçš„ã«å‘¼ã³å‡ºã™ï¼‰
+	public function heartbeat(Request $request){
     $validated = $request->validate([
 	    'room_id' => 'required|integer|exists:rooms,id',
 	    'player_id' => 'required|string',
 	]);
 	
-	//Room‚Ì‘¶Ýƒ`ƒFƒbƒN
+	//Roomã®å­˜åœ¨ãƒã‚§ãƒƒã‚¯
 	if (!Room::find($validated['room_id'])) {
             return response()->json(['error' => 'Room not found'], 404);
     	}

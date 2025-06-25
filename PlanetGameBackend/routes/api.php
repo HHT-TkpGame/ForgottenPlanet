@@ -6,118 +6,32 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ChatMessageController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use App\Http\Controllers\MatchingController;
 
-//APIƒeƒXƒg—p
+
 Route::get('/hello', [ApiTestController::class, 'hello']);
 
-//‡Œ¾—tƒ}ƒbƒ`ƒ“ƒO
-Route::post('/match', function (Request $request) {
-    $keyword = $request->input('keyword');
-    $playerId = $request->input('player_id');
+//ãƒžãƒƒãƒãƒ³ã‚°å‡¦ç†
+Route::post('/match', [MatchingController::class, 'match']);
 
-
-    if (!$keyword || !$playerId) {
-        return response()->json(['status' => 'error', 'message' => 'Missing data'], 400);
-    }
-    $keywordHash = md5($keyword);
-
-    //ƒ|ƒXƒg‚³‚ê‚½‡Œ¾—t‚É‘Î‰ž‚µ‚½•”‰®‚ð’T‚·
-    $room = DB::table('rooms')->where('keyword', $keywordHash)->first();
-
-    //•”‰®‚ª‚È‚©‚Á‚½ê‡
-    if (!$room) {
-        $roomCount = DB::table('rooms')->count();
-                //10•”‰®ˆÈã‚ ‚Á‚½‚çì¬‚µ‚È‚¢
-        if ($roomCount >= 10) {
-            return response()->json(['status' => 'error', 'message' => 'server is full'], 403);
-        }
-        //•”‰®ì¬
-        $roomId = DB::table('rooms')->insertGetId([
-            'keyword' => $keywordHash,
-            'created_at' => now(),
-        ]);
-	$isHost = true;
-	//–ðE‚ðƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ’è
-	$isCommander = (bool)random_int(0, 1);
-        //ƒvƒŒƒCƒ„[‚Ìî•ñÝ’è
-        DB::table('players')->insert([
-            'room_id' => $roomId,
-	    'is_host'=>$isHost,
-            'player_id' => $playerId,
-	    'is_commander' => $isCommander,
-        ]);
-
-        return response()->json([
-            'status' => 'created',
-            'room_id' => $roomId,
-	    'is_host'=>$isHost,
-            'player_id' => $playerId,
-            'is_commander' => $isCommander,
-            'player_count' => 1,
-        ]);
-    }
-    //ƒ|ƒXƒg‚³‚ê‚½‡Œ¾—t‚É‘Î‰ž‚µ‚½•”‰®‚ª‚ ‚Á‚½ê‡
-    else {
-        $roomId = $room->id;
-
-	//•”‰®‚ª–žˆõ‚¾‚Á‚½‚çŽQ‰Á‚Å‚«‚È‚¢
-        $count = DB::table('players')->where('room_id', $roomId)->count();
-        if ($count >= 2) {
-            return response()->json(['status' => 'error', 'message' => 'room is full'], 403);
-        }
-
-	$isHost = false;
-	//‘¼ƒvƒŒƒCƒ„[‚Ì–ðE‚ðŽæ“¾‚·‚é
-	$players = DB::table('players')->where('room_id', $roomId)->get();
-	// ‚à‚µ’N‚à‚¢‚È‚©‚Á‚½ê‡–¢’è‹`ƒGƒ‰[‚É‚È‚ç‚È‚¢‚æ‚¤‚É‘ÎôB
-	//$players‚ª‹ó‚¾‚Á‚½ê‡Å‰‚Ìl‚È‚Ì‚ÅŽi—ßŠ¯‚Æ‚·‚é
-	if ($players->isEmpty()) {
-    	    $isCommander = true;
-	} else {
-	        //”í‚ç‚È‚¢‚æ‚¤‚É”½“]
-    	    $existRole = $players[0]->is_commander;
-    	    $isCommander = !$existRole;
-	}
-        //•”‰®‚ÉŽQ‰Á
-        DB::table('players')->insert([
-            'room_id' => $roomId,
-	    'is_host'=>$isHost,
-            'player_id' => $playerId,
-	    'is_commander' => $isCommander,
-        ]);
-
-        return response()->json([
-            'status' => 'joined',
-            'room_id' => $roomId,
-	    'is_host'=>$isHost,
-            'player_id' => $playerId,
-	    'is_commander' => $isCommander,
-            'player_count' => $count + 1,
-        ]);
-    }
-});
-
-//Žw’è‚³‚ê‚½•”‰®‚ÌƒvƒŒƒCƒ„[‚Ìl”‚ðŽæ“¾iˆê’èŠÔŠu‚¨‚«‚ÉŒÄ‚Ño‚·j
+//éƒ¨å±‹ã®æŽ¥ç¶šäººæ•°ã‚’å–å¾—
 Route::get('/room/{roomId}/playerCount', [RoomStatusController::class, 'getPlayerCountInRoom']);
 
-//Ž©•ª‚ÌÀ•W‚ðƒ|ƒXƒg‚µ‚ÄXV‚·‚éi’Tõ‘¤j
+//roomIdã«å¯¾å¿œã™ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™ã‚’æ›´æ–°
 Route::post('/room/{roomId}/position', [PositionController::class, 'updatePosition']);
 
-//ƒvƒŒƒCƒ„[‚ÌÀ•W‚ðŽæ“¾‚·‚éi’ÊMŽº‘¤j
+//roomIdã«å¯¾å¿œã™ã‚‹ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™ã‚’å–å¾—
 Route::get('/room/{roomId}/position', [PositionController::class, 'getPosition']);
 
-//ƒvƒŒƒCƒ„[‚©‚ç–¾Ž¦“I‚É’ÊMØ’f‚³‚ê‚½‚Æ‚«‚Éƒ‹[ƒ€‚ðíœ‚·‚é
+//roomIdã«å¯¾å¿œã™ã‚‹éƒ¨å±‹ã‚’å‰Šé™¤
 Route::delete('room/{roomId}', [RoomController::class, 'deleteRoom']);
 
-//ÅŒã‚ÌƒŠƒNƒGƒXƒg‚ÌŽžŠÔ‚ðXV‚µ‚ÄAƒNƒ‰ƒCƒAƒ“ƒg‚ª¶‚«‚Ä‚¢‚é‚±‚Æ‚ð“`‚¦‚éapi
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æœ€å¾Œã«é€šä¿¡ã•ã‚ŒãŸæ™‚é–“ã‚’æ›´æ–°
 Route::post('player/heartbeat', [PlayerController::class, 'heartbeat']);
 
-//ƒ`ƒƒƒbƒg‚ð‘—M
+//roomIdã«å¯¾å¿œã™ã‚‹éƒ¨å±‹ã®ãƒãƒ£ãƒƒãƒˆã‚’ã‚¹ãƒˆã‚¢ã™ã‚‹
 Route::post('room/{roomId}/chat', [ChatMessageController::class, 'store']);
 
-//ƒ`ƒƒƒbƒg‚ðŽæ“¾
+//roomIdã«å¯¾å¿œã™ã‚‹éƒ¨å±‹ã®ãƒãƒ£ãƒƒãƒˆã‚’å–å¾—
 Route::get('room/{roomId}/chat', [ChatMessageController::class, 'fetch']);
 ?>

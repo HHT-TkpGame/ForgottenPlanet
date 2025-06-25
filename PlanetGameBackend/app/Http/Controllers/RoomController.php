@@ -7,14 +7,14 @@ use App\Models\Room;
 
 class RoomController extends Controller
 {
-    //roomId‚É‘Î‰ž‚·‚éƒJƒ‰ƒ€‚ðíœ‚·‚é
+    //roomIdã«å¯¾å¿œã™ã‚‹ã‚«ãƒ©ãƒ ã‚’å‰Šé™¤ã™ã‚‹
     public function deleteRoom($roomId){
 	$room = Room::find($roomId);
 	if(!$room){
 	    return response()->json(['error' => 'Room not found'], 404);	
 	}
-	//ƒJƒXƒP[ƒhíœ‚ðÝ’è‚µ‚Ä‚¢‚é‚Ì‚ÅA
-	//ƒ‹[ƒ€‚É•R‚Ã‚¢‚Ä‚¢‚éplayers‚Æpositions‚ÌƒJƒ‰ƒ€‚àˆê‚Éíœ‚³‚ê‚é	
+	//ã‚«ã‚¹ã‚±ãƒ¼ãƒ‰å‰Šé™¤ã‚’è¨­å®šã—ã¦ã„ã‚‹ã®ã§ã€
+	//ãƒ«ãƒ¼ãƒ ã«ç´ã¥ã„ã¦ã„ã‚‹playersã¨positionsã®ã‚«ãƒ©ãƒ ã‚‚ä¸€ç·’ã«å‰Šé™¤ã•ã‚Œã‚‹	
 	$room->delete();
 
 	return response()->json(['status' => 'deleted']);

@@ -14,7 +14,7 @@ class RemoveInactiveRooms extends Command
      *
      * @var string
      */
-    //php artisan‚Å•\Ž¦‚³‚ê‚éƒRƒ}ƒ“ƒh‚Ì–¼‘O
+    //php artisanã§è¡¨ç¤ºã•ã‚Œã‚‹ã‚³ãƒžãƒ³ãƒ‰ã®åå‰
     protected $signature = 'rooms:cleanup';
 
     /**
@@ -22,7 +22,7 @@ class RemoveInactiveRooms extends Command
      *
      * @var string
      */
-    //php artisan‚Å•\Ž¦‚³‚ê‚éƒRƒ}ƒ“ƒh‚Ìà–¾
+    //php artisanã§è¡¨ç¤ºã•ã‚Œã‚‹ã‚³ãƒžãƒ³ãƒ‰ã®èª¬æ˜Ž
     protected $description = 'Remove rooms where at least one player has timed out';
 
     /**
@@ -33,11 +33,11 @@ class RemoveInactiveRooms extends Command
         $timeoutSeconds = 30;
         $threshold = Carbon::now()->subSeconds($timeoutSeconds);
 
-        // ‚·‚×‚Ä‚Ìƒ‹[ƒ€‚Æ‚»‚ÌƒvƒŒƒCƒ„[‚ðŽæ“¾
+        // ã™ã¹ã¦ã®ãƒ«ãƒ¼ãƒ ã¨ãã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å–å¾—
         $rooms = Room::with('players')->get();
 
         foreach ($rooms as $room) {
-            // 1l‚Å‚àƒ^ƒCƒ€ƒAƒEƒg‚µ‚Ä‚¢‚ê‚Îíœ
+            // 1äººã§ã‚‚ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã—ã¦ã„ã‚Œã°å‰Šé™¤
             $anyTimedOut = $room->players->contains(function ($player) use ($threshold) {
                 return $player->last_request_time < $threshold;
             });
