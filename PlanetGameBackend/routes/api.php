@@ -7,6 +7,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\MatchingController;
+use App\Http\Controllers\RoleSelectionController;
 
 
 Route::get('/hello', [ApiTestController::class, 'hello']);
@@ -34,4 +35,13 @@ Route::post('room/{roomId}/chat', [ChatMessageController::class, 'store']);
 
 //roomIdに対応する部屋のチャットを取得
 Route::get('room/{roomId}/chat', [ChatMessageController::class, 'fetch']);
+
+//roomIdに対応する部屋のプレイヤーの選択情報を取得
+Route::get('room/{roomId}/roles', [RoleSelectionController::class, 'getSelectionsInRoom']);
+
+//クライアントの役職などの更新
+Route::post('room/{roomId}/roles', [RoleSelectionController::class, 'updateSelection']);
+
+//役職が被っているかチェック
+Route::get('room/{roomId}/roles/conflict', [RoleSelectionController::class, 'checkConflictInRoom']);
 ?>

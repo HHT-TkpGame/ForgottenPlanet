@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     protected $table = 'rooms';
+    protected $fillable = ['keyword'];
     public function players()
     {
 	//roomsの中に複数のplayersがいるという関係を定義

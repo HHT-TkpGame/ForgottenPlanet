@@ -70,7 +70,7 @@ public class MatchingManager : MonoBehaviour
             Debug.Log(res.player_count);
             if(res.player_count == MAX_PLAYER_COUNT)
             {
-                SceneChangeManager.SceneChange("InGameScene");
+                SceneChangeManager.SceneChange("InGameScene"/*"RoleSetScene"*/);
             }
         }
         else
