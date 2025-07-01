@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class MatchingManager : MonoBehaviour
 {
     TMP_InputField inputField;
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     const string MATCH_API_ENDPOINT = "/api/match";
     
     
@@ -35,7 +34,7 @@ public class MatchingManager : MonoBehaviour
         //マッチ待機中なら実行しない
         if (!isWaiting)
         {
-            StartCoroutine(FindRoom(inputField.text, PlayerIdManager.Id, BASE_URI + MATCH_API_ENDPOINT));
+            StartCoroutine(FindRoom(inputField.text, PlayerIdManager.Id, ApiConfig.BASE_URI + MATCH_API_ENDPOINT));
         }
     }
     const float REQUEST_INTERVAL = 1f;
@@ -47,7 +46,7 @@ public class MatchingManager : MonoBehaviour
     {
         while (isWaiting) 
         {
-            yield return StartCoroutine(GetPlayerCountInRoom(BASE_URI + "/api/room/" + RoomId + "/playerCount"));
+            yield return StartCoroutine(GetPlayerCountInRoom(ApiConfig.BASE_URI + "/api/room/" + RoomId + "/playerCount"));
             Debug.Log("マッチ待機中");
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }

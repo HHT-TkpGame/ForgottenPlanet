@@ -21,6 +21,18 @@ class RoleSelectionRepository
         );
     }
 
+    /**
+     * 指定ルーム内のすべてのプレイヤーの is_locked を false に更新
+     *
+     * @param int $roomId
+     * @return int 更新されたレコード数
+     */
+    public function unlockAllByRoomId(int $roomId)
+    {
+        return RoleSelection::where('room_id', $roomId)
+            ->update(['is_locked' => false]);
+    }
+
 
     public function findByRoomId(int $roomId)
     {

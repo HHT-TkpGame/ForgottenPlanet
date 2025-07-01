@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 public class TransformSender : MonoBehaviour
 {
     [SerializeField] GameObject target;
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +29,7 @@ public class TransformSender : MonoBehaviour
     {
         while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
-            yield return StartCoroutine(SendTransform(BASE_URI + "/api/room/" + 
+            yield return StartCoroutine(SendTransform(ApiConfig.BASE_URI + "/api/room/" + 
                 MatchingManager.RoomId + "/position", target.transform.position, target.transform.eulerAngles.y));
 
             yield return new WaitForSeconds(REQUEST_INTERVAL);

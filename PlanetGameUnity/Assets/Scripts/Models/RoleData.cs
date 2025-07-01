@@ -5,12 +5,10 @@ public class RoleData
     public string player_id;
     public bool is_rocked;
     public bool has_conflict;
-    public RoleData(int roomId, string playerId, bool isLocked, bool hasConflict)
+    public RoleData(string playerId, bool isLocked)
     {
-        room_id = roomId;
         player_id = playerId;
         is_rocked = isLocked;
-        has_conflict = hasConflict;
     }
 }
 //RoleDataをラップするためのクラス

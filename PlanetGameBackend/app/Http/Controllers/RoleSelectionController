@@ -36,6 +36,18 @@ class RoleSelectionController extends Controller
     }
 
     /**
+     * 再選択
+     * 指定ルーム内の全てのプレイヤーのis_lockedをfalseにする
+     */
+    public function unlockAllInRoom($roomId)
+    {
+        $this->service->unlockAllByRoomId($roomId);
+        return response()->json([
+            'result' => 'ResetAllLockState'
+        ]);
+    }
+
+    /**
      * 指定ルーム内のすべてのプレイヤーの状態を取得
      */
     public function getSelectionsInRoom($roomId)

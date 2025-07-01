@@ -33,6 +33,17 @@ class RoleSelectionService
     }
 
     /**
+     * 指定ルーム内のすべてのプレイヤーの is_locked を false に更新
+     *
+     * @param int $roomId
+     * @return int 更新されたレコード数
+     */
+    public function unlockAllByRoomId($roomId)
+    {
+        return $this->repository->unlockAllByRoomId($roomId);
+    }
+
+    /**
      * 全員がロック済みかどうか
      */
     public function allLocked(int $roomId)
@@ -46,10 +57,16 @@ class RoleSelectionService
     public function getHasConflict(int $roomId)
     {
         $isAllLocked = $this->allLocked($roomId);
-        $hasConflict = true;
-        if($isAllLocked){
-            $hasConflict = $this->repository->hasRoleConflict($roomId);
+        //全員がロックしてなければ衝突扱い
+        //Unity側で両方ロックしてないと呼べないが一応
+        if(!$isAllLocked){ return true; }
+        
+        $hasConflict = $this->repository->hasRoleConflict($roomId);
+        if($hasConflict){
+            //役職被ってたら選びなおし
+            $this->repository->unlockAllByRoomId($roomId);
         }
+        
         return $hasConflict;
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 public class TransformGetter : MonoBehaviour
 {
     [SerializeField] GameObject target;
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -25,7 +24,7 @@ public class TransformGetter : MonoBehaviour
     {
         while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
-            yield return StartCoroutine(GetTransform(BASE_URI+"/api/room/"+MatchingManager.RoomId + "/position"));
+            yield return StartCoroutine(GetTransform(ApiConfig.BASE_URI +"/api/room/"+MatchingManager.RoomId + "/position"));
             Debug.Log("GetPos");
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }
