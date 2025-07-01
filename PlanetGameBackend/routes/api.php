@@ -46,5 +46,5 @@ Route::post('room/{roomId}/roles', [RoleSelectionController::class, 'updateSelec
 Route::get('room/{roomId}/roles/conflict', [RoleSelectionController::class, 'checkConflictInRoom']);
 
 //役職の再選択
-Route::post('room/{roomId}/roles/conflict', [RoleSelectionController::class, 'unlockAllInRoom']);
+Route::post('room/{roomId}/roles/reselection', [RoleSelectionController::class, 'unlockAllInRoom']);
 ?>

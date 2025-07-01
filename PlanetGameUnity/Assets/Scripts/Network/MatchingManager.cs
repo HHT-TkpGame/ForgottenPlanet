@@ -69,7 +69,7 @@ public class MatchingManager : MonoBehaviour
             Debug.Log(res.player_count);
             if(res.player_count == MAX_PLAYER_COUNT)
             {
-                SceneChangeManager.SceneChange("InGameScene"/*"RoleSetScene"*/);
+                SceneChangeManager.SceneChange("RoleSetScene");
             }
         }
         else
@@ -107,8 +107,8 @@ public class MatchingManager : MonoBehaviour
             string res = request.downloadHandler.text;
             RoomData roomData = JsonUtility.FromJson<RoomData>(res);
             RoomId = roomData.room_id;
-            IsCommander = roomData.is_commander;
-            Debug.Log("RoomId : " + roomData.room_id + "/is_commander : " + roomData.is_commander);
+            IsHost = roomData.is_host;
+            Debug.Log("RoomId : " + roomData.room_id + "isHost" + roomData.is_host);
             
             //部屋のプレイヤーの数を一定間隔で見に行く
             StartCoroutine(GetPlayerCountInRoomLoop());
@@ -140,9 +140,10 @@ public class MatchingManager : MonoBehaviour
     class RoomData
     {
         public int room_id;
-        public bool is_commander;//指示役かどうか（役職振り分け）
+        public bool is_host;
     }
-    public static bool IsCommander { get; private set; }
+    public static bool IsHost { get; private set; }
+    public static bool IsCommander { get; set; }
     public static int RoomId { get; private set; }
     
     [System.Serializable]

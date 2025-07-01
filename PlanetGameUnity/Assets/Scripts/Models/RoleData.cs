@@ -3,17 +3,19 @@ public class RoleData
 {
     public int room_id;
     public string player_id;
-    public bool is_rocked;
+    public bool is_locked;
     public bool has_conflict;
-    public RoleData(string playerId, bool isLocked)
+    public bool is_commander;
+    public RoleData(string playerId, bool isLocked,bool isCommander)
     {
         player_id = playerId;
-        is_rocked = isLocked;
+        is_locked = isLocked;
+        is_commander = isCommander;
     }
 }
 //RoleDataをラップするためのクラス
 [System.Serializable]
-class RoleDataList
+public class RoleDataList
 {
     public RoleData[] Selections;
 }
