@@ -13,7 +13,7 @@ class RoleSelectionController extends Controller
     {
         $this->service = $service;
     }
-
+//
     /**
      * プレイヤーの役職とロック状態を保存・更新
      */

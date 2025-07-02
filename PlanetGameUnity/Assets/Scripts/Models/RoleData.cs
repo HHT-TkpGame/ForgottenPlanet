@@ -17,6 +17,6 @@ public class RoleData
 [System.Serializable]
 public class RoleDataList
 {
-    public RoleData[] Selections;
+    public RoleData[] selections;
 }
 

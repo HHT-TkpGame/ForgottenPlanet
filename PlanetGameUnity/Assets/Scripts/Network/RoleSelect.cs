@@ -19,8 +19,9 @@ public class RoleSelect : IRoleSelect
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log(request.downloadHandler.text);
             RoleDataList data = JsonUtility.FromJson<RoleDataList>(request.downloadHandler.text);
+            Debug.Log(data);
+            Debug.Log(data.selections);
             onSuccess?.Invoke(data);
         }
         else
@@ -87,8 +88,10 @@ public class RoleSelect : IRoleSelect
     public IEnumerator PostReselection(Action onSuccess = null, Action<string> onError = null)
     {
         string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/roles/reselection";
-        UnityWebRequest request = new UnityWebRequest(uri, "GET");
+        UnityWebRequest request = new UnityWebRequest(uri, "POST");
+        request.uploadHandler = new UploadHandlerRaw(new byte[0]);
         request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {

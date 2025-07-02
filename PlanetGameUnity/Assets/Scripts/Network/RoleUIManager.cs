@@ -29,7 +29,7 @@ public class RoleUIManager : MonoBehaviour
     IRoleSelect roleSelect;
     
     bool isLocked;
-    bool isCommander;
+    bool isCommander =true;
     /// <summary>
     /// 依存関係設定
     /// </summary>
@@ -137,6 +137,8 @@ public class RoleUIManager : MonoBehaviour
             {
                 Debug.Log("再選択");
                 UnlockSelect();
+                ChangeButtonVisible(sendButton, true);
+                ChangeButtonVisible(checkButton, false);
                 ChangeButtonVisible(reselectButton, false);
                 ChangeButtonVisible(startButton, false);
             },
@@ -160,6 +162,8 @@ public class RoleUIManager : MonoBehaviour
                 if (roleSelectManager.HasConflict)
                 {
                     UnlockSelect();
+                    ChangeButtonVisible(sendButton, true);
+                    ChangeButtonVisible(checkButton, false);
                 }
                 //衝突してなければ再選択ボタンとスタートボタン表示
                 else
@@ -181,8 +185,8 @@ public class RoleUIManager : MonoBehaviour
     /// <param name="dataList"></param>
     public void UpdateUI(RoleDataList dataList)
     {
-        if(dataList.Selections == null) { return; }
-        foreach (RoleData data in dataList.Selections)
+        if(dataList.selections == null) { return; }
+        foreach (RoleData data in dataList.selections)
         {
             //自分のロックの状態更新
             if(PlayerIdManager.Id == data.player_id)

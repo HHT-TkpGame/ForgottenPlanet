@@ -15,8 +15,8 @@ public class RoleSelectManager : MonoBehaviour
     {
         roleSelect = new RoleSelect();
         poller.Initialize(roleSelect);
-        poller.OnSelectionUpdated += roleUIManager.UpdateUI;
         roleUIManager.Initialized(this, roleSelect);
+        poller.OnSelectionUpdated += roleUIManager.UpdateUI;
     }
     private void Start()
     {

@@ -21,7 +21,7 @@ public class RoleSelectPoller : MonoBehaviour
         {
             yield return StartCoroutine(roleSelect.GetSelection(onSuccess: (dataList) =>
                 {
-                    Debug.Log(dataList.Selections);
+                    Debug.Log(dataList.selections);
                     OnSelectionUpdated?.Invoke(dataList);
                 },
                 onError: (err) =>
