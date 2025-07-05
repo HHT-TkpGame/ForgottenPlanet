@@ -6,20 +6,31 @@ public class RoleSelectPoller : MonoBehaviour
 {
     [SerializeField] float interval = 1.0f;
     IRoleSelect roleSelect;
+    RoleUIManager roleUI;
     //イベント定義
-    public event Action<RoleDataList> OnSelectionUpdated;
+    public event Action<SelectionDataList> OnSelectionUpdated;
 
 
-    public void Initialize(IRoleSelect roleSelect)
+    public void Initialize(IRoleSelect roleSelect, RoleUIManager roleUI)
     {
         this.roleSelect = roleSelect;
+        this.roleUI = roleUI;
     }
 
     public IEnumerator PollLoop()
     {
         while (true)
         {
-            yield return StartCoroutine(roleSelect.GetSelection(onSuccess: (dataList) =>
+            yield return StartCoroutine(roleSelect.PostRole(new SelectionData(PlayerIdManager.Id, roleUI.IsCommander), onSuccess: () =>
+            {
+                Debug.Log("Success");
+            },
+            onError: (err) =>
+            {
+                Debug.Log(err);
+            }
+            ));
+            yield return StartCoroutine(roleSelect.GetSelections(onSuccess: (dataList) =>
                 {
                     Debug.Log(dataList.selections);
                     OnSelectionUpdated?.Invoke(dataList);
@@ -29,8 +40,6 @@ public class RoleSelectPoller : MonoBehaviour
                     Debug.Log(err);
                 }
             ));
-
-
             yield return new WaitForSeconds(interval);
         }
     }

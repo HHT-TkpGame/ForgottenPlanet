@@ -13,7 +13,7 @@ class RoleSelectionController extends Controller
     {
         $this->service = $service;
     }
-//
+
     /**
      * プレイヤーの役職とロック状態を保存・更新
      */
@@ -32,6 +32,22 @@ class RoleSelectionController extends Controller
             $validated['is_locked']
         );
 
+        return response()->json($result);
+    }
+    /**
+     * プレイヤーの役職を保存・更新
+     */
+    public function updateRole(Request $request, int $roomId){
+        $validated = $request->validate([
+            'player_id' => 'required|string',
+            'is_commander' => 'required|boolean',
+        ]);
+
+        $result = $this->service->updateRole(
+            $validated['player_id'],
+            $roomId,
+            $validated['is_commander']
+        );
         return response()->json($result);
     }
 

@@ -8,20 +8,18 @@ public class RoleSelect : IRoleSelect
 {
     /// <summary>
     /// 部屋にいるプレイヤーの選択情報を取得
-    /// 定期的に呼び出す
+    /// 一定間隔で実行
     /// </summary>
     /// <returns></returns>
-    public IEnumerator GetSelection(Action<RoleDataList> onSuccess = null, Action<string> onError = null)
+    public IEnumerator GetSelections(Action<SelectionDataList> onSuccess = null, Action<string> onError = null)
     {
-        string uri = ApiConfig.BASE_URI+ "/api/room/" + MatchingManager.RoomId + "/roles";
+        string uri = ApiConfig.BASE_URI+ "/api/room/" + MatchingManager.RoomId + "/selections";
         UnityWebRequest request = new UnityWebRequest(uri, "GET");
         request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
-            RoleDataList data = JsonUtility.FromJson<RoleDataList>(request.downloadHandler.text);
-            Debug.Log(data);
-            Debug.Log(data.selections);
+            SelectionDataList data = JsonUtility.FromJson<SelectionDataList>(request.downloadHandler.text);
             onSuccess?.Invoke(data);
         }
         else
@@ -35,9 +33,9 @@ public class RoleSelect : IRoleSelect
     /// <param name="data"></param>
     /// <param name="onSuccess"></param>
     /// <returns></returns>
-    public IEnumerator PostRole(RoleData data, Action onSuccess = null, Action<string> onError = null)
+    public IEnumerator PostSelection(SelectionData data, Action onSuccess = null, Action<string> onError = null)
     {
-        string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/roles";
+        string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/selections";
         string json = JsonUtility.ToJson(data);
         byte[] rawData = Encoding.UTF8.GetBytes(json);
         UnityWebRequest request = new UnityWebRequest(uri,"POST");
@@ -47,6 +45,35 @@ public class RoleSelect : IRoleSelect
 
         yield return request.SendWebRequest();
         if(request.result == UnityWebRequest.Result.Success)
+        {
+            onSuccess?.Invoke();// 成功コールバックを実行
+            Debug.Log(request.downloadHandler.text);
+        }
+        else
+        {
+            onError?.Invoke(request.error);// 失敗コールバックを実行
+            Debug.Log($"PostSelection failed: {request.error}");
+        }
+    }
+    /// <summary>
+    /// 自分の役職を送信
+    /// 一定間隔で実行
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="onSuccess"></param>
+    /// <returns></returns>
+    public IEnumerator PostRole(SelectionData data, Action onSuccess = null, Action<string> onError = null)
+    {
+        string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/role";
+        string json = JsonUtility.ToJson(data);
+        byte[] rawData = Encoding.UTF8.GetBytes(json);
+        UnityWebRequest request = new UnityWebRequest(uri, "POST");
+        request.uploadHandler = new UploadHandlerRaw(rawData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.Success)
         {
             onSuccess?.Invoke();// 成功コールバックを実行
             Debug.Log(request.downloadHandler.text);
@@ -71,7 +98,7 @@ public class RoleSelect : IRoleSelect
         yield return request.SendWebRequest();
         if(request.result == UnityWebRequest.Result.Success)
         {
-            RoleData data = JsonUtility.FromJson<RoleData>(request.downloadHandler.text);
+            SelectionData data = JsonUtility.FromJson<SelectionData>(request.downloadHandler.text);
             onSuccess?.Invoke(data.has_conflict);
         }
         else
@@ -89,9 +116,49 @@ public class RoleSelect : IRoleSelect
     {
         string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/roles/reselection";
         UnityWebRequest request = new UnityWebRequest(uri, "POST");
-        request.uploadHandler = new UploadHandlerRaw(new byte[0]);
         request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            onSuccess?.Invoke();
+        }
+        else
+        {
+            onError?.Invoke(request.error);
+        }
+    }
+    /// <summary>
+    /// 次に進めるリクエスト
+    /// </summary>
+    /// <param name="onSuccess"></param>
+    /// <param name="onError"></param>
+    /// <returns></returns>
+    public IEnumerator PostProcessToNextPhase(Action onSuccess = null, Action<string> onError = null)
+    {
+        string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/process";
+        UnityWebRequest request = new UnityWebRequest(uri, "POST");
+        request.downloadHandler = new DownloadHandlerBuffer();
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            onSuccess?.Invoke();
+        }
+        else
+        {
+            onError?.Invoke(request.error);
+        }
+    }
+    /// <summary>
+    /// 次に進んでいいかを取得
+    /// </summary>
+    /// <param name="onSuccess"></param>
+    /// <param name="onError"></param>
+    /// <returns></returns>
+    public IEnumerator GetCanProcessToNextPhase(Action onSuccess = null, Action<string> onError = null)
+    {
+        string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/process";
+        UnityWebRequest request = new UnityWebRequest(uri, "GET");
+        request.downloadHandler = new DownloadHandlerBuffer();
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {

@@ -18,7 +18,6 @@ public class RoleUIManager : MonoBehaviour
     GameObject selfReadyState;
     [SerializeField] GameObject otherState;
     GameObject otherReadyState;
-    const int DISTANSE = 400;
     Vector3 selfLeftPos = new Vector3(-400, 250, 0);
     Vector3 selfRightPos = new Vector3(0, 250, 0);
     Vector3 otherLeftPos = new Vector3 (-250, 250, 0);
@@ -28,8 +27,8 @@ public class RoleUIManager : MonoBehaviour
     RoleSelectManager roleSelectManager;
     IRoleSelect roleSelect;
     
-    bool isLocked;
-    bool isCommander =true;
+    public bool IsLocked {  get; private set; }
+    public bool IsCommander {  get; private set; }
     /// <summary>
     /// 依存関係設定
     /// </summary>
@@ -58,7 +57,7 @@ public class RoleUIManager : MonoBehaviour
     void Update()
     {
         //後でInputSystem用にHandlerみたいなクラス作る
-        if (isLocked){ return; }
+        if (IsLocked){ return; }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             MoveCursor(selfCursorRect);
@@ -74,15 +73,15 @@ public class RoleUIManager : MonoBehaviour
     /// <param name="isCommander"></param>
     void MoveCursor(RectTransform rect)
     {
-        if (isCommander)
+        if (IsCommander)
         {
             rect.transform.localPosition = selfRightPos;
-            isCommander = false;
+            IsCommander = false;
         }
         else
         {
             rect.transform.localPosition = selfLeftPos;
-            isCommander = true;
+            IsCommander = true;
         }
     }
     /// <summary>
@@ -110,14 +109,14 @@ public class RoleUIManager : MonoBehaviour
     /// </summary>
     public void SendRole()
     {
-        if(isLocked) { return; }
-        RoleData data = new RoleData(PlayerIdManager.Id,true,isCommander);
-        StartCoroutine(roleSelect.PostRole(data, onSuccess: () =>
+        if(IsLocked) { return; }
+        SelectionData data = new SelectionData(PlayerIdManager.Id,true,IsCommander);
+        StartCoroutine(roleSelect.PostSelection(data, onSuccess: () =>
         {
-            isLocked = true;
-            ChangeState(selfReadyState, isLocked);
+            IsLocked = true;
+            ChangeState(selfReadyState, IsLocked);
             ChangeButtonVisible(sendButton, false);
-            MatchingManager.IsCommander = isCommander;
+            MatchingManager.IsCommander = IsCommander;
             Debug.Log("成功");
         },
         onError: (err) =>
@@ -132,7 +131,7 @@ public class RoleUIManager : MonoBehaviour
     /// </summary>
     public void SendReselection()
     {
-        if (!isLocked) { return; }
+        if (!IsLocked) { return; }
         StartCoroutine(roleSelect.PostReselection(onSuccess:()=>
             {
                 Debug.Log("再選択");
@@ -154,7 +153,7 @@ public class RoleUIManager : MonoBehaviour
     /// </summary>
     public void SendConflictCheck()
     {
-        if (!isLocked) { return; }
+        if (!IsLocked) { return; }
         StartCoroutine(roleSelect.GetHasConflict(onSuccess: (result) =>
             {
                 Debug.Log("成功");
@@ -183,10 +182,10 @@ public class RoleUIManager : MonoBehaviour
     /// 定期取得される全員の選択情報を反映
     /// </summary>
     /// <param name="dataList"></param>
-    public void UpdateUI(RoleDataList dataList)
+    public void UpdateUI(SelectionDataList dataList)
     {
         if(dataList.selections == null) { return; }
-        foreach (RoleData data in dataList.selections)
+        foreach (SelectionData data in dataList.selections)
         {
             //自分のロックの状態更新
             if(PlayerIdManager.Id == data.player_id)
@@ -204,7 +203,7 @@ public class RoleUIManager : MonoBehaviour
         }
 
         //自分が選択した後にサーバーで選択解除されたら
-        if (isLocked)
+        if (IsLocked)
         {
             if (!roleSelectManager.IsHostButtonLocked && !roleSelectManager.IsGuestButtonLocked)
             {
@@ -228,7 +227,7 @@ public class RoleUIManager : MonoBehaviour
     /// </summary>
     void UnlockSelect()
     {
-        isLocked = false;
+        IsLocked = false;
         ChangeState(selfReadyState, false);
         ChangeState(otherReadyState, false);
     }

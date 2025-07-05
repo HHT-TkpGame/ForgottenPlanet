@@ -10,8 +10,8 @@ class Room extends Model
     protected $fillable = ['keyword'];
     public function players()
     {
-	//roomsの中に複数のplayersがいるという関係を定義
-	return $this->hasMany(Player::class);
+        //roomsの中に複数のplayersがいるという関係を定義
+        return $this->hasMany(Player::class);
     }
 
 }

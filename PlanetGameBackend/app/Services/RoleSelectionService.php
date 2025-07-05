@@ -23,6 +23,15 @@ class RoleSelectionService
             'is_locked' => $isLocked,
         ]);
     }
+    /**
+     * プレイヤーの役職を更新する
+     */
+    public function updateRole(string $playerId, int $roomId, bool $isCommander)
+    {
+        return $this->repository->createOrUpdate($playerId, $roomId, [
+            'is_commander' => $isCommander
+        ]);
+    }
 
     /**
      * 指定ルームのすべてのプレイヤーの状態を取得する

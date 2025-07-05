@@ -37,10 +37,12 @@ Route::post('room/{roomId}/chat', [ChatMessageController::class, 'store']);
 Route::get('room/{roomId}/chat', [ChatMessageController::class, 'fetch']);
 
 //roomIdに対応する部屋のプレイヤーの選択情報を定期的に取得
-Route::get('room/{roomId}/roles', [RoleSelectionController::class, 'getSelectionsInRoom']);
+Route::get('room/{roomId}/selections', [RoleSelectionController::class, 'getSelectionsInRoom']);
 
 //クライアントの選択情報の更新
-Route::post('room/{roomId}/roles', [RoleSelectionController::class, 'updateSelection']);
+Route::post('room/{roomId}/selections', [RoleSelectionController::class, 'updateSelection']);
+
+Route::post('room/{roomId}/role', [RoleSelectionController::class, 'updateRole']);
 
 //役職が被っているかチェック
 Route::get('room/{roomId}/roles/conflict', [RoleSelectionController::class, 'checkConflictInRoom']);
