@@ -33,7 +33,6 @@ class RoleSelectionRepository
             ->update(['is_locked' => false]);
     }
 
-
     public function findByRoomId(int $roomId)
     {
         return RoleSelection::where('room_id', $roomId)->get();

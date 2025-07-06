@@ -33,7 +33,11 @@ public class RoleSelect : IRoleSelect
     /// <param name="data"></param>
     /// <param name="onSuccess"></param>
     /// <returns></returns>
-    public IEnumerator PostSelection(SelectionData data, Action onSuccess = null, Action<string> onError = null)
+    public IEnumerator PostSelection(
+        SelectionData data,
+        Action onSuccess = null,
+        Action<string> onError = null
+    )
     {
         string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/selections";
         string json = JsonUtility.ToJson(data);

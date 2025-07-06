@@ -17,6 +17,10 @@ public class RoleSelectPoller : MonoBehaviour
         this.roleUI = roleUI;
     }
 
+    /// <summary>
+    /// カーソル上の役職データを定期的に送信
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator PollLoop()
     {
         while (true)

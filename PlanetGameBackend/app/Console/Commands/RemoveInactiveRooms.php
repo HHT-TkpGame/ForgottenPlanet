@@ -4,11 +4,26 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use App\Models\Room;
 use Carbon\Carbon;
+use App\Models\RoomRepository;
 
 class RemoveInactiveRooms extends Command
 {
+    /**
+     * @var RoomRepository
+     */
+    private $roomRepository;
+
+    /**
+     * コンストラクタ
+     * @param RoomRepository
+     */
+    public function __construct(RoomRepository $roomRepository)
+    {
+        parent::__construct();
+        $this->roomRepository = $roomRepository;
+    }
+
     /**
      * The name and signature of the console command.
      *
@@ -34,7 +49,7 @@ class RemoveInactiveRooms extends Command
         $threshold = Carbon::now()->subSeconds($timeoutSeconds);
 
         // すべてのルームとそのプレイヤーを取得
-        $rooms = Room::with('players')->get();
+        $rooms = $this->roomRepository->getAllRoomsWithPlayers();
 
         foreach ($rooms as $room) {
             // 1人でもタイムアウトしていれば削除
@@ -43,10 +58,10 @@ class RemoveInactiveRooms extends Command
             });
 
             if ($anyTimedOut) {
-		Log::info("Room ID {$room->id} has a timed-out player. Deleting.");
-                $room->delete();
+		        Log::info("Room ID {$room->id} has a timed-out player. Deleting.");
+                $rooms = $this->roomRepository->delete($room);                
             }
         }
-	Log::info("Room timeout cleanup completed.");
+	    Log::info("Room timeout cleanup completed.");
     }
 }

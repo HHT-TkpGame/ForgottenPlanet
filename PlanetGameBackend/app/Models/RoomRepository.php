@@ -9,6 +9,22 @@ use App\Models\Room;
  */
 class RoomRepository
 {
+
+    /**
+     * プレイヤー情報つきの全ルームを取得
+     */
+    public function getAllRoomsWithPlayers()
+    {
+        return Room::with('players')->get();
+    }
+    /**
+     * 指定されたルームを削除
+     */
+    public function delete(Room $room)
+    {
+        $room->delete();
+    }
+
     /**
      * 合言葉をもとに部屋を検索
      * @param string 合言葉

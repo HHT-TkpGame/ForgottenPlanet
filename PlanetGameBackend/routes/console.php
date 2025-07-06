@@ -8,4 +8,5 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
+//ルームの削除判定を毎分実行
 Schedule::command('rooms:cleanup')->everyMinute();
