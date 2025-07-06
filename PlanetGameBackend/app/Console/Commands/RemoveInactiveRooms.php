@@ -13,7 +13,6 @@ class RemoveInactiveRooms extends Command
      * @var RoomRepository
      */
     private $roomRepository;
-
     /**
      * コンストラクタ
      * @param RoomRepository

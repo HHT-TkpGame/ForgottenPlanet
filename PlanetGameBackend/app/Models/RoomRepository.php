@@ -9,7 +9,6 @@ use App\Models\Room;
  */
 class RoomRepository
 {
-
     /**
      * プレイヤー情報つきの全ルームを取得
      */
