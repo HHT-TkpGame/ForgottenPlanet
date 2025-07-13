@@ -1,13 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Agent : MonoBehaviour,I_PlayerDefaultFunctions
+public class Agent : MonoBehaviour,I_PlayerDefaultFunctions, ITransformProvider
 {
 	//サーバーに送るAgentがどこにいるのかを保持するプロパティ
-	public Vector3 AgentPos=>gameObject.transform.position;
-	public float AgentRot_Y=>gameObject.transform.eulerAngles.y;
-
-
+	public Vector3 AgentPos=>transform.position;
+	public float AgentRotY=>gameObject.transform.eulerAngles.y;
 
 	[SerializeField, Header("カメラ")] GameObject cameraObj;
 	[SerializeField, Header("初期位置")] Transform startPos;
@@ -35,11 +33,10 @@ public class Agent : MonoBehaviour,I_PlayerDefaultFunctions
 	{
 		characterController = GetComponent<CharacterController>();
 
-		cameraObj.transform.position = startPos.position;
-
 		//カメラを自分の子供にする
 		cameraObj.transform.SetParent(transform);
-		cameraObj.transform.eulerAngles = Vector3.zero;
+        cameraObj.transform.localPosition = Vector3.zero;
+        cameraObj.transform.localEulerAngles = Vector3.zero;
 
 		//初期位置に配置
 		//transform.position = Vector3.zero;

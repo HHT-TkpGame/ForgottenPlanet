@@ -23,7 +23,7 @@ return new class extends Migration
 
         $table->unique(['room_id', 'player_id']);
 
-	//外部キー制約と、カスケード削除
+	//螟夜Κ繧ｭ繝ｼ蛻ｶ邏�縺ｨ縲√き繧ｹ繧ｱ繝ｼ繝牙炎髯､
 	$table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
 	});  
       }

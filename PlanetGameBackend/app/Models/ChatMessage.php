@@ -12,6 +12,6 @@ class ChatMessage extends Model
 	'message',
 	'sent_at',
     ];
-    //created_at,update_atg‚í‚È‚¢‚Ì‚Åfalse
+    //created_at,update_atä½¿ã‚ãªã„ã®ã§false
     public $timestamps = false;
 }

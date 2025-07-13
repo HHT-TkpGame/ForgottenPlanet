@@ -5,13 +5,12 @@ using UnityEngine.Networking;
 
 public class HeartbeatManager : MonoBehaviour
 {
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     const string API_ENDPOINT = "/api/player/heartbeat";
     const float REQUEST_INTERVAL = 5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(SendHeartbeatLoop(BASE_URI + API_ENDPOINT));
+        StartCoroutine(SendHeartbeatLoop(ApiConfig.BASE_URI + API_ENDPOINT));
     }
 
     // Update is called once per frame
@@ -41,7 +40,6 @@ public class HeartbeatManager : MonoBehaviour
         if(request.result == UnityWebRequest.Result.Success)
         {
             NetworkStateManager.SetState(NetworkStateManager.NetworkState.Connected);
-            Debug.Log(request.downloadHandler.text);
         }
         else if (request.responseCode == 404)
         {

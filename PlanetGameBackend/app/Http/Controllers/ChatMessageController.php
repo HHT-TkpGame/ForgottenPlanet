@@ -7,7 +7,7 @@ use App\Models\ChatMessage;
 
 class ChatMessageController extends Controller
 {
-    //ƒ`ƒƒƒbƒg‚ğ‘—‚é
+    //ãƒãƒ£ãƒƒãƒˆã‚’é€ã‚‹
     public function store(Request $request, $roomId){
 	$max_message_length = 30;
 	$validated = $request->validate([
@@ -24,8 +24,8 @@ class ChatMessageController extends Controller
 	return response()->json(['status'=>'success', 'chat => $chat,']);
     }
 
-    //ƒ`ƒƒƒbƒg‚ğæ“¾‚·‚é
-    //since‚É“ü‚Á‚Ä‚¢‚éŠÔˆÈ‘O‚Ìƒ`ƒƒƒbƒg‚ÍE‚í‚È‚¢
+    //ãƒãƒ£ãƒƒãƒˆã‚’å–å¾—ã™ã‚‹
+    //sinceã«å…¥ã£ã¦ã„ã‚‹æ™‚é–“ä»¥å‰ã®ãƒãƒ£ãƒƒãƒˆã¯æ‹¾ã‚ãªã„
     public function fetch(Request $request, $roomId){
 	    $validated = $request->validate([
             'since'     => 'nullable|date',
@@ -36,7 +36,7 @@ class ChatMessageController extends Controller
             $query->where('sent_at', '>', $validated['since']);
         }
 
-	//sent_at‚ğ¸‡‚Åƒ\[ƒg
+	//sent_atã‚’æ˜‡é †ã§ã‚½ãƒ¼ãƒˆ
 	$messages = $query->orderBy('sent_at', 'asc')->get([
             'player_id', 'message', 'sent_at',
         ]);

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('chat_messages', function (Blueprint $table) {
         $table->id();
-	//カスケード削除定義
+	//繧ｫ繧ｹ繧ｱ繝ｼ繝牙炎髯､螳夂ｾｩ
 	$table->foreignId('room_id')->constrained()->onDelete('cascade');
 	$table->string('player_id');
 	$table->text('message');
