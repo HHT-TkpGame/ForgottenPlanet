@@ -7,12 +7,14 @@ using UnityEngine.UI;
 
 public class MatchingManager : MonoBehaviour
 {
+    GameStateManager gameStateManager;
     TMP_InputField inputField;
     const string MATCH_API_ENDPOINT = "/api/match";
     
     
     void Start()
     {
+        gameStateManager = GameStateManager.Instance;
         inputField = GameObject.Find("Keyword").GetComponent<TMP_InputField>();
     }
     void Update()
@@ -69,6 +71,7 @@ public class MatchingManager : MonoBehaviour
             Debug.Log(res.player_count);
             if(res.player_count == MAX_PLAYER_COUNT)
             {
+                gameStateManager.SetProgress(GameProgress.Select);
                 SceneChangeManager.SceneChange("RoleSetScene");
             }
         }

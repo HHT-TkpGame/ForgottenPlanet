@@ -26,7 +26,9 @@ public class RoleUIManager : MonoBehaviour
 
     RoleSelectManager roleSelectManager;
     IRoleSelect roleSelect;
-    
+    GameStateRequester requester;
+
+    bool onClicked;
     public bool IsLocked {  get; private set; }
     public bool IsCommander {  get; private set; }
     /// <summary>
@@ -34,10 +36,11 @@ public class RoleUIManager : MonoBehaviour
     /// </summary>
     /// <param name="roleSelectManager"></param>
     /// <param name="roleSelect"></param>
-    public void Initialized(RoleSelectManager roleSelectManager, IRoleSelect roleSelect)
+    public void Initialized(RoleSelectManager roleSelectManager, IRoleSelect roleSelect, GameStateRequester requester)
     {
         this.roleSelectManager = roleSelectManager;
         this.roleSelect = roleSelect;
+        this.requester = requester;
     }
 
     void Start()
@@ -101,7 +104,16 @@ public class RoleUIManager : MonoBehaviour
     }
     public void ToNext()
     {
-        Debug.Log("すたーと");
+        if (onClicked) { return; }
+        StartCoroutine(requester.PostState(onSuccess: (prog) =>
+        {
+            onClicked = true;
+        },
+        onError: (err) =>
+        {
+            Debug.LogError(err);
+        }
+        ));
     }
     /// <summary>
     /// サーバーに選択情報送信
@@ -189,8 +201,7 @@ public class RoleUIManager : MonoBehaviour
         {
             //自分のロックの状態更新
             if(PlayerIdManager.Id == data.player_id)
-            {
-                Debug.Log("自分のUI操作");
+            {   
                 roleSelectManager.IsHostButtonLocked = data.is_locked;
             }
             //相手のロックの状態更新
@@ -219,7 +230,6 @@ public class RoleUIManager : MonoBehaviour
                 ChangeButtonVisible(checkButton, true);
             }
         }
-        Debug.Log("UI Updated : " + dataList);
     }
     /// <summary>
     /// 自分と相手の選択を解除

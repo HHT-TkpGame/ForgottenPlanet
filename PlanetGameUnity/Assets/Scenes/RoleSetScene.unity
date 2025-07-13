@@ -772,6 +772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roleUIManager: {fileID: 948207088}
   poller: {fileID: 1135519532}
+  requestPoller: {fileID: 1916266002}
 --- !u!4 &520149361
 Transform:
   m_ObjectHideFlags: 0
@@ -2539,6 +2540,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904137808}
   m_CullTransparentMesh: 1
+--- !u!1 &1916266001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1916266003}
+  - component: {fileID: 1916266002}
+  m_Layer: 0
+  m_Name: GameStateRequestPoller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1916266002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916266001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a232d3495a1ac144e9d18d0e27d1741e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 1
+--- !u!4 &1916266003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916266001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1061.0236, y: 567.6454, z: -652.0866}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1967206597
 GameObject:
   m_ObjectHideFlags: 0
@@ -3379,3 +3425,4 @@ SceneRoots:
   - {fileID: 1135519533}
   - {fileID: 520149361}
   - {fileID: 186088804}
+  - {fileID: 1916266003}

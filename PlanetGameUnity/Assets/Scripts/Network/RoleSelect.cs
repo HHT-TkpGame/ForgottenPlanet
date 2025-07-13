@@ -80,12 +80,12 @@ public class RoleSelect : IRoleSelect
         if (request.result == UnityWebRequest.Result.Success)
         {
             onSuccess?.Invoke();// 成功コールバックを実行
-            Debug.Log(request.downloadHandler.text);
+            //Debug.Log(request.downloadHandler.text);
         }
         else
         {
             onError?.Invoke(request.error);// 失敗コールバックを実行
-            Debug.Log($"PostSelection failed: {request.error}");
+            //Debug.Log($"PostSelection failed: {request.error}");
         }
     }
     /// <summary>

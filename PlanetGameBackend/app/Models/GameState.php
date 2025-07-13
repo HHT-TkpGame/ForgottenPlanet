@@ -7,6 +7,7 @@ use App\Enums\GameProgress;
 
 class GameState extends Model
 {
+    protected $table = 'game_states_tbl';
     protected $fillable = ['room_id', 'game_progress'];
 
     protected $casts = [

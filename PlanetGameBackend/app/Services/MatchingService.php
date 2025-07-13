@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 use App\Services\RoleSelectionService;
+use App\Services\GameStateService;
 use App\Models\PlayerRepository;
 use App\Models\RoomRepository;
 
@@ -15,6 +16,11 @@ class MatchingService
     protected $roleSelectionService;
 
     /**
+     * @var GameStateService
+     */
+    protected $gameStateService;
+
+    /**
      * @var RoomRepository
      */
     protected $roomRepository;
@@ -24,9 +30,15 @@ class MatchingService
      */
     protected $playerRepository;
 
-    public function __construct(RoleSelectionService $roleSelectionService, RoomRepository $roomRepository, PlayerRepository $playerRepository)
+    public function __construct(
+        RoleSelectionService $roleSelectionService,
+        GameStateService $gameStateService,
+        RoomRepository $roomRepository,
+        PlayerRepository $playerRepository
+    )
     {
         $this->roleSelectionService = $roleSelectionService;
+        $this->gameStateService = $gameStateService;
         $this->roomRepository = $roomRepository;
         $this->playerRepository = $playerRepository;
     }
@@ -60,6 +72,9 @@ class MatchingService
                 'player_id' => $playerId,
             ]);
 
+            //ゲーム進行の初期化
+            $this->gameStateService->init($roomData->id);
+            $currentState = $this->gameStateService->getProgressByRoomId($roomData->id);
             //roleSelectionの初期データ作成
             $this->roleSelectionService->updateSelection(
                 $playerId,
@@ -75,6 +90,7 @@ class MatchingService
                 'player_id' => $playerId,
                 'is_commander' => $isHost,
                 'player_count' => 1,
+                'game_progress' => $currentState,
             ]);
         }
         //ポストされた合言葉に対応した部屋があった場合
@@ -94,6 +110,7 @@ class MatchingService
             'player_id' => $playerId,
         ]);
 
+        $currentState = $this->gameStateService->getProgressByRoomId($room->id);
         //roleSelectionの初期データ作成
         $this->roleSelectionService->updateSelection(
                 $playerId,
@@ -109,6 +126,7 @@ class MatchingService
             'player_id' => $playerId,
 	        'is_commander' => $isHost,
             'player_count' => $count + 1,
+            'game_progress' => $currentState,
         ]);
         }
     }

@@ -40,7 +40,6 @@ public class HeartbeatManager : MonoBehaviour
         if(request.result == UnityWebRequest.Result.Success)
         {
             NetworkStateManager.SetState(NetworkStateManager.NetworkState.Connected);
-            Debug.Log(request.downloadHandler.text);
         }
         else if (request.responseCode == 404)
         {
