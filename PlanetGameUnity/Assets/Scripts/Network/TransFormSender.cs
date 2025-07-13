@@ -4,16 +4,24 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class TransformSender : MonoBehaviour, ITransformStrategy.ITransformSenderStrategy
+public class TransformSender : MonoBehaviour
 {
-    ITransformProvider iTransformProvider;
-    [SerializeField] Agent agent;
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
-    
-    public void Initialize()
+    [SerializeField] GameObject target;
+    // Start is called before the first frame update
+    void Start()
     {
-        iTransformProvider = agent;
+        if (MatchingManager.IsCommander) { return; }
         StartCoroutine(SendTransformLoop());
+    }
+    const float SPEED = 3f;
+    
+    void Update()
+    {
+        if(MatchingManager.IsCommander) { return; }
+        float y = Input.GetAxis("Horizontal") * SPEED;
+        float z = Input.GetAxis("Vertical") * SPEED;
+        target.transform.Translate(0 ,0, z * Time.deltaTime);
+        target.transform.Rotate(0, y * Time.deltaTime * 50,0);
     }
 
     const float REQUEST_INTERVAL = 0.3f;
@@ -21,9 +29,8 @@ public class TransformSender : MonoBehaviour, ITransformStrategy.ITransformSende
     {
         while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
-            Debug.Log(iTransformProvider);
-            yield return StartCoroutine(SendTransform(BASE_URI + "/api/room/" + 
-                MatchingManager.RoomId + "/position", iTransformProvider.AgentPos, iTransformProvider.AgentRotY));
+            yield return StartCoroutine(SendTransform(ApiConfig.BASE_URI + "/api/room/" + 
+                MatchingManager.RoomId + "/position", target.transform.position, target.transform.eulerAngles.y));
 
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }

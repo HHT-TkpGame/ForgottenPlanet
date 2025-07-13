@@ -9,14 +9,13 @@ public class ChatManager : MonoBehaviour
 {
     [SerializeField] TMP_InputField inputField;
     [SerializeField] TMP_Text txtMsg;
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     const float REQUEST_INTERVAL = 4f;
 
     DateTime lastFetchTime;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(FetchChatLoop($"{BASE_URI}/api/room/{MatchingManager.RoomId}/chat/"));
+        StartCoroutine(FetchChatLoop($"{ApiConfig.BASE_URI}/api/room/{MatchingManager.RoomId}/chat/"));
     }
 
     // Update is called once per frame
@@ -31,7 +30,7 @@ public class ChatManager : MonoBehaviour
     {
         if (inputField.text.Length != 0)
         {
-            StartCoroutine(SendChatMessage($"{BASE_URI}/api/room/{MatchingManager.RoomId}/chat/", inputField.text));
+            StartCoroutine(SendChatMessage($"{ApiConfig.BASE_URI}/api/room/{MatchingManager.RoomId}/chat/", inputField.text));
             inputField.text = "";
         }
     }

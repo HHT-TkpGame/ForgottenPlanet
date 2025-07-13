@@ -8,13 +8,13 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        \App\Console\Commands\RemoveInactiveRooms::class,
+        //Commands\RemoveInactiveRooms::class,
     ];
 
     protected function schedule(Schedule $schedule): void
     {
-        // 1•ª‚²‚Æ‚ÉŽÀs‚·‚é
-        $schedule->command('rooms:cleanup')->everyMinute();
+        // 1åˆ†ã”ã¨ã«å®Ÿè¡Œã™ã‚‹
+        //$schedule->command('examples:greet')->everyMinute();
     }
 
     protected function commands(): void

@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Room extends Model
 {
     protected $table = 'rooms';
+    protected $fillable = ['keyword'];
     public function players()
     {
-	//rooms‚Ì’†‚É•¡”‚Ìplayers‚ª‚¢‚é‚Æ‚¢‚¤ŠÖŒW‚ğ’è‹`
-	return $this->hasMany(Player::class);
+        //roomsã®ä¸­ã«è¤‡æ•°ã®playersãŒã„ã‚‹ã¨ã„ã†é–¢ä¿‚ã‚’å®šç¾©
+        return $this->hasMany(Player::class);
     }
 
 }

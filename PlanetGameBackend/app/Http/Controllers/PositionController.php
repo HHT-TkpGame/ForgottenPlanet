@@ -7,7 +7,7 @@ use App\Models\Position;
 
 class PositionController extends Controller
 {
-        //Post‚ÅƒvƒŒƒCƒ„[‚ÌÀ•W‚ğæ“¾EXVi’Tõ‘¤j
+    //Postã§ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åº§æ¨™ã‚’å–å¾—ãƒ»æ›´æ–°ï¼ˆæ¢ç´¢å´ï¼‰
     public function updatePosition(Request $request, $roomId)
     {
         $validated = $request->validate([
@@ -26,7 +26,7 @@ class PositionController extends Controller
         return response()->json(['status' => 'ok']);
     }
 
-    // GET: À•W‚ğæ“¾i’ÊMº‘¤j
+    // GET: åº§æ¨™ã‚’å–å¾—ï¼ˆé€šä¿¡å®¤å´ï¼‰
     public function getPosition($roomId)
     {
         $position = Position::where('room_id', $roomId)->first();
