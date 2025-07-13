@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TransformSyncManager : MonoBehaviour
 {
-    ITransformStrategy.ITransformSenderStrategy iSender;
-    ITransformStrategy.ITransformGetterStrategy iGetter;
+    ITransformSenderStrategy iSender;
+    ITransformGetterStrategy iGetter;
 
     [SerializeField] TransformSender sender;
     [SerializeField] TransformGetter getter;
