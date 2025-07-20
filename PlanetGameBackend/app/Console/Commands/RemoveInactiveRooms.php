@@ -4,17 +4,31 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
-use App\Models\Room;
 use Carbon\Carbon;
+use App\Models\RoomRepository;
 
 class RemoveInactiveRooms extends Command
 {
+    /**
+     * @var RoomRepository
+     */
+    private $roomRepository;
+    /**
+     * ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+     * @param RoomRepository
+     */
+    public function __construct(RoomRepository $roomRepository)
+    {
+        parent::__construct();
+        $this->roomRepository = $roomRepository;
+    }
+
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    //php artisan‚Å•\Ž¦‚³‚ê‚éƒRƒ}ƒ“ƒh‚Ì–¼‘O
+    //php artisanã§è¡¨ç¤ºã•ã‚Œã‚‹ã‚³ãƒžãƒ³ãƒ‰ã®åå‰
     protected $signature = 'rooms:cleanup';
 
     /**
@@ -22,7 +36,7 @@ class RemoveInactiveRooms extends Command
      *
      * @var string
      */
-    //php artisan‚Å•\Ž¦‚³‚ê‚éƒRƒ}ƒ“ƒh‚Ìà–¾
+    //php artisanã§è¡¨ç¤ºã•ã‚Œã‚‹ã‚³ãƒžãƒ³ãƒ‰ã®èª¬æ˜Ž
     protected $description = 'Remove rooms where at least one player has timed out';
 
     /**
@@ -33,20 +47,20 @@ class RemoveInactiveRooms extends Command
         $timeoutSeconds = 30;
         $threshold = Carbon::now()->subSeconds($timeoutSeconds);
 
-        // ‚·‚×‚Ä‚Ìƒ‹[ƒ€‚Æ‚»‚ÌƒvƒŒƒCƒ„[‚ðŽæ“¾
-        $rooms = Room::with('players')->get();
+        // ã™ã¹ã¦ã®ãƒ«ãƒ¼ãƒ ã¨ãã®ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å–å¾—
+        $rooms = $this->roomRepository->getAllRoomsWithPlayers();
 
         foreach ($rooms as $room) {
-            // 1l‚Å‚àƒ^ƒCƒ€ƒAƒEƒg‚µ‚Ä‚¢‚ê‚Îíœ
+            // 1äººã§ã‚‚ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆã—ã¦ã„ã‚Œã°å‰Šé™¤
             $anyTimedOut = $room->players->contains(function ($player) use ($threshold) {
                 return $player->last_request_time < $threshold;
             });
 
             if ($anyTimedOut) {
-		Log::info("Room ID {$room->id} has a timed-out player. Deleting.");
-                $room->delete();
+		        Log::info("Room ID {$room->id} has a timed-out player. Deleting.");
+                $rooms = $this->roomRepository->delete($room);                
             }
         }
-	Log::info("Room timeout cleanup completed.");
+	    Log::info("Room timeout cleanup completed.");
     }
 }

@@ -16,7 +16,7 @@ class Player extends Model
         'last_request_time',
     ];
 
-    // Room‚Æ‚ÌƒŠƒŒ[ƒVƒ‡ƒ“i1‚Â‚ÌRoom‚É‘®‚·‚éj‚ð’è‹`
+    // Roomã¨ã®ãƒªãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ï¼ˆ1ã¤ã®Roomã«å±žã™ã‚‹ï¼‰ã‚’å®šç¾©
     public function room()
     {
         return $this->belongsTo(Room::class);

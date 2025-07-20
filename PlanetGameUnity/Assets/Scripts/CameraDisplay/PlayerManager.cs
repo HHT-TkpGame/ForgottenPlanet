@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
 {
     I_PlayerDefaultFunctions i_function;
     I_BodyCamTrans i_camTrans;
-    ITransformStrategy.ITransformGetterStrategy iTransformGetter;
+    ITransformGetterStrategy iTransformGetter;
     [SerializeField] TransformGetter transformGetter;
 
     [SerializeField,Header("どっちのプレイヤーを使うか")]bool isCommander;

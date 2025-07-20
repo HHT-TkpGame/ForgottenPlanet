@@ -4,15 +4,9 @@ using UnityEngine.Networking;
 
 public class NetworkDisconnector : MonoBehaviour
 {
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
     public void OnClick()
     {
-        StartCoroutine(Disconnect(BASE_URI + "/api/room/"+MatchingManager.RoomId));
+        StartCoroutine(Disconnect(ApiConfig.BASE_URI + "/api/room/"+MatchingManager.RoomId));
     }
 
     IEnumerator Disconnect(string uri)

@@ -2,12 +2,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class TransformGetter : MonoBehaviour, ITransformStrategy.ITransformGetterStrategy
-{
+public class TransformGetter : MonoBehaviour, ITransformGetterStrategy
+{   
     public Vector3 Pos { get; private set; }
     public float RotY {  get; private set; }
-    [SerializeField] GameObject target;
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
     public void Initialize()
     {
         StartCoroutine(GetTransformLoop());
@@ -18,7 +16,7 @@ public class TransformGetter : MonoBehaviour, ITransformStrategy.ITransformGette
     {
         while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
-            yield return StartCoroutine(GetTransform(BASE_URI+"/api/room/"+MatchingManager.RoomId + "/position"));
+            yield return StartCoroutine(GetTransform(ApiConfig.BASE_URI +"/api/room/"+MatchingManager.RoomId + "/position"));
             Debug.Log("GetPos");
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }
@@ -34,9 +32,9 @@ public class TransformGetter : MonoBehaviour, ITransformStrategy.ITransformGette
         {
             string res = request.downloadHandler.text;
             PlayerTransform json = JsonUtility.FromJson<PlayerTransform>(res);
+            Debug.Log(json.x + json.y + json.z);
             Pos = new Vector3(json.x, json.y, json.z);
             RotY = json.rot_y;
-            Debug.Log("pos:" + Pos + " / rotY:" + RotY);
         }
         else
         {

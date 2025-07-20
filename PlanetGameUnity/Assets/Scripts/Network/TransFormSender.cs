@@ -4,26 +4,24 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class TransformSender : MonoBehaviour, ITransformStrategy.ITransformSenderStrategy
+public class TransformSender : MonoBehaviour, ITransformSenderStrategy
 {
-    ITransformProvider iTransformProvider;
+    ITransformProvider transformProvider;
     [SerializeField] Agent agent;
-    const string BASE_URI = "https://hht-game.fee-on.com/SynchronizationTest";
-    
+    // Start is called before the first frame update
     public void Initialize()
     {
-        iTransformProvider = agent;
+        transformProvider = agent;
         StartCoroutine(SendTransformLoop());
     }
-
+    
     const float REQUEST_INTERVAL = 0.3f;
     IEnumerator SendTransformLoop()
     {
         while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
-            Debug.Log(iTransformProvider);
-            yield return StartCoroutine(SendTransform(BASE_URI + "/api/room/" + 
-                MatchingManager.RoomId + "/position", iTransformProvider.AgentPos, iTransformProvider.AgentRotY));
+            yield return StartCoroutine(SendTransform(ApiConfig.BASE_URI + "/api/room/" + 
+                MatchingManager.RoomId + "/position", transformProvider.AgentPos, transformProvider.AgentRotY));
 
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }
