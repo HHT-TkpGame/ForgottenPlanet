@@ -35,7 +35,8 @@ public class PlayerManager : MonoBehaviour
 		//scanAct.started += OnScanStarted;
 		//scanAct.canceled += OnScanCanceled;
 
-		if (MatchingManager.IsCommander)
+        if(isCommander)
+		//if (MatchingManager.IsCommander)
         {
             i_function = commander;
             i_camTrans = bodyCamera;

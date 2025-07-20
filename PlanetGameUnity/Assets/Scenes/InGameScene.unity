@@ -1190,7 +1190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d25001fac5522d94fb948d4aac8afb51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!4 &447607832
 Transform:
   m_ObjectHideFlags: 0
@@ -1314,8 +1313,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 988465858}
   m_HandleRect: {fileID: 988465857}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.9999999
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3929,21 +3928,21 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 989139829}
-  - {fileID: 103101238}
-  - {fileID: 1124393849}
-  - {fileID: 868977558}
   - {fileID: 1185276013}
   - {fileID: 447607832}
   - {fileID: 140492151}
   - {fileID: 295556720}
   - {fileID: 115329674}
-  - {fileID: 1669952580}
+  - {fileID: 861205514}
+  - {fileID: 1124393849}
+  - {fileID: 989139829}
+  - {fileID: 103101238}
+  - {fileID: 1090644846}
   - {fileID: 1215965909}
   - {fileID: 639147129}
+  - {fileID: 321432324}
+  - {fileID: 868977558}
+  - {fileID: 1669952580}
   - {fileID: 249090159}
   - {fileID: 1607687118}
-  - {fileID: 1090644846}
   - {fileID: 1906391364}
-  - {fileID: 321432324}
-  - {fileID: 861205514}
