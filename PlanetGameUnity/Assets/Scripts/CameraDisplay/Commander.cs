@@ -22,6 +22,7 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 	const int ROTSPEED = 90;
 
 	float verticalVelocity = 0;
+	float cameraPitch = 0;
 
 	bool finSetUp;
 
@@ -81,16 +82,14 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		rot *= Time.deltaTime;
 
 
-		//¶‰E‚Í‚»‚Ì‚Ü‚Üã‰º‚Í‹t‚É‚µ‚ÄŽg‚¢‚½‚¢‚Ì‚Åcamera‚Ì‰ñ“]‚Íƒ}ƒCƒiƒX‚ðŠ|‚¯‚é
-		transform.eulerAngles += new Vector3(0, rot.y, 0);
-		cameraObj.transform.eulerAngles += new Vector3(-rot.x, 0, 0);
+		transform.Rotate(0, rot.y, 0);
 
-		if (cameraObj.transform.eulerAngles.x > 45 && cameraObj.transform.eulerAngles.x < 360 - 45)
-		{
-			cameraObj.transform.eulerAngles += new Vector3(rot.x, 0, 0);
-		}
-
+		cameraPitch += rot.x;
+		cameraPitch = Mathf.Clamp(cameraPitch, -80f, 80f);
+		cameraObj.transform.localEulerAngles = new Vector3(-cameraPitch, 0, 0);
 	}
+
+	//
 
 
 	// Update is called once per frame

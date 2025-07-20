@@ -1,3 +1,4 @@
+using System.Buffers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -15,13 +16,13 @@ public class PlayerManager : MonoBehaviour
 	[SerializeField, Header("エージェント")] Agent agent;
     [SerializeField, Header("エージェントのボディカメラ")] AgentBodyCamera bodyCamera;
 
-	PlayerInput input;
+
+	
+    PlayerInput input;
 
 	InputAction moveAct;
 	InputAction lookAct;
-
-
-    
+    InputAction scanAct;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -29,6 +30,10 @@ public class PlayerManager : MonoBehaviour
 		input = GetComponent<PlayerInput>();
 		moveAct = input.actions["Move"];
 		lookAct = input.actions["Look"];
+		//scanAct = input.actions["Search"];
+
+		//scanAct.started += OnScanStarted;
+		//scanAct.canceled += OnScanCanceled;
 
 		if (MatchingManager.IsCommander)
         {
@@ -46,10 +51,17 @@ public class PlayerManager : MonoBehaviour
 		i_camTrans?.Init();
 	}
 
-    float a = 0;
-    float b = 180;
-    const int COUNT = 1;
-    float count=COUNT;
+    //void OnScanStarted(InputAction.CallbackContext context)
+    //{
+    //	if (MatchingManager.IsCommander) { return; }
+    //       agent.OnScanStarted();
+
+    //}
+    //void OnScanCanceled(InputAction.CallbackContext context)
+    //{
+    //    if (MatchingManager.IsCommander) { return; }
+    //    agent.OnScanCanceled();
+    //}
     // Update is called once per frame
     void Update()
     {
