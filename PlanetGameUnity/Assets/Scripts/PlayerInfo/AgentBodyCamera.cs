@@ -6,14 +6,16 @@ public class AgentBodyCamera : MonoBehaviour,I_BodyCamTrans
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Init()
     {
+        Debug.Log("ssss");
         //Ç±Ç±è´óàÇÕAgentÇÃç¿ïWÇ…Ç∑ÇÈ
-        gameObject.transform.position=startPos.position;
+        transform.position=startPos.position;
+        transform.rotation=startPos.rotation;
+        Debug.Log(transform.position);
     }
     public void SetCameraTransform(Vector3 cameraPos, float cameraRot_Y)
     {
+        Debug.Log(cameraPos);
         transform.position = cameraPos;
-        Debug.Log(transform.position);
-        //transform.position = cameraPos;
         transform.eulerAngles = new Vector3(0, cameraRot_Y, 0);
     }
 }
