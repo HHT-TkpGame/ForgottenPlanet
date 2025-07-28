@@ -6,23 +6,6 @@ using UnityEngine;
 
 public class CluesManager : MonoBehaviour
 {
-	class ClueData
-	{
-		public int rnd;
-		public ClueBehavior clue;
-	}
-
-	[System.Serializable]
-	class Truth
-	{
-		public int truth;
-		public string truthName;
-		public Truth(int truth, string truthName)
-		{
-			this.truth = truth;
-			this.truthName = truthName;
-		}
-	}
 
 	[SerializeField, Header("ê^ëäÇÃScriptableObject")] PlanetTruthList planetTruthList;
 
