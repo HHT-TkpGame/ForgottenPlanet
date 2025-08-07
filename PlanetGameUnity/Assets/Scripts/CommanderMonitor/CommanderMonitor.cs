@@ -1,16 +1,8 @@
+using UnityEditor;
 using UnityEngine;
 
 public class CommanderMonitor : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] int num;
+    public int Num=>num;
 }
