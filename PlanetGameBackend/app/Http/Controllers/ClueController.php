@@ -18,4 +18,11 @@ class ClueController extends Controller
         $clueData = $this->clueService->getByRoomId($roomId);
         return response()->json($clueData);
     }
+
+    public function getClueShared($roomID){
+        //手がかりの共有情報を取得
+    }
+    public function postClueShared($roomID){
+        //手がかりの共有情報を送信
+    }
 }
