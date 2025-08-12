@@ -9,6 +9,7 @@ use App\Http\Controllers\ChatMessageController;
 use App\Http\Controllers\MatchingController;
 use App\Http\Controllers\RoleSelectionController;
 use App\Http\Controllers\GameStateController;
+use App\Http\Controllers\ClueController;
 
 
 Route::get('/hello', [ApiTestController::class, 'hello']);
@@ -54,4 +55,6 @@ Route::post('room/{roomId}/roles/reselection', [RoleSelectionController::class, 
 Route::get('room/{roomId}/progress', [GameStateController::class, 'getProgress']);
 
 Route::post('room/{roomId}/progress', [GameStateController::class, 'updateProgress']); 
+
+Route::get('room/{roomId}/clueAndTruth', [ClueController::class, 'getCluesByRoomId']);
 ?>

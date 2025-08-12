@@ -61,6 +61,5 @@ class RemoveInactiveRooms extends Command
                 $rooms = $this->roomRepository->delete($room);                
             }
         }
-	    Log::info("Room timeout cleanup completed.");
     }
 }

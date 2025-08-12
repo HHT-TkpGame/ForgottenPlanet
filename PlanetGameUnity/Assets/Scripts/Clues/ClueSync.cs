@@ -1,23 +1,39 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class ClueSync : IClueSync
 {
-    public IEnumerator PostClue(Action onSuccess, Action onError)
+    public IEnumerator GetClue(Action<ClueData> onSuccess, Action<string> onError)
     {
         yield return null;
     }
-    public IEnumerator GetClue(Action<ClueData> onSuccess, Action onError)
+    public IEnumerator PostClue(Action onSuccess, Action<string> onError)
     {
         yield return null;
     }
-    public IEnumerator PostTruth(Action onSuccess, Action onError)
+    /// <summary>
+    /// マッチ開始時に今回の真相IDと手がかりの範囲を取得する
+    /// </summary>
+    /// <param name="onSuccess"></param>
+    /// <param name="onError"></param>
+    /// <returns></returns>
+    public IEnumerator GetClueAndTruth(Action<ClueData> onSuccess, Action<string> onError)
     {
-        yield return null;
+        string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/clueAndTruth";
+        UnityWebRequest request = new UnityWebRequest(uri, "GET");
+        request.downloadHandler = new DownloadHandlerBuffer();
+        yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            ClueData json = JsonUtility.FromJson<ClueData>(request.downloadHandler.text);
+            onSuccess?.Invoke(json);
+        }
+        else
+        {
+            onError?.Invoke(request.error);
+        }
     }
-    public IEnumerator GetTruth(Action<Truth>onSuccess, Action onError)
-    {
-        yield return null;
-    }
+    
 }
