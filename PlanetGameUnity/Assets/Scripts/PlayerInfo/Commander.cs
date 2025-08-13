@@ -89,9 +89,6 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		cameraObj.transform.localEulerAngles = new Vector3(-cameraPitch, 0, 0);
 	}
 
-	//
-
-
 	// Update is called once per frame
 	void Update()
     {
