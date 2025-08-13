@@ -57,4 +57,8 @@ Route::get('room/{roomId}/progress', [GameStateController::class, 'getProgress']
 Route::post('room/{roomId}/progress', [GameStateController::class, 'updateProgress']); 
 
 Route::get('room/{roomId}/clueAndTruth', [ClueController::class, 'getCluesByRoomId']);
+
+Route::get('room/{roomId}/clueShared', [ClueController::class, 'getClueShared']);
+
+Route::post('room/{roomId}/clueId/{clueId}/clueShared', [ClueController::class, 'postClueShared']);
 ?>

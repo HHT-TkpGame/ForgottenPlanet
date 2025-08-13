@@ -36,4 +36,11 @@ class ClueService
             'clue_range' => [$minClueId, $maxClueId],
         ];
     }
+    public function getSharedByRoomId($roomId){
+        return $this->clueRepository->getSharedByRoomId($roomId);
+    }
+    public function setSharedByClueId($roomId, $clueId)
+    {
+        return $this->clueRepository->setSharedByClueId($roomId, $clueId);
+    }
 }

@@ -20,9 +20,17 @@ class ClueController extends Controller
     }
 
     public function getClueShared($roomID){
-        //手がかりの共有情報を取得
+        $data = $this->clueService->getSharedByRoomId($roomID)
+            ->map(function ($clue) {
+            return [
+                'clue_id'   => $clue->clue_id,
+                'is_shared' => (bool) $clue->is_shared
+            ];
+        })
+        ->values();
+        return response()->json(['sharedClues' => $data]);
     }
-    public function postClueShared($roomID){
-        //手がかりの共有情報を送信
+    public function postClueShared($roomID, $clueId){
+        $this->clueService->setSharedByClueId($roomID, $clueId);
     }
 }
