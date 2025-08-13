@@ -14,6 +14,8 @@ public class CamCon : MonoBehaviour
     }
 
     zoomState state = zoomState.Default;
+	
+	//移動のスクリプトが別なのでそこでZoomedInの時は移動しないように
     public zoomState State=>state;
 
     [SerializeField] GameObject camPivot;
