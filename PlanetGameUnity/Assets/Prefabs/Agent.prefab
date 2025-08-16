@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5560934118876608667}
   - component: {fileID: 704763414100269716}
   - component: {fileID: 1855853670342457975}
+  - component: {fileID: 6530995724970510428}
   m_Layer: 0
   m_Name: Agent
   m_TagString: Untagged
@@ -93,3 +94,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraObj: {fileID: 0}
+  startPos: {fileID: 0}
+  scanAct: {fileID: 0}
+--- !u!114 &6530995724970510428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487514790306134787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc5b380ef412f0b4893ac6e05e72633a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scanColObj: {fileID: 0}
+  scanModel: {fileID: 0}
