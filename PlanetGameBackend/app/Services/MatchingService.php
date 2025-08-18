@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Http\Request;
 use App\Services\RoleSelectionService;
 use App\Services\GameStateService;
+use App\Services\GenerateCluesService;
 use App\Models\PlayerRepository;
 use App\Models\RoomRepository;
 
@@ -21,6 +22,11 @@ class MatchingService
     protected $gameStateService;
 
     /**
+     * @var GenerateCluesService
+     */
+    protected $generateCluesService;
+
+    /**
      * @var RoomRepository
      */
     protected $roomRepository;
@@ -33,12 +39,14 @@ class MatchingService
     public function __construct(
         RoleSelectionService $roleSelectionService,
         GameStateService $gameStateService,
+        GenerateCluesService $generateCluesService,
         RoomRepository $roomRepository,
         PlayerRepository $playerRepository
     )
     {
         $this->roleSelectionService = $roleSelectionService;
         $this->gameStateService = $gameStateService;
+        $this->generateCluesService = $generateCluesService;
         $this->roomRepository = $roomRepository;
         $this->playerRepository = $playerRepository;
     }
@@ -82,6 +90,8 @@ class MatchingService
                 $isHost,
                 false
             );
+            //手がかり生成
+            $this->generateCluesService->generateByRoomId($roomData->id);
             //is_commanderは初期値でis_hostの値が入る
             return response()->json([
                 'status' => 'created',

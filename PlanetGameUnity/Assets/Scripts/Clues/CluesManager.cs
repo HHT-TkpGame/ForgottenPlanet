@@ -6,23 +6,6 @@ using UnityEngine;
 
 public class CluesManager : MonoBehaviour
 {
-	class ClueData
-	{
-		public int rnd;
-		public ClueBehavior clue;
-	}
-
-	[System.Serializable]
-	class Truth
-	{
-		public int truth;
-		public string truthName;
-		public Truth(int truth, string truthName)
-		{
-			this.truth = truth;
-			this.truthName = truthName;
-		}
-	}
 
 	[SerializeField, Header("真相のScriptableObject")] PlanetTruthList planetTruthList;
 
@@ -40,21 +23,35 @@ public class CluesManager : MonoBehaviour
 	void Start()
 	{
 		Init();
-
 	}
 
 	void Init()
 	{
+		//range => [1,5]
 		//二週目以降リセットするためメソッド化
-		int rnd = Random.Range(0, planetTruthList.DataList.Count);
-		planetTruth = planetTruthList.DataList[rnd];
+
+		//int rnd = Random.Range(0, planetTruthList.DataList.Count);
+		//int[] resRange = new int[2];//サーバーから受け取った範囲
+		////ここで生成するrndは真相IDではなく、
+		////ScriptableObjectで生成したデータを配列にしたものの要素番号
+		//int truthId = planetTruthList.DataList.TruthId;
+		//int minRange = planetTruthList.DataList.IdNo1[resRange[0]];
+		//int maxRange = planetTruthList.DataList.IdNo5[resRange[1]];
+		//planetTruth = new PlanetTruth();
+		//planetTruth.Truth = truthId;
+		//int count = 1;
+		//for(int rangeStart = minRange;  rangeStart <= maxRange; rangeStart++)
+		//{
+		//	planetTruth.IdNums[count] = rangeStart;
+		//}
+
 
 		GetArrayId();
 
-		//相手に送る真相
-		Truth truth = new Truth(planetTruth.Truth, planetTruth.TruthName);
+		////相手に送る真相
+		//Truth truth = new Truth(planetTruth.Truth, planetTruth.TruthName);
 
-		Debug.Log("真相の数値は"+truth.truth+"真相は"+truth.truthName);
+		Debug.Log("真相の数値は"+planetTruth.Truth+"手がかりIDは");
 		//planetTruthで取ったIdNoXを選ばれたスクリプトに入れる
 
 		//リストの中に自分の子供の電子機器を入れる
