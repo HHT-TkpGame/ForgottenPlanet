@@ -52,10 +52,18 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 		ResetHold();
 	}
 
+	/// <summary>
+	/// サーチアクションが始まったらColliderが出現
+	/// ColliderのOnTriggerStayからScanメソッドを呼び
+	/// ExecuteActionでそのObjectがClueを持っているなら値を取得
+	/// </summary>
+	/// <param name="scanObj"></param>
 	public void Scan(GameObject scanObj)
 	{
 		holdTime += Time.deltaTime;
 		float scanRot = holdTime * SCAN_ROT_RATIO;
+		//一定時間Scanメソッドが呼び出されたら
+		//actionExecutedはこの後すぐもう一回下のメソッドを呼ぶの防止
 		if (holdTime >= MAX_HOLDTIME && !actionExecuted)
 		{
 			ExecuteAction(scanObj);
