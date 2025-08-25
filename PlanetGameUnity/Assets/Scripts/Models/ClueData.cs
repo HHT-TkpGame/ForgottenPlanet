@@ -22,7 +22,7 @@ public class ClueSharedInfo
     public bool is_shared;
 }
 
-//手がかりを持たせるためのデータ
+//マップ上のオブジェクトに手がかりを持たせるためのデータ
 public class ClueData
 {
     public int rnd;
@@ -47,7 +47,7 @@ public class CurrentMatchClues
     }
 }
 
-//CSVのデータの一行分のデータが入る
+//CSVの一行分のデータが入る
 [System.Serializable]
 public class PlanetTruth
 {

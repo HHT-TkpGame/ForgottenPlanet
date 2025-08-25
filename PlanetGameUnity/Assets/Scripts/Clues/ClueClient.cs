@@ -33,6 +33,7 @@ public class ClueClient : IClueSync
         else
         {
             onError?.Invoke(request.error);
+            Debug.Log(request.error);
         }
     }
     

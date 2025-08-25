@@ -1,7 +1,4 @@
-using JetBrains.Annotations;
-using NUnit.Framework;
 using System.Collections.Generic;
-using System.Transactions;
 using UnityEngine;
 
 public class CluesManager : MonoBehaviour
@@ -26,13 +23,22 @@ public class CluesManager : MonoBehaviour
 	void Init()
 	{
 		//二週目以降リセットするためメソッド化
+		int truthId = CluesDataGetter.Instance.Data.truth_id;
+		int clueRangeStart = CluesDataGetter.Instance.Data.clues_range[0];
+		int clueRangeEnd = CluesDataGetter.Instance.Data.clues_range[1];
 
-		//今回使う手がかり情報を作成。前のシーンで取得される
-		currentMatchClues = new CurrentMatchClues(
-            CluesDataGetter.Instance.Data.truth_id,
-			CluesDataGetter.Instance.Data.clues_range[0],
-            CluesDataGetter.Instance.Data.clues_range[1]
-        );
+		Debug.Log($"id:{truthId}, start:{clueRangeStart}, end:{clueRangeEnd}");
+
+		//サーバーから受け取った値に対応するリストを探す
+        PlanetTruth target = planetTruthList.DataList.Find(pt =>
+			pt.Truth == truthId &&
+			pt.IdNo1 == clueRangeStart 
+		);
+        if(target != null)
+		{
+			Debug.Log(target);
+			currentMatchClues = new CurrentMatchClues(target.Truth, target.IdNo1, target.IdNo5);
+		}
 		string s = "";
 		for(int i = 0; i < currentMatchClues.clueIds.Length;i++)
 		{

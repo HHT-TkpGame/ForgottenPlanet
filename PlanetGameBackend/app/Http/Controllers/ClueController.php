@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Service\ClueService;
+use App\Services\ClueService;
 use Illuminate\Http\Request;
 
 class ClueController extends Controller

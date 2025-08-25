@@ -6,7 +6,6 @@ public class AgentBodyCamera : MonoBehaviour,I_BodyCamTrans
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void Init()
     {
-        Debug.Log("ssss");
         //‚±‚±«—ˆ‚ÍAgent‚ÌÀ•W‚É‚·‚é
         transform.position=startPos.position;
         transform.rotation=startPos.rotation;
