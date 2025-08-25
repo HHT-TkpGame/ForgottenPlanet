@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="PlanetTruthList",menuName = "ScriptableObject/PlanetTruthList")]
@@ -8,14 +9,17 @@ public class PlanetTruthList : ScriptableObject
 
     private void OnEnable()
     {
-        LoadCsvData();
+        //Debug.Log("LoadCSV");
+        //LoadCsvData();
     }
     public void LoadCsvData()
     {
         DataList = new List<PlanetTruth>();
         //C:\Unity\PlanetGame\PlanetGameUnity\Assets\Scripts\SpreadSheet\Data
         //C:/Users/fanta/PlanetGame2/PlanetGameUnity/Assets/Scripts/SpreadSheet/Data/PlanetTruth.csv
-        var filePath ="C:/Unity/PlanetGame/PlanetGameUnity/Assets/Scripts/SpreadSheet/Data/PlanetTruth.csv";
+        //var filePath ="C:/Unity/PlanetGame/PlanetGameUnity/Assets/Scripts/SpreadSheet/Data/PlanetTruth.csv";
+        string filePath = Path.Combine(Application.dataPath, "Scripts/SpreadSheet/Data/PlanetTruth.csv");
+
         string[,] data = CsvUtility.LoadCsvAs2DArray(filePath);
         for (int i = 2; i < data.GetLength(0); i++)
         {

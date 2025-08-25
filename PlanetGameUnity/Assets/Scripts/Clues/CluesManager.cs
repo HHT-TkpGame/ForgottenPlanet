@@ -22,6 +22,8 @@ public class CluesManager : MonoBehaviour
 
 	void Init()
 	{
+		planetTruthList.LoadCsvData();
+		Debug.Log(planetTruthList.DataList[1]);
 		//二週目以降リセットするためメソッド化
 		int truthId = CluesDataGetter.Instance.Data.truth_id;
 		int clueRangeStart = CluesDataGetter.Instance.Data.clues_range[0];
