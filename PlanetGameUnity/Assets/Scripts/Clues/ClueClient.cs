@@ -3,9 +3,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class ClueSync : IClueSync
+public class ClueClient : IClueSync
 {
-    public IEnumerator GetClue(Action<ClueData> onSuccess, Action<string> onError)
+    public IEnumerator GetClue(Action<ClueSharedInfoList> onSuccess, Action<string> onError)
     {
         yield return null;
     }
@@ -19,7 +19,7 @@ public class ClueSync : IClueSync
     /// <param name="onSuccess"></param>
     /// <param name="onError"></param>
     /// <returns></returns>
-    public IEnumerator GetClueAndTruth(Action<ClueData> onSuccess, Action<string> onError)
+    public IEnumerator GetClueAndTruth(Action<ServerCurrentMatchClues> onSuccess, Action<string> onError)
     {
         string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/clueAndTruth";
         UnityWebRequest request = new UnityWebRequest(uri, "GET");
@@ -27,7 +27,7 @@ public class ClueSync : IClueSync
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
-            ClueData json = JsonUtility.FromJson<ClueData>(request.downloadHandler.text);
+            ServerCurrentMatchClues json = JsonUtility.FromJson<ServerCurrentMatchClues>(request.downloadHandler.text);
             onSuccess?.Invoke(json);
         }
         else

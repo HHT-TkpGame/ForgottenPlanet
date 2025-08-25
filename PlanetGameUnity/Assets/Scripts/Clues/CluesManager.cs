@@ -9,17 +9,15 @@ public class CluesManager : MonoBehaviour
 
 	[SerializeField, Header("真相のScriptableObject")] PlanetTruthList planetTruthList;
 
-	//現在の手がかりの数
-	const int MAXCLUES = 5;
+	CurrentMatchClues currentMatchClues;
+    //現在の手がかりの数
+    const int MAXCLUES = 5;
 
 	int[] roomNumArray = new int[MAXCLUES];
 	int[] idArray;
 
 	List<GameObject> devices = new List<GameObject>();
 
-	PlanetTruth planetTruth;
-
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
 		Init();
@@ -27,32 +25,22 @@ public class CluesManager : MonoBehaviour
 
 	void Init()
 	{
-		//range => [1,5]
 		//二週目以降リセットするためメソッド化
 
-		//int rnd = Random.Range(0, planetTruthList.DataList.Count);
-		//int[] resRange = new int[2];//サーバーから受け取った範囲
-		////ここで生成するrndは真相IDではなく、
-		////ScriptableObjectで生成したデータを配列にしたものの要素番号
-		//int truthId = planetTruthList.DataList.TruthId;
-		//int minRange = planetTruthList.DataList.IdNo1[resRange[0]];
-		//int maxRange = planetTruthList.DataList.IdNo5[resRange[1]];
-		//planetTruth = new PlanetTruth();
-		//planetTruth.Truth = truthId;
-		//int count = 1;
-		//for(int rangeStart = minRange;  rangeStart <= maxRange; rangeStart++)
-		//{
-		//	planetTruth.IdNums[count] = rangeStart;
-		//}
+		//今回使う手がかり情報を作成。前のシーンで取得される
+		currentMatchClues = new CurrentMatchClues(
+            CluesDataGetter.Instance.Data.truth_id,
+			CluesDataGetter.Instance.Data.clues_range[0],
+            CluesDataGetter.Instance.Data.clues_range[1]
+        );
+		string s = "";
+		for(int i = 0; i < currentMatchClues.clueIds.Length;i++)
+		{
+			s += currentMatchClues.clueIds[i].ToString() + ", ";
+		}
+		Debug.Log($"今回の真相ID:{currentMatchClues.truthId}, 手がかりID:{s}");
 
-
-		GetArrayId();
-
-		////相手に送る真相
-		//Truth truth = new Truth(planetTruth.Truth, planetTruth.TruthName);
-
-		Debug.Log("真相の数値は"+planetTruth.Truth+"手がかりIDは");
-		//planetTruthで取ったIdNoXを選ばれたスクリプトに入れる
+		GetArrayId(currentMatchClues.clueIds);
 
 		//リストの中に自分の子供の電子機器を入れる
 		devices = AddDevices();
@@ -61,17 +49,20 @@ public class CluesManager : MonoBehaviour
 		DeliverClue();
 	}
 
-	void GetArrayId()
+	void GetArrayId(int[] clueIds)
 	{
-		idArray = new int [MAXCLUES]{ planetTruth.IdNo1,planetTruth.IdNo2,
-			planetTruth.IdNo3,planetTruth.IdNo4,planetTruth.IdNo5};
+		idArray = new int [MAXCLUES];
+		for(int i = 0;i < clueIds.Length; i++)
+		{
+			idArray[i] = clueIds[i];
+		}
 	}
 
 
 	List<GameObject> AddDevices()
 	{
 		List<GameObject> children= new List <GameObject>();
-		for(int i = 0;i<transform.childCount;i++)
+		for(int i = 0; i < transform.childCount;i++)
 		{
 			children.Add(transform.GetChild(i).gameObject);
 		}
@@ -85,7 +76,7 @@ public class CluesManager : MonoBehaviour
 
 		for (int i = 0; i < MAXCLUES; i++)
 		{
-			var clueData = ChooseDevice();
+			ClueData clueData = ChooseDevice();
 			//二つ目以降の手がかりの電子機器が同じ部屋から選ばれないようにする配列
 			roomNumArray[i] = clueData.clue.RoomNum;
 			//選ばれた電子機器に選ばれたことを伝えるメソッド

@@ -1,20 +1,61 @@
 using UnityEngine;
 
+//サーバーから受け取った手がかり初期化用のデータクラス
 [System.Serializable]
+public class ServerCurrentMatchClues
+{
+    public int truth_id;
+    public int[] clues_range = new int[2];
+}
+//ClueSharedInfoをラップするクラス
+[System.Serializable]
+public class ClueSharedInfoList
+{
+    public ClueSharedInfo[] dataList;
+}
+//サーバーから受け取る手がかり共有情報のクラス
+[System.Serializable]
+public class ClueSharedInfo
+{
+    public int truth_id;
+    public int clue_id;
+    public bool is_shared;
+}
+
+//手がかりを持たせるためのデータ
 public class ClueData
 {
     public int rnd;
     public ClueBehavior clue;
 }
-
-[System.Serializable]
-public class Truth
+//今回のマッチの手がかりデータ
+public class CurrentMatchClues
 {
-    public int truth;
-    public string truthName;
-    public Truth(int truth, string truthName)
+    public int truthId;
+    public int[] clueIds;
+    public bool[] isShared;
+    public CurrentMatchClues(int truthId, int rangeStart, int rangeEnd)
     {
-        this.truth = truth;
-        this.truthName = truthName;
+        this.truthId = truthId;
+        int maxClues = rangeEnd - rangeStart + 1;
+        clueIds = new int[maxClues];
+        isShared = new bool[maxClues];
+        for(int i = 0; i < maxClues; i++)
+        {
+            clueIds[i] = rangeStart + i;
+        }
     }
+}
+
+//CSVのデータの一行分のデータが入る
+[System.Serializable]
+public class PlanetTruth
+{
+    public int Truth;
+    public string TruthName;
+    public int IdNo1;
+    public int IdNo2;
+    public int IdNo3;
+    public int IdNo4;
+    public int IdNo5;
 }

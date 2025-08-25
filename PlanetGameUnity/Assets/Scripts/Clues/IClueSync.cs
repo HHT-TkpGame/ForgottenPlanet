@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IClueSync
 {
-    IEnumerator GetClue(Action<ClueData> onSuccess, Action<string> onError);
+    IEnumerator GetClue(Action<ClueSharedInfoList> onSuccess, Action<string> onError);
     IEnumerator PostClue(Action onSuccess, Action<string> onError);
-    IEnumerator GetClueAndTruth(Action<ClueData> onSuccess, Action<string> onError);
+    IEnumerator GetClueAndTruth(Action<ServerCurrentMatchClues> onSuccess, Action<string> onError);
 }

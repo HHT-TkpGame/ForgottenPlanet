@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="PlanetTruthList",menuName = "ScriptableObject/PlanetTruthList")]
 public class PlanetTruthList : ScriptableObject
 {
-    [SerializeField]
     public List<PlanetTruth> DataList;
 
     private void OnEnable()
@@ -14,7 +13,9 @@ public class PlanetTruthList : ScriptableObject
     public void LoadCsvData()
     {
         DataList = new List<PlanetTruth>();
-        var filePath="C:/Users/fanta/PlanetGame2/PlanetGameUnity/Assets/Scripts/SpreadSheet/Data/PlanetTruth.csv";
+        //C:\Unity\PlanetGame\PlanetGameUnity\Assets\Scripts\SpreadSheet\Data
+        //C:/Users/fanta/PlanetGame2/PlanetGameUnity/Assets/Scripts/SpreadSheet/Data/PlanetTruth.csv
+        var filePath ="C:/Unity/PlanetGame/PlanetGameUnity/Assets/Scripts/SpreadSheet/Data/PlanetTruth.csv";
         string[,] data = CsvUtility.LoadCsvAs2DArray(filePath);
         for (int i = 2; i < data.GetLength(0); i++)
         {
@@ -29,24 +30,5 @@ public class PlanetTruthList : ScriptableObject
             DataList.Add(planetTruth);
         }
     }
-}
-
-[System.Serializable]
-public class PlanetTruth
-{
-    [SerializeField]
-    public int Truth;
-    [SerializeField]
-    public string TruthName;
-    [SerializeField]
-    public int IdNo1;
-    [SerializeField]
-    public int IdNo2;
-    [SerializeField]
-    public int IdNo3;
-    [SerializeField]
-    public int IdNo4;
-    [SerializeField]
-    public int IdNo5;
 }
 
