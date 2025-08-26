@@ -11,13 +11,12 @@ public class ServerCurrentMatchClues
 [System.Serializable]
 public class ClueSharedInfoList
 {
-    public ClueSharedInfo[] dataList;
+    public ClueSharedInfo[] shared_clues;
 }
 //サーバーから受け取る手がかり共有情報のクラス
 [System.Serializable]
 public class ClueSharedInfo
 {
-    public int truth_id;
     public int clue_id;
     public bool is_shared;
 }

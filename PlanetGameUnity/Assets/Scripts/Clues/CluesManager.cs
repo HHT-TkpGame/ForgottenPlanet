@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class CluesManager : MonoBehaviour
 {
-
 	[SerializeField, Header("真相のScriptableObject")] PlanetTruthList planetTruthList;
+	[SerializeField] ClueClientPoller poller;
 
-	CurrentMatchClues currentMatchClues;
+	public CurrentMatchClues MatchClues {  get; private set; }
     //現在の手がかりの数
     const int MAXCLUES = 5;
 
@@ -17,13 +18,15 @@ public class CluesManager : MonoBehaviour
 
 	void Start()
 	{
+		//pollerを使うのはagentだけ
+		poller.Init(this);
+		poller.StartLoop();
 		Init();
 	}
 
 	void Init()
 	{
 		planetTruthList.LoadCsvData();
-		Debug.Log(planetTruthList.DataList[1]);
 		//二週目以降リセットするためメソッド化
 		int truthId = CluesDataGetter.Instance.Data.truth_id;
 		int clueRangeStart = CluesDataGetter.Instance.Data.clues_range[0];
@@ -32,23 +35,19 @@ public class CluesManager : MonoBehaviour
 		Debug.Log($"id:{truthId}, start:{clueRangeStart}, end:{clueRangeEnd}");
 
 		//サーバーから受け取った値に対応するリストを探す
-        PlanetTruth target = planetTruthList.DataList.Find(pt =>
+		PlanetTruth target = planetTruthList.DataList.Find(pt =>
 			pt.Truth == truthId &&
-			pt.IdNo1 == clueRangeStart 
+			pt.IdNo1 == clueRangeStart
 		);
-        if(target != null)
+		if (target != null)
 		{
 			Debug.Log(target);
-			currentMatchClues = new CurrentMatchClues(target.Truth, target.IdNo1, target.IdNo5);
+			MatchClues = new CurrentMatchClues(target.Truth, target.IdNo1, target.IdNo5);
 		}
-		string s = "";
-		for(int i = 0; i < currentMatchClues.clueIds.Length;i++)
-		{
-			s += currentMatchClues.clueIds[i].ToString() + ", ";
-		}
-		Debug.Log($"今回の真相ID:{currentMatchClues.truthId}, 手がかりID:{s}");
 
-		GetArrayId(currentMatchClues.clueIds);
+		int[] tmpIds = { 1, 2, 3, 4, 5 };
+
+		GetArrayId(/*tmpIds*/MatchClues.clueIds);
 
 		//リストの中に自分の子供の電子機器を入れる
 		devices = AddDevices();
@@ -77,7 +76,11 @@ public class CluesManager : MonoBehaviour
 		return children;
 	}
 
-	void DeliverClue()
+    /// <summary>
+    /// 判定のロジックの都合上、ClueBehaviorの[SerializeField]には、
+	/// 1以上 && 計5種類以上の値が必要（最低でも5つはClueBehaviorがアタッチされたGameObjectが必要）
+    /// </summary>
+    void DeliverClue()
 	{
 		//もし確定で手がかりにしたいものがあるなら
 		//forループの前に入れる
@@ -113,7 +116,7 @@ public class CluesManager : MonoBehaviour
 			clueData.rnd = Random.Range(0, devices.Count);
 			clueData.clue = devices[clueData.rnd].GetComponent<ClueBehavior>();
 
-			//配列は最初から全て0が入っているためRoomNumは1から始める
+			//配列は最初から全て0が入っているため[SerializeFiled]のRoomNumは1から始める
 			foreach (int roomNum in roomNumArray)
 			{
 				if (roomNum == clueData.clue.RoomNum)

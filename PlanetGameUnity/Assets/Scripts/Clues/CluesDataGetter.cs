@@ -4,6 +4,7 @@ public class CluesDataGetter : MonoBehaviour
 {
     public static CluesDataGetter Instance;
     public ServerCurrentMatchClues Data {  get; private set; }
+    public ClueClient ClueClient { get; private set; }
     void Awake()
     {
         if(Instance != null)
@@ -16,8 +17,8 @@ public class CluesDataGetter : MonoBehaviour
     }
     void Start()
     {
-        ClueClient clueClient = new ClueClient();
-        StartCoroutine(clueClient.GetClueAndTruth(onSuccess:(res) =>
+        ClueClient = new ClueClient();
+        StartCoroutine(ClueClient.GetClueAndTruth(onSuccess:(res) =>
         {
             Data = res;
         },
