@@ -6,9 +6,31 @@ public class InputFieldManager : MonoBehaviour
 {
     [SerializeField] InputField inputField;
     [SerializeField] TMP_Text displayText;
+    MonitorController monitorController;
 
-public void DisplayInputText()
+    public void GetMonitorController(MonitorController monitorController)
     {
-        displayText.text = inputField.text;
+        this.monitorController = monitorController;
+    }
+
+    public void DisplayInputText()
+    {
+        monitorController.SendCodeText(inputField.text.ToString());    
+        
+    }
+    public void SetDisplayText(int num)
+    {
+        switch (num)
+        {
+            case 0:
+                displayText.text = "éËÇ™Ç©ÇËÇå©Ç¬ÇØÇƒÇ¢Ç»Ç¢";
+				break; 
+            case 1:
+				displayText.text = "ê≥â";
+				break;
+            case 2:
+				displayText.text = "ê≥â";
+				break;
+        }
     }
 }
