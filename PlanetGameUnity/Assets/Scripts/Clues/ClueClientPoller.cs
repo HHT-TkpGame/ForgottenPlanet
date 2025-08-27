@@ -27,6 +27,8 @@ public class ClueClientPoller : MonoBehaviour
                     List<ClueSharedInfo> sharedClues = new List<ClueSharedInfo>();
                     for (int i = 0; i < res.shared_clues.Length; i++) 
                     {
+                        Debug.Log(cluesManager.MatchClues.isShared[i]);
+                        Debug.Log(res.shared_clues[i].is_shared);
                         if (res.shared_clues[i].is_shared != cluesManager.MatchClues.isShared[i])
                         {
                             //共有情報の更新があった手がかり情報をリストに追加
@@ -37,6 +39,11 @@ public class ClueClientPoller : MonoBehaviour
                     if (sharedClues.Count > 0)
                     {
                         OnSharedUpdated?.Invoke(sharedClues);
+                        Debug.Log("Updated");
+                    }
+                    else
+                    {
+                        Debug.Log("noUpdated");
                     }
                 },
                 onError: (err) =>

@@ -24,7 +24,7 @@ public class CluesManager : MonoBehaviour
 			//pollerを使うのはCommanderだけ
 			poller.Init(this);
 			poller.OnSharedUpdated += UpdateMatchClues;
-            //poller.OnSharedUpdated += モニター表示用のクラスの表示メソッド 引数の型は<>
+            //poller.OnSharedUpdated += モニター表示用のクラスの表示メソッド 引数の型は<ClueSharedInfo>
             poller.StartLoop();
 		}
 		Init();
