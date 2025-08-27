@@ -40,8 +40,8 @@ public class PlayerManager : MonoBehaviour
         searchAct = input.actions["Search"];
 
 
-        if (isCommander)
-		//if (MatchingManager.IsCommander)
+        //if (isCommander)
+		if (MatchingManager.IsCommander)
         {
             i_function = commander;
             i_camTrans = bodyCamera;
@@ -83,6 +83,6 @@ public class PlayerManager : MonoBehaviour
         
         //引数はサーバー関係
         //第一引数はVector3のPosition第二引数はFloatのRotation
-        //i_camTrans?.SetCameraTransform(iTransformGetter.Pos, iTransformGetter.RotY);
+        i_camTrans?.SetCameraTransform(iTransformGetter.Pos, iTransformGetter.RotY);
     }
 }

@@ -55,9 +55,11 @@ class GenerateCluesService
         //ここでcluesCount(現在は15が返る)をもとに、3パターンに手がかりの生成を切り替えたい
         //パターンはそれぞれ1~5,6~10,11~15
 
-        ////////////////
-        //truthIdが5のときは1~5固定にする
-        ////////////////
+        //truthIdが6のときは1~5固定にする
+        if ($truthId === 6) {
+            return [1, 5];
+        }
+        
         $chunkSize = $cluesCount / self::CLUE_PATTERN_COUNT;
         $ranges = [];
         for ($i = 0; $i < self::CLUE_PATTERN_COUNT; $i++) {

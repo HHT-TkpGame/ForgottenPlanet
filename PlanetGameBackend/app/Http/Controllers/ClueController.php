@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Service\ClueService;
+use App\Services\ClueService;
 use Illuminate\Http\Request;
 
 class ClueController extends Controller
@@ -28,7 +28,7 @@ class ClueController extends Controller
             ];
         })
         ->values();
-        return response()->json(['sharedClues' => $data]);
+        return response()->json(['shared_clues' => $data]);
     }
     public function postClueShared($roomID, $clueId){
         $this->clueService->setSharedByClueId($roomID, $clueId);

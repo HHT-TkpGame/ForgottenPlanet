@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace App\Services;
 
 use App\Models\ClueRepository;
 
@@ -33,7 +33,7 @@ class ClueService
         $maxClueId = $clues->max('clue_id');
         return [
             'truth_id' => $truthId,
-            'clue_range' => [$minClueId, $maxClueId],
+            'clues_range' => [$minClueId, $maxClueId],
         ];
     }
     public function getSharedByRoomId($roomId){

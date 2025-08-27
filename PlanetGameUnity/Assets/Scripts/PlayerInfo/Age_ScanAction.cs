@@ -86,8 +86,17 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 			//è‚ª‚©‚è‚Ì”Ô†‚ğè‚É“ü‚ê‚é
 			int clueNum = clue.ClueNum;
 			//‘—‚é‚È‚Ç‚·‚é
-
-			Debug.Log("è‚ª‚©‚è‚ÍŒ©‚Â‚©‚Á‚½”Ô†‚Í" + clueNum + "‚¾I");
+			StartCoroutine(CluesDataGetter.Instance.ClueClient.PostClue(
+				clueNum,
+				onSuccess: () =>
+				{
+					Debug.Log($"Success: è‚ª‚©‚è”Ô†{clueNum}");
+				},
+				onError: (err) =>
+				{
+                    Debug.Log($"Failure: è‚ª‚©‚è”Ô†{clueNum}");
+                })
+			);
 		}
 		else
 		{
