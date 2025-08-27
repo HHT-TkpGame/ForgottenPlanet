@@ -17,25 +17,32 @@ public class CodeController : MonoBehaviour
 
 	int[] cipherNumArray=new int[MAXCLUES];
 
+	int i=-1;
 	public (Sprite,string) SetClueCipher(int count)
 	{
 		bool numTaken=false;
 		int rand;
 		//ƒ‰ƒ“ƒ_ƒ€‚ð‚Æ‚è‚ ‚¦‚¸ˆê‰ñ‚ÍŠm”F‚·‚é‚½‚ß‚ÉdoWhile
-		do
-		{
-			rand = Random.Range(0, cipherArray.Length);
-			foreach(var cipherNum in cipherNumArray)
-			{
-				if (rand == cipherNum)
-				{
-					numTaken = true;
-				}
-			}
-		}
-		while (numTaken);
 
-		cipherNumArray[count] = rand;
-		return (cipherArray[rand],answerArray[rand]);
+
+		//cipherNumArray[count] = i;
+		i++;
+		Debug.Log(i);
+		return (cipherArray[i], answerArray[i]);
+
+		//do
+		//{
+		//	rand = Random.Range(0, cipherArray.Length);
+		//	foreach(var cipherNum in cipherNumArray)
+		//	{
+		//		if (rand == cipherNum)
+		//		{
+		//			numTaken = true;
+		//		}
+		//	}
+		//}
+		//while (numTaken);
+
+
 	}
 }

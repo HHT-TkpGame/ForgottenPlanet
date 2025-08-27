@@ -29,7 +29,7 @@ public class InputFieldManager : MonoBehaviour
 				displayText.text = "³‰ğ";
 				break;
             case 2:
-				displayText.text = "³‰ğ";
+				displayText.text = "•s³‰ğ";
 				break;
         }
     }

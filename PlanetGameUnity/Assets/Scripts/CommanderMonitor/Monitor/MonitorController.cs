@@ -97,7 +97,9 @@ public class MonitorController : MonoBehaviour
 		{
 			//暗号のImageと手がかりのImageを手に入れる
 			Sprite clueImage = truthArray[i];
+			//Debug.Log(clueImage);
 			var codeData = codeController.SetClueCipher(i);
+
 
 			infoPanels[i].GetComponent<Com_ClueInfo>().SetPanelImages(clueImage, codeData.Item1, codeData.Item2);
 			infoPanels[i].SetActive(false);
@@ -109,6 +111,7 @@ public class MonitorController : MonoBehaviour
 	//ボタンが押された時に呼ばれるメソッド
     public void DisplayInfoPanel(int num)
     {
+		Debug.Log("num"+num);
         if (panelObj)
         {
             panelObj.SetActive(false);
@@ -128,7 +131,7 @@ public class MonitorController : MonoBehaviour
 	public void SendCodeText(string message)
 	{
 		//panelObjがNullならDisplayTextをテキストはまだ入力されてないみたいなのにする
-		if (panelObj) 
+		if (!panelObj) 
 		{ 
 			inputManager.SetDisplayText(0);
 			return;

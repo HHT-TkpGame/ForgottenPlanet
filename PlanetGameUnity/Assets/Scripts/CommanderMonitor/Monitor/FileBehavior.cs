@@ -11,7 +11,7 @@ public class FileBehavior : MonoBehaviour
 	{
 		monitorController = controller;
 		button = GetComponent<Button>();
-		button.interactable = false;
+		//button.interactable = false;
 	}
 	public void SendMyNumber()
 	{

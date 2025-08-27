@@ -28,9 +28,11 @@ public class Com_ClueInfo : MonoBehaviour
 	//panelObj‚ÌImage‚ğ‚Ç‚Á‚¿‚É‚·‚é‚©‚ğƒ[ƒJƒ‹•Ï”‚ğg‚Á‚Ä”»’è‚·‚é
 	public bool VerifyAnswer(string answer)
 	{
+		Debug.Log("³‰ğ‚Í" + codeAns + "“ü—Í‚Í" + answer);
 		if (codeAns == answer)
 		{
-			///infoImage.sprite = clueImage;
+			Debug.Log("eeeee");
+			infoImage.sprite = clueImage;
 			return true;
 		}
 		return false;

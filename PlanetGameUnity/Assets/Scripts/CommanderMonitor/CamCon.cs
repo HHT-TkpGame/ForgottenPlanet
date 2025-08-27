@@ -56,7 +56,7 @@ public class CamCon : MonoBehaviour
         gameObject.transform.position = currentPos.position;
         cam.fieldOfView = VIEW_DEFAULT_RATE;
         cameraView = cam.fieldOfView;
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
 
 		for (int i = 0; i < MAX_MONITORS; i++)
 		{
