@@ -6,6 +6,7 @@ public class CluesManager : MonoBehaviour
 {
 	[SerializeField, Header("真相のScriptableObject")] PlanetTruthList planetTruthList;
 	[SerializeField] ClueClientPoller poller;
+	//[SerializeField] モニター表示用のクラス
 
 	public CurrentMatchClues MatchClues {  get; private set; }
     //現在の手がかりの数
@@ -18,36 +19,32 @@ public class CluesManager : MonoBehaviour
 
 	void Start()
 	{
-		//pollerを使うのはagentだけ
-		poller.Init(this);
-		poller.StartLoop();
+		if (MatchingManager.IsCommander)
+		{
+			//pollerを使うのはCommanderだけ
+			poller.Init(this);
+			poller.OnSharedUpdated += UpdateMatchClues;
+            //poller.OnSharedUpdated += モニター表示用のクラスの表示メソッド 引数の型は<>
+            poller.StartLoop();
+		}
 		Init();
 	}
+    private void OnDestroy()
+    {
+        if(MatchingManager.IsCommander)
+		{
+			poller.OnSharedUpdated -= UpdateMatchClues;
+			//poller.OnSharedUpdated -= 
+		}
+    }
 
-	void Init()
+    void Init()
 	{
 		planetTruthList.LoadCsvData();
 		//二週目以降リセットするためメソッド化
-		int truthId = CluesDataGetter.Instance.Data.truth_id;
-		int clueRangeStart = CluesDataGetter.Instance.Data.clues_range[0];
-		int clueRangeEnd = CluesDataGetter.Instance.Data.clues_range[1];
+		SetLocalClue();
 
-		Debug.Log($"id:{truthId}, start:{clueRangeStart}, end:{clueRangeEnd}");
-
-		//サーバーから受け取った値に対応するリストを探す
-		PlanetTruth target = planetTruthList.DataList.Find(pt =>
-			pt.Truth == truthId &&
-			pt.IdNo1 == clueRangeStart
-		);
-		if (target != null)
-		{
-			Debug.Log(target);
-			MatchClues = new CurrentMatchClues(target.Truth, target.IdNo1, target.IdNo5);
-		}
-
-		int[] tmpIds = { 1, 2, 3, 4, 5 };
-
-		GetArrayId(/*tmpIds*/MatchClues.clueIds);
+		GetArrayId(MatchClues.clueIds);
 
 		//リストの中に自分の子供の電子機器を入れる
 		devices = AddDevices();
@@ -55,6 +52,46 @@ public class CluesManager : MonoBehaviour
 		//今回手がかりとする電子機器を決める
 		DeliverClue();
 	}
+	/// <summary>
+	/// Pollerのイベント発火時に受けとったリストから対応するisSharedを更新する
+	/// </summary>
+	/// <param name="clues"></param>
+	void UpdateMatchClues(List<ClueSharedInfo> clues)
+	{
+        foreach (ClueSharedInfo updated in clues)
+        {
+            // MatchClues.clueIds の中から対象の clue_id のインデックスを探す
+            int index = System.Array.IndexOf(MatchClues.clueIds, updated.clue_id);
+
+            if (index >= 0)
+            {
+                MatchClues.isShared[index] = updated.is_shared;
+				Debug.Log($"MatchClues:{MatchClues.isShared[0]},{MatchClues.isShared[1]},{MatchClues.isShared[2]},{MatchClues.isShared[3]},{MatchClues.isShared[4]}");
+            }
+            else
+            {
+                Debug.LogWarning($"ClueId {updated.clue_id}:NotFound");
+            }
+        }
+    }
+	void SetLocalClue()
+	{
+        int truthId = CluesDataGetter.Instance.Data.truth_id;
+        int clueRangeStart = CluesDataGetter.Instance.Data.clues_range[0];
+        int clueRangeEnd = CluesDataGetter.Instance.Data.clues_range[1];
+
+        Debug.Log($"id:{truthId}, start:{clueRangeStart}, end:{clueRangeEnd}");
+
+        //サーバーから受け取った値に対応するリストを探す
+        PlanetTruth target = planetTruthList.DataList.Find(pt =>
+            pt.Truth == truthId &&
+            pt.IdNo1 == clueRangeStart
+        );
+        if (target != null)
+        {
+            MatchClues = new CurrentMatchClues(target.Truth, target.IdNo1, target.IdNo5);
+        }
+    }
 
 	void GetArrayId(int[] clueIds)
 	{
