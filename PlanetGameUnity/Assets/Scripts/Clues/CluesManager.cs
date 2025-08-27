@@ -1,61 +1,50 @@
-using JetBrains.Annotations;
-using NUnit.Framework;
 using System.Collections.Generic;
-using System.Transactions;
 using UnityEngine;
+
 
 public class CluesManager : MonoBehaviour
 {
-	class ClueData
-	{
-		public int rnd;
-		public ClueBehavior clue;
-	}
-
-	[System.Serializable]
-	class Truth
-	{
-		public int truth;
-		public string truthName;
-		public Truth(int truth, string truthName)
-		{
-			this.truth = truth;
-			this.truthName = truthName;
-		}
-	}
-
 	[SerializeField, Header("真相のScriptableObject")] PlanetTruthList planetTruthList;
+	[SerializeField] ClueClientPoller poller;
+	//[SerializeField] モニター表示用のクラス
 
-	//現在の手がかりの数
-	const int MAXCLUES = 5;
+	public CurrentMatchClues MatchClues {  get; private set; }
+    //現在の手がかりの数
+    const int MAXCLUES = 5;
 
 	int[] roomNumArray = new int[MAXCLUES];
 	int[] idArray;
 
 	List<GameObject> devices = new List<GameObject>();
 
-	PlanetTruth planetTruth;
-
-	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
 	{
+		if (MatchingManager.IsCommander)
+		{
+			//pollerを使うのはCommanderだけ
+			poller.Init(this);
+			poller.OnSharedUpdated += UpdateMatchClues;
+            //poller.OnSharedUpdated += モニター表示用のクラスの表示メソッド 引数の型は<ClueSharedInfo>
+            poller.StartLoop();
+		}
 		Init();
-
 	}
+    private void OnDestroy()
+    {
+        if(MatchingManager.IsCommander)
+		{
+			poller.OnSharedUpdated -= UpdateMatchClues;
+			//poller.OnSharedUpdated -= 
+		}
+    }
 
-	void Init()
+    void Init()
 	{
+		planetTruthList.LoadCsvData();
 		//二週目以降リセットするためメソッド化
-		int rnd = Random.Range(0, planetTruthList.DataList.Count);
-		planetTruth = planetTruthList.DataList[rnd];
+		SetLocalClue();
 
-		GetArrayId();
-
-		//相手に送る真相
-		Truth truth = new Truth(planetTruth.Truth, planetTruth.TruthName);
-
-		Debug.Log("真相の数値は"+truth.truth+"真相は"+truth.truthName);
-		//planetTruthで取ったIdNoXを選ばれたスクリプトに入れる
+		GetArrayId(MatchClues.clueIds);
 
 		//リストの中に自分の子供の電子機器を入れる
 		devices = AddDevices();
@@ -63,32 +52,79 @@ public class CluesManager : MonoBehaviour
 		//今回手がかりとする電子機器を決める
 		DeliverClue();
 	}
-
-	void GetArrayId()
+	/// <summary>
+	/// Pollerのイベント発火時に受けとったリストから対応するisSharedを更新する
+	/// </summary>
+	/// <param name="clues"></param>
+	void UpdateMatchClues(List<ClueSharedInfo> clues)
 	{
-		idArray = new int [MAXCLUES]{ planetTruth.IdNo1,planetTruth.IdNo2,
-			planetTruth.IdNo3,planetTruth.IdNo4,planetTruth.IdNo5};
+        foreach (ClueSharedInfo updated in clues)
+        {
+            // MatchClues.clueIds の中から対象の clue_id のインデックスを探す
+            int index = System.Array.IndexOf(MatchClues.clueIds, updated.clue_id);
+
+            if (index >= 0)
+            {
+                MatchClues.isShared[index] = updated.is_shared;
+				Debug.Log($"MatchClues:{MatchClues.isShared[0]},{MatchClues.isShared[1]},{MatchClues.isShared[2]},{MatchClues.isShared[3]},{MatchClues.isShared[4]}");
+            }
+            else
+            {
+                Debug.LogWarning($"ClueId {updated.clue_id}:NotFound");
+            }
+        }
+    }
+	void SetLocalClue()
+	{
+        int truthId = CluesDataGetter.Instance.Data.truth_id;
+        int clueRangeStart = CluesDataGetter.Instance.Data.clues_range[0];
+        int clueRangeEnd = CluesDataGetter.Instance.Data.clues_range[1];
+
+        Debug.Log($"id:{truthId}, start:{clueRangeStart}, end:{clueRangeEnd}");
+
+        //サーバーから受け取った値に対応するリストを探す
+        PlanetTruth target = planetTruthList.DataList.Find(pt =>
+            pt.Truth == truthId &&
+            pt.IdNo1 == clueRangeStart
+        );
+        if (target != null)
+        {
+            MatchClues = new CurrentMatchClues(target.Truth, target.IdNo1, target.IdNo5);
+        }
+    }
+
+	void GetArrayId(int[] clueIds)
+	{
+		idArray = new int [MAXCLUES];
+		for(int i = 0;i < clueIds.Length; i++)
+		{
+			idArray[i] = clueIds[i];
+		}
 	}
 
 
 	List<GameObject> AddDevices()
 	{
 		List<GameObject> children= new List <GameObject>();
-		for(int i = 0;i<transform.childCount;i++)
+		for(int i = 0; i < transform.childCount;i++)
 		{
 			children.Add(transform.GetChild(i).gameObject);
 		}
 		return children;
 	}
 
-	void DeliverClue()
+    /// <summary>
+    /// 判定のロジックの都合上、ClueBehaviorの[SerializeField]には、
+	/// 1以上 && 計5種類以上の値が必要（最低でも5つはClueBehaviorがアタッチされたGameObjectが必要）
+    /// </summary>
+    void DeliverClue()
 	{
 		//もし確定で手がかりにしたいものがあるなら
 		//forループの前に入れる
 
 		for (int i = 0; i < MAXCLUES; i++)
 		{
-			var clueData = ChooseDevice();
+			ClueData clueData = ChooseDevice();
 			//二つ目以降の手がかりの電子機器が同じ部屋から選ばれないようにする配列
 			roomNumArray[i] = clueData.clue.RoomNum;
 			//選ばれた電子機器に選ばれたことを伝えるメソッド
@@ -117,7 +153,7 @@ public class CluesManager : MonoBehaviour
 			clueData.rnd = Random.Range(0, devices.Count);
 			clueData.clue = devices[clueData.rnd].GetComponent<ClueBehavior>();
 
-			//配列は最初から全て0が入っているためRoomNumは1から始める
+			//配列は最初から全て0が入っているため[SerializeFiled]のRoomNumは1から始める
 			foreach (int roomNum in roomNumArray)
 			{
 				if (roomNum == clueData.clue.RoomNum)

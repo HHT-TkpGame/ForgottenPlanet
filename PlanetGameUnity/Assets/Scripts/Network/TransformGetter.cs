@@ -17,13 +17,13 @@ public class TransformGetter : MonoBehaviour, ITransformGetterStrategy
         while (NetworkStateManager.CurrentState == NetworkStateManager.NetworkState.Connected)
         {
             yield return StartCoroutine(GetTransform(ApiConfig.BASE_URI +"/api/room/"+MatchingManager.RoomId + "/position"));
-            Debug.Log("GetPos");
+            //Debug.Log("GetPos");
             yield return new WaitForSeconds(REQUEST_INTERVAL);
         }
     }
     IEnumerator GetTransform(string uri)
     {
-        Debug.Log(uri);
+        //Debug.Log(uri);
         UnityWebRequest request = new UnityWebRequest(uri, "GET");
         request.downloadHandler = new DownloadHandlerBuffer();
 
@@ -32,7 +32,7 @@ public class TransformGetter : MonoBehaviour, ITransformGetterStrategy
         {
             string res = request.downloadHandler.text;
             PlayerTransform json = JsonUtility.FromJson<PlayerTransform>(res);
-            Debug.Log(json.x + json.y + json.z);
+            //Debug.Log(json.x + json.y + json.z);
             Pos = new Vector3(json.x, json.y, json.z);
             RotY = json.rot_y;
         }

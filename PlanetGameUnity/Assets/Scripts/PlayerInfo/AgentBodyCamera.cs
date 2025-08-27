@@ -7,13 +7,13 @@ public class AgentBodyCamera : MonoBehaviour,I_BodyCamTrans
     public void Init()
     {
         //Ç±Ç±è´óàÇÕAgentÇÃç¿ïWÇ…Ç∑ÇÈ
-        gameObject.transform.position=startPos.position;
+        transform.position=startPos.position;
+        transform.rotation=startPos.rotation;
+        Debug.Log(transform.position);
     }
     public void SetCameraTransform(Vector3 cameraPos, float cameraRot_Y)
     {
         transform.position = cameraPos;
-        Debug.Log(transform.position);
-        //transform.position = cameraPos;
         transform.eulerAngles = new Vector3(0, cameraRot_Y, 0);
     }
 }
