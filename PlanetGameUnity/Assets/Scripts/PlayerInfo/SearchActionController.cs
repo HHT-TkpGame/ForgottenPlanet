@@ -3,7 +3,6 @@ using UnityEngine;
 public class SearchActionController// : MonoBehaviour
 {
     I_SearchAction iSearch;
-    GameObject a;
     public void Init(I_SearchAction iSearch)
     {
         this.iSearch = iSearch;

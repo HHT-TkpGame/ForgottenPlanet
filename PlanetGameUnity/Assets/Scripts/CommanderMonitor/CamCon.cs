@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class CamCon : MonoBehaviour
 {
+
     public enum zoomState
     {
        Default,
@@ -14,58 +15,96 @@ public class CamCon : MonoBehaviour
     }
 
     zoomState state = zoomState.Default;
-	
-	//移動のスクリプトが別なのでそこでZoomedInの時は移動しないように
-    public zoomState State=>state;
+	public zoomState State => state;
 
-    [SerializeField] GameObject camPivot;
+	//移動のスクリプトが別なのでそこでZoomedInの時は移動しないように
+
+
+	[SerializeField] GameObject camPivot;
     [SerializeField] Camera cam;
     [SerializeField] float sensitivity; // マウス感度
     [SerializeField] float pitchMin;  // 上下回転の最小角度
     [SerializeField] float pitchMax;   // 上下回転の最大角度
     [SerializeField] Transform currentPos;
     float pitch; // 現在の上下角度
-    float rayDistance = 5f;
-    float cameraView;
+    
+	float rayDistance = 5f;
 
     const int MAX_MONITORS = 3;
+	//monitor上のImageの配列これ5つはUICon行き?
     [SerializeField] GameObject[] monitor_State_Array=new GameObject[MAX_MONITORS];
-	[SerializeField] Transform[] monitor_Trans_Array = new Transform[MAX_MONITORS];
-	[SerializeField] GraphicRaycaster[] monitor_Graphic_Array=new GraphicRaycaster[MAX_MONITORS];
+	[SerializeField] GraphicRaycaster[] monitor_Graphic_Array = new GraphicRaycaster[MAX_MONITORS];
+	[SerializeField] GameObject defaultCanvas;
+	[SerializeField] Button leftButton;
+	[SerializeField] Button rightButton;
 
-    [SerializeField] GameObject defaultCanvas;
-    [SerializeField] Button leftButton;
-    [SerializeField] Button rightButton;
+
+	//これはCommanderいき
+	[SerializeField] Transform[] monitor_Trans_Array = new Transform[MAX_MONITORS];
+
+
+
 
     PlayerInput input;
     InputAction searchAct;
     InputAction zoomAct;
+
+	const int LEFT = 0;
+	const int CENTER = 1;
+	const int RIGHT = 2;
+
+	const int VIEW_DEFAULT_RATE = 60;
+
+
+	/// <summary>
+	/// ステートもコマンダーに持たせてこれに変えてっていう
+	/// 
+	/// ここのUpdateの中のやつをコルーチンに
+	/// 
+	/// コマンダーに自分を入れてSetUpをコマンダーからする
+	/// 
+	/// ZoomPerformedはManagerからしか呼べないからiSearchAction?.で呼ぶManagerから
+	/// iSearchActionだとiSearchActionはどっちでも中身が入ってるから別のInterFaceとか
+	/// 
+	/// monitorGameUIControllerを作る
+	/// モニターの上のUiを変えたりCanVasの状態を変えたり
+	/// 自分を送るかコマンダーを送るかするしSetUpもする
+	/// </summary>
 
 	private void Start()
 	{
         input = GetComponent<PlayerInput>();
 
         searchAct = input.actions["Search"];
-        zoomAct = input.actions["Com_Zoom"];
+		searchAct.started += OnSearchStarted;
+		searchAct.canceled += OnSearchCanceled;
 
-        searchAct.started += OnSearchStarted;
-        searchAct.canceled += OnSearchCanceled;
+		//Manager
+		zoomAct = input.actions["Com_Zoom"];
+		zoomAct.performed += OnZoomPerformed;
 
-        zoomAct.performed += OnZoomPerformed;
+
+
+
 
         gameObject.transform.position = currentPos.position;
+
+		//カメラの初期設定はコマンダーで
         cam.fieldOfView = VIEW_DEFAULT_RATE;
-        cameraView = cam.fieldOfView;
-        //Debug.Log(transform.position);
+
 
 		for (int i = 0; i < MAX_MONITORS; i++)
 		{
 			monitor_State_Array[i].SetActive(false);
 			SetGraphicArray(i, false);
 		}
-        defaultCanvas.SetActive(false);
+
+		//これUIController行き
+		defaultCanvas.SetActive(false);
 	}
 
+
+	//スターテッドの中は基本このまま
 	void OnSearchStarted(InputAction.CallbackContext context)
     {
 		if (state == zoomState.ZoomedIn) { return; }
@@ -76,12 +115,14 @@ public class CamCon : MonoBehaviour
 			CommanderMonitor monitor = hit.collider.GetComponent<CommanderMonitor>();
 			if (monitor != null)
 			{
+				//これUIController行き
+				//モニターナムがヌルじゃないならそのナム番目をSetActiveFalseして
 				monitorNum = monitor.Num;
 
-				//numCode = (KeyCode)System.Enum.Parse(typeof(KeyCode), ("Alpha") + ((monitorNum + 1).ToString()));
+				//これUIController行き
+				//モニターナム番目をTrueにする
 
-				//Vector3 monitorPos = hit.collider.gameObject.transform.position;
-
+				//したらこれいらん
 				foreach (var UI in monitor_State_Array)
 				{
 					///monitorのNumを持ってきてその番号のUIを表示
@@ -140,11 +181,15 @@ public class CamCon : MonoBehaviour
 	private void Zoom()
 	{
 		currentRotation = cam.transform.localEulerAngles;
+		
+		//ここもMonitorNumを引数として
 		cam.transform.position = monitor_Trans_Array[monitorNum].transform.position;
 		cam.transform.eulerAngles = monitor_Trans_Array[monitorNum].eulerAngles;
 		//ステートの変更
 		state = zoomState.ZoomedIn;
 
+		//これUIController行き
+		//ChangeButtonState();はMonitorNumを引数として
 		defaultCanvas.SetActive(true);
 		ChangeButtonState();
 
@@ -165,6 +210,7 @@ public class CamCon : MonoBehaviour
         Look();
 
 		if(state != zoomState.Select) { return; }
+		
         if (canZoom_Time>0)
         {
             canZoom_Time-=Time.deltaTime;
@@ -180,9 +226,7 @@ public class CamCon : MonoBehaviour
         }
     }
 
-	const int LEFT = 0;
-	const int CENTER = 1;
-	const int RIGHT = 2;
+
     void ChangeButtonState()
     {
 		switch (monitorNum)
@@ -216,10 +260,7 @@ public class CamCon : MonoBehaviour
 		monitor_Graphic_Array[num].enabled = isActive;
 	}
 
-	const int VIEW_DEFAULT_RATE = 60;
-	const int VIEW_MAX_RATE = 80;
-    const int VIEW_MIN_RATE = 30;
-    const int RATE = 10;
+
 
     void Look()
     {

@@ -3,11 +3,29 @@ using UnityEngine.InputSystem;
 
 public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 {
+	public enum zoomState
+	{
+		Default,
+		Select,
+		ZoomedIn
+	}
+
+	zoomState state = zoomState.Default;
+	public zoomState State => state;
+
+	const int MAX_MONITORS = 3;
 
 	[SerializeField, Header("カメラ")] GameObject cameraObj;
-	[SerializeField, Header("初期位置")] Transform startPos; 
+	[SerializeField, Header("初期位置")] Transform startPos;
+
+	//カメラを移動させる先の座標
+	[SerializeField] Transform[] monitor_Trans_Array = new Transform[MAX_MONITORS];
 
 	CharacterController characterController;
+
+	Camera cam;
+
+	Com_ZoomAction zoomAct;
 
 	//I_PlayerDefaultFunctions i_function;
 
@@ -21,10 +39,15 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 
 	const int ROTSPEED = 90;
 
+	const int VIEW_DEFAULT_RATE = 60;
+
 	float verticalVelocity = 0;
 	float cameraPitch = 0;
 
 	bool finSetUp;
+
+	const float MAX_CANZOOM_TIME = 5;
+	float canZoom_Time;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	public void Init()
@@ -37,9 +60,13 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		cameraObj.transform.SetParent(transform);
 		cameraObj.transform.eulerAngles = Vector3.zero;
 
-
+		cam = cameraObj.GetComponent<Camera>();
+		cam.fieldOfView = VIEW_DEFAULT_RATE;
 		//初期位置に配置
 		//transform.position= Vector3.zero;
+
+		zoomAct = GetComponent<Com_ZoomAction>();
+		zoomAct.SetUp(this);
 
 		finSetUp = true;
 	}
@@ -49,6 +76,10 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		transform.position = startPos.position;
 	}
 
+	public void SetZoomState(zoomState state)
+	{
+		this.state=state;
+	}
 	
 	public void Move(Vector2 moveAxis)
 	{
