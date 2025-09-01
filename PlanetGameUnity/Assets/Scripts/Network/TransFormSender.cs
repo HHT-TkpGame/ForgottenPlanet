@@ -28,7 +28,7 @@ public class TransformSender : MonoBehaviour, ITransformSenderStrategy
     }
     IEnumerator SendTransform(string uri, Vector3 pos, float rotY)
     {
-        Debug.Log(uri);
+        //Debug.Log(uri);
         string json = JsonUtility.ToJson(new PlayerTransform(PlayerIdManager.Id, pos.x, pos.y, pos.z, rotY));
         byte[] rawData = Encoding.UTF8.GetBytes(json);
         UnityWebRequest request = new UnityWebRequest(uri, "POST");
@@ -39,7 +39,7 @@ public class TransformSender : MonoBehaviour, ITransformSenderStrategy
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log(request.downloadHandler.text);
+            //Debug.Log(request.downloadHandler.text);
         }
         else
         {

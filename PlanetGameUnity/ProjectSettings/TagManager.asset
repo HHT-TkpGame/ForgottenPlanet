@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Camera
+  - Clue
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PostProcess
+  - Minimap
   - Water
   - UI
   - 
