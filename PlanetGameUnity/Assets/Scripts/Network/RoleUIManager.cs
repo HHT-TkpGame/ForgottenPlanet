@@ -55,6 +55,7 @@ public class RoleUIManager : MonoBehaviour
         ChangeButtonVisible(startButton, false);
         ChangeState(selfReadyState, false);
         ChangeState(otherReadyState, false);
+        MoveCursor(selfCursorRect);
     }
 
     void Update()
