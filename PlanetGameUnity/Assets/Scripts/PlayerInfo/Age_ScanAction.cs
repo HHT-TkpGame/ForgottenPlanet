@@ -9,7 +9,8 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	////onScanStartedのとこでSetActiveするものとScanでSetActiveするものは
 	////扇形が真上で待機する体制になってしまう
 	[SerializeField, Header("スキャン用のモデル")] GameObject scanModel;
-
+	[SerializeField, Header("モニター画面時のゲームUI")] GameObject gameUIPanel;
+	[SerializeField, Header("エージェント帰還用UI")] GameObject agentReturnUIPanel;
 
 	ScanColliderBehavior scanColliderBehavior;
 	BoxCollider scanBoxCollider;
@@ -35,6 +36,8 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 		ResetHold();
 
 		scanModel.SetActive(false);
+		gameUIPanel.SetActive(false);
+		agentReturnUIPanel.SetActive(false);
 	}
 
 	public void OnSearchStarted()
@@ -52,10 +55,23 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 		ResetHold();
 	}
 
+	public void OnZoomPerformed(string keyName)
+	{
+
+	}
+
+	/// <summary>
+	/// サーチアクションが始まったらColliderが出現
+	/// ColliderのOnTriggerStayからScanメソッドを呼び
+	/// ExecuteActionでそのObjectがClueを持っているなら値を取得
+	/// </summary>
+	/// <param name="scanObj"></param>
 	public void Scan(GameObject scanObj)
 	{
 		holdTime += Time.deltaTime;
 		float scanRot = holdTime * SCAN_ROT_RATIO;
+		//一定時間Scanメソッドが呼び出されたら
+		//actionExecutedはこの後すぐもう一回下のメソッドを呼ぶの防止
 		if (holdTime >= MAX_HOLDTIME && !actionExecuted)
 		{
 			ExecuteAction(scanObj);
