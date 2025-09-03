@@ -30,6 +30,7 @@ public class PlayerManager : MonoBehaviour
 	InputAction moveAct;
 	InputAction lookAct;
     InputAction searchAct;
+    InputAction zoomAct;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	void Start()
@@ -46,7 +47,12 @@ public class PlayerManager : MonoBehaviour
             i_function = commander;
             i_camTrans = bodyCamera;
             iTransformGetter = transformGetter;
+            
             iSearchAction = zoomAction;
+            zoomAct = input.actions["Com_Zoom"];
+            zoomAct.performed += OnZoomPerformed;
+
+
         }
         else
         {
@@ -75,6 +81,13 @@ public class PlayerManager : MonoBehaviour
 		searchController.OnSearchCanceled();
         //iSearchAction.OnSearchCanceled();
 	}
+    void OnZoomPerformed(InputAction.CallbackContext context)
+    {
+        //Debug.Log("ddddd");
+		//defaultCanvas.SetActive(true);
+		searchController.OnZoomPerformed(context.control);
+    }
+
 	// Update is called once per frame
 	void Update()
     {

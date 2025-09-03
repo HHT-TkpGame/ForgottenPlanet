@@ -42,9 +42,6 @@ public class CamCon : MonoBehaviour
 	//これはCommanderいき
 	[SerializeField] Transform[] monitor_Trans_Array = new Transform[MAX_MONITORS];
 
-
-
-
     PlayerInput input;
     InputAction searchAct;
     InputAction zoomAct;
@@ -57,18 +54,10 @@ public class CamCon : MonoBehaviour
 
 
 	/// <summary>
-	/// ステートもコマンダーに持たせてこれに変えてっていう
+	/// 実際にリストを変更してみてボタンを押せるかどうか
 	/// 
-	/// ここのUpdateの中のやつをコルーチンに
+	/// 手がかりの内容考える
 	/// 
-	/// コマンダーに自分を入れてSetUpをコマンダーからする
-	/// 
-	/// ZoomPerformedはManagerからしか呼べないからiSearchAction?.で呼ぶManagerから
-	/// iSearchActionだとiSearchActionはどっちでも中身が入ってるから別のInterFaceとか
-	/// 
-	/// monitorGameUIControllerを作る
-	/// モニターの上のUiを変えたりCanVasの状態を変えたり
-	/// 自分を送るかコマンダーを送るかするしSetUpもする
 	/// </summary>
 
 	private void Start()
@@ -303,6 +292,7 @@ public class CamCon : MonoBehaviour
 		state = zoomState.Default;
 		cam.gameObject.transform.localPosition = Vector3.zero;
         cam.transform.localEulerAngles = currentRotation;
+		defaultCanvas.SetActive(false);
 	}
 
 	//void Zoom()

@@ -24,6 +24,7 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 	CharacterController characterController;
 
 	Camera cam;
+	public Camera Cam => cam;
 
 	Com_ZoomAction zoomAct;
 
@@ -33,6 +34,7 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 	Vector2 lookAxis;
 
 	Vector3 rot;
+	Vector3 prevAngle;
 
 	const int MOVESPEED = 5;
 	const int GRAVITY = 200;
@@ -46,8 +48,6 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 
 	bool finSetUp;
 
-	const float MAX_CANZOOM_TIME = 5;
-	float canZoom_Time;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	public void Init()
@@ -81,9 +81,29 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		this.state=state;
 	}
 	
+	public void ZoomStart(int monitorNum)
+	{
+		prevAngle=cameraObj.transform.localEulerAngles;
+		SetCameraTrans(monitorNum);
+		SetZoomState(zoomState.ZoomedIn);
+	}
+
+	public void ZoomCancel()
+	{
+		cam.gameObject.transform.localPosition = Vector3.zero;
+		cam.transform.localEulerAngles = prevAngle;
+	}
+
+	public void SetCameraTrans(int num)
+	{
+		cameraObj.transform.position = monitor_Trans_Array[num].transform.position;
+		cameraObj.transform.eulerAngles = monitor_Trans_Array[num].eulerAngles;
+	}
+
 	public void Move(Vector2 moveAxis)
 	{
 		if (!finSetUp) { return; }
+		if (state == zoomState.ZoomedIn) { return; }
 
 		this.moveAxis = moveAxis;
 
@@ -100,8 +120,7 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 	public void Look(Vector2 lookAxis)
 	{
 		if (!finSetUp) { return; }
-		//Debug.Log(cameraObj.transform.eulerAngles);
-		//if (!MatchingManager.IsCommander) { return; }
+		if (state == zoomState.ZoomedIn) { return; }
 
 		this.lookAxis = lookAxis;
 
@@ -119,10 +138,4 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		cameraPitch = Mathf.Clamp(cameraPitch, -80f, 80f);
 		cameraObj.transform.localEulerAngles = new Vector3(-cameraPitch, 0, 0);
 	}
-
-	// Update is called once per frame
-	void Update()
-    {
-        
-    }
 }

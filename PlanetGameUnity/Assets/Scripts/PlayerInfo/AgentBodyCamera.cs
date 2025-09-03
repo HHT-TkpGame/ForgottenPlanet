@@ -9,7 +9,7 @@ public class AgentBodyCamera : MonoBehaviour,I_BodyCamTrans
         //‚±‚±«—ˆ‚ÍAgent‚ÌÀ•W‚É‚·‚é
         transform.position=startPos.position;
         transform.rotation=startPos.rotation;
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
     }
     public void SetCameraTransform(Vector3 cameraPos, float cameraRot_Y)
     {

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,37 +14,30 @@ public class CodeController : MonoBehaviour
 	///同じものは出ないように
 	/// </summary>
 
-	[SerializeField, Header("暗号を入れる配列")] Sprite[] cipherArray= new Sprite[MAXCODES];
 	[SerializeField, Header("答えを入れる配列")] string[] answerArray = new string[MAXCODES];
+	[SerializeField, Header("暗号を入れる配列")] Sprite[] cipherArray= new Sprite[MAXCODES];
+
 
 	int[] cipherNumArray=new int[MAXCLUES];
 
-	int i=-1;
-	public (Sprite,string) SetClueCipher(int count)
+	List<int> availableIndices;
+
+	public void SetCodeList()
 	{
-		bool numTaken=false;
-		int rand;
-		//ランダムをとりあえず一回は確認するためにdoWhile
+		availableIndices = Enumerable.Range(0, cipherArray.Length).ToList();
+		
+	}
+	public (Sprite,string) SetClueCipher()
+	{
+		if (availableIndices.Count == 0)
+		{
+			return (null,null);
+		}
 
+		int rand=Random.Range(0,availableIndices.Count);
+		int chosen = availableIndices[rand];
+		availableIndices.RemoveAt(rand);
 
-		//cipherNumArray[count] = i;
-		i++;
-		Debug.Log(i);
-		return (cipherArray[i], answerArray[i]);
-
-		//do
-		//{
-		//	rand = Random.Range(0, cipherArray.Length);
-		//	foreach(var cipherNum in cipherNumArray)
-		//	{
-		//		if (rand == cipherNum)
-		//		{
-		//			numTaken = true;
-		//		}
-		//	}
-		//}
-		//while (numTaken);
-
-
+		return (cipherArray[chosen], answerArray[chosen]);
 	}
 }

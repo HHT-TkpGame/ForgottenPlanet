@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class SearchActionController// : MonoBehaviour
 {
@@ -20,4 +22,13 @@ public class SearchActionController// : MonoBehaviour
 
 		iSearch.OnSearchCanceled();
 	}
+    public void OnZoomPerformed(InputControl control)
+    {
+        if(control is KeyControl keyControl)
+        {
+            string keyName = keyControl.name;
+			iSearch.OnZoomPerformed(keyName);
+		}
+
+    }
 }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +28,8 @@ public class MonitorController : MonoBehaviour
 	//表示されているPanelを入れる配列
 	GameObject panelObj;
 
+	CluesManager cluesManager;
+
 	
 
 	/// <summary>
@@ -46,15 +50,95 @@ public class MonitorController : MonoBehaviour
 	//その時の真相に合わせて使う配列
 	Sprite[] truthArray;
 
-	//managerのInitとかにしてもいいかも
+	List<ClueSharedInfo> clueGettingStates=new List<ClueSharedInfo>();
 
-	void Start()
-    {
+	public void Init(CluesManager cluesManager)
+	{
+		this.cluesManager = cluesManager;
+
 		truth = 0;
+
+		codeController.SetCodeList();
 		FileSetup();
 		TruthSetup();
 		PanelSetup();
-    }
+
+
+		//for (int i = 0; i < 5; i++)
+		//{
+		//	ClueSharedInfo clueInfo = new ClueSharedInfo();
+		//	//clueIdは1から
+		//	clueInfo.clue_id = i+1;
+		//	clueInfo.is_shared = false;
+		//	clueGettingStates.Add(clueInfo);
+		//}
+
+	}
+
+
+void Start()
+	{
+		/////---------------------------
+		/////ここサーバーの値にする
+		/////rangeにナンバーの最初の値を入れる1,6,11とか
+		/////---------------------------
+		
+		//truth = 0;
+
+		//codeController.SetCodeList();
+		//FileSetup();
+		//TruthSetup();
+		//PanelSetup();
+
+
+		//for (int i = 0; i < 5; i++)
+		//{
+		//	ClueSharedInfo clueInfo = new ClueSharedInfo();
+		//	clueInfo.clue_id = i;
+		//	clueInfo.is_shared = false;
+		//	clueGettingStates.Add(clueInfo);
+		//}
+
+	}
+
+	public void UpdateUI(List<ClueSharedInfo> clues)
+	{
+		foreach (ClueSharedInfo updated in clues)
+		{
+			
+			// MatchClues.clueIds の中から対象の clue_id のインデックスを探す
+			//インデックスに帰ってくるものはリストの何番目にあるか
+			int index = System.Array.IndexOf(cluesManager.MatchClues.clueIds, updated.clue_id);
+
+			Debug.Log("MatchClues.clueIds"+cluesManager.MatchClues.clueIds[0]);
+			Debug.Log("index"+index+"clueId"+updated.clue_id);
+			
+			//見つからなかったときindexが-1になるから入れたほうがいい気がする
+			//if (index < 0) { return; }
+
+			//一致したIdのローカルのリストのis_sharedがTrueなら
+			if (clueGettingStates[index].is_shared)
+			{
+				//UI更新
+				//配列の要素番号はゼロからだけどClueIdは1からだからその理由から-1
+				files[index].ActiveInteractable();
+			}
+			else
+			{
+				Debug.LogWarning($"ClueId {updated.clue_id}:NotFound");
+			}
+		}
+	}
+
+	private void Update()
+	{
+		//if (Input.GetKeyDown(KeyCode.Q))
+		//{
+		//	clueGettingStates[3].is_shared=true;
+		//	UpdateUI(clueGettingStates);
+		//	//メソッド
+		//}
+	}
 
 	void FileSetup()
 	{
@@ -96,9 +180,10 @@ public class MonitorController : MonoBehaviour
 		for (int i = 0; i < infoPanels.Length; i++)
 		{
 			//暗号のImageと手がかりのImageを手に入れる
+			///i+rangeに変える
 			Sprite clueImage = truthArray[i];
 			//Debug.Log(clueImage);
-			var codeData = codeController.SetClueCipher(i);
+			var codeData = codeController.SetClueCipher();
 
 
 			infoPanels[i].GetComponent<Com_ClueInfo>().SetPanelImages(clueImage, codeData.Item1, codeData.Item2);
@@ -106,6 +191,7 @@ public class MonitorController : MonoBehaviour
 		}
 
 		inputManager.GetMonitorController(this);
+
 	}
 
 	//ボタンが押された時に呼ばれるメソッド

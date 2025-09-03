@@ -6,6 +6,7 @@ public class CluesManager : MonoBehaviour
 {
 	[SerializeField, Header("真相のScriptableObject")] PlanetTruthList planetTruthList;
 	[SerializeField] ClueClientPoller poller;
+	[SerializeField] MonitorController monitorController;
 	//[SerializeField] モニター表示用のクラス
 
 	public CurrentMatchClues MatchClues {  get; private set; }
@@ -17,15 +18,19 @@ public class CluesManager : MonoBehaviour
 
 	List<GameObject> devices = new List<GameObject>();
 
+	//bool isCommander = true;
 	void Start()
 	{
+		//if(isCommander)
 		if (MatchingManager.IsCommander)
 		{
+			monitorController.Init(this);
 			//pollerを使うのはCommanderだけ
 			poller.Init(this);
 			poller.OnSharedUpdated += UpdateMatchClues;
-            //poller.OnSharedUpdated += モニター表示用のクラスの表示メソッド 引数の型は<ClueSharedInfo>
-            poller.StartLoop();
+			poller.OnSharedUpdated += monitorController.UpdateUI;
+			poller.StartLoop();
+
 		}
 		Init();
 	}
@@ -34,7 +39,7 @@ public class CluesManager : MonoBehaviour
         if(MatchingManager.IsCommander)
 		{
 			poller.OnSharedUpdated -= UpdateMatchClues;
-			//poller.OnSharedUpdated -= 
+			poller.OnSharedUpdated -= monitorController.UpdateUI; 
 		}
     }
 
