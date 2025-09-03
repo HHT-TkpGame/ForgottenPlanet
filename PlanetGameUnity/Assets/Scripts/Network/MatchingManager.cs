@@ -71,7 +71,6 @@ public class MatchingManager : MonoBehaviour
             if(res.player_count == MAX_PLAYER_COUNT)
             {
                 gameStateManager.SetProgress(GameProgress.Select);
-                SceneChangeManager.SceneChange("RoleSetScene");
             }
         }
         else

@@ -21,6 +21,11 @@ public class RoleSelectManager : MonoBehaviour
         poller.OnSelectionUpdated += roleUIManager.UpdateUI;
         requestPoller.OnStateUpdated += TransitionToInGame;
     }
+    void OnDestroy()
+    {
+        poller.OnSelectionUpdated -= roleUIManager.UpdateUI;
+        requestPoller.OnStateUpdated -= TransitionToInGame;
+    }
     private void Start()
     {
         gameState = GameStateManager.Instance;
@@ -32,6 +37,6 @@ public class RoleSelectManager : MonoBehaviour
     }
     void TransitionToInGame()
     {
-        SceneChangeManager.SceneChange("InGameScene");
+        GameStateManager.Instance.SetProgress(GameProgress.InGame);
     }
 }

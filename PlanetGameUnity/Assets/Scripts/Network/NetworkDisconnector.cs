@@ -18,7 +18,7 @@ public class NetworkDisconnector : MonoBehaviour
         if(request.result == UnityWebRequest.Result.Success)
         {
             Debug.Log(request.downloadHandler.text);
-            SceneChangeManager.SceneChange("OpeningScene");
+            GameStateManager.Instance.SetProgress(GameProgress.Matching);
         }
         else
         {
