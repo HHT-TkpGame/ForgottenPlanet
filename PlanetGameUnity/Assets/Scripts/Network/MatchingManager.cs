@@ -3,19 +3,18 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
 
 public class MatchingManager : MonoBehaviour
 {
     GameStateManager gameStateManager;
-    TMP_InputField inputField;
+    [SerializeField] StarTrailController starTrailController;
+    [SerializeField] TMP_InputField inputField;
     const string MATCH_API_ENDPOINT = "/api/match";
     
     
     void Start()
     {
         gameStateManager = GameStateManager.Instance;
-        inputField = GameObject.Find("Keyword").GetComponent<TMP_InputField>();
     }
     void Update()
     {
@@ -112,7 +111,8 @@ public class MatchingManager : MonoBehaviour
             RoomId = roomData.room_id;
             IsHost = roomData.is_host;
             Debug.Log("RoomId : " + roomData.room_id + "isHost" + roomData.is_host);
-            
+
+            starTrailController.TransitionToHyperDrive();
             //部屋のプレイヤーの数を一定間隔で見に行く
             StartCoroutine(GetPlayerCountInRoomLoop());
         }

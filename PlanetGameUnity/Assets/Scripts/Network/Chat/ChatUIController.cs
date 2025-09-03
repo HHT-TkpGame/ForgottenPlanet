@@ -8,6 +8,41 @@ public class ChatUIController : MonoBehaviour
     [SerializeField] TMP_InputField inputField;
     [SerializeField] TMP_Text txtMsg;
     [SerializeField] Button sendButton;
+    RectTransform scrollViewRect;
+    float scrollViewDefaultHeight;
+    Vector2 scrollViewDefaultPos;
+    RectTransform chatPanelRect;
+    float panelDefaultHeight;
+    bool isOpen = true;
+    void Awake()
+    {
+        chatPanelRect = GetComponent<RectTransform>();
+        scrollViewRect = transform.Find("Scroll View").GetComponent<RectTransform>();
+        panelDefaultHeight = chatPanelRect.sizeDelta.y;
+        scrollViewDefaultHeight = scrollViewRect.sizeDelta.y;
+        scrollViewDefaultPos = scrollViewRect.anchoredPosition;
+    }
+    void Start()
+    {
+        ToggleChatPanel();
+    }
+    public void ToggleChatPanel()
+    {
+        if (isOpen)
+        {
+            scrollViewRect.sizeDelta = new Vector2(scrollViewRect.sizeDelta.x, 130f);
+            scrollViewRect.anchoredPosition = new Vector2(scrollViewRect.anchoredPosition.x, -45f);
+            chatPanelRect.sizeDelta = new Vector2(chatPanelRect.sizeDelta.x, 180f);
+            isOpen = false;
+        }
+        else
+        {
+            scrollViewRect.sizeDelta = new Vector2(scrollViewRect.sizeDelta.x, scrollViewDefaultHeight);
+            scrollViewRect.anchoredPosition = scrollViewDefaultPos;
+            chatPanelRect.sizeDelta = new Vector2(chatPanelRect.sizeDelta.x, panelDefaultHeight);
+            isOpen = true;
+        }
+    }
 
     public void RestoreChat(string history, UnityAction onSend)
     {
@@ -18,7 +53,6 @@ public class ChatUIController : MonoBehaviour
 
     public string GetInputText()
     {
-        Debug.Log("textClear");
         string text = inputField.text;
         inputField.text = "";
         return text;
