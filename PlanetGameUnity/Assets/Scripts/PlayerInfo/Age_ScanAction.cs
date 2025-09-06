@@ -23,9 +23,10 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	public void SetUp(Transform camera)
 	{
 		scanColObj.transform.SetParent(camera);
-		scanColObj.transform.localPosition = new Vector3(0, 0.5f, 0);
+		scanColObj.transform.localPosition = Vector3.zero;
 		scanColObj.transform.eulerAngles = Vector3.zero;
 		scanModel.transform.SetParent(camera);
+		scanModel.transform.localPosition = new Vector3(0, 0, 0.2f);
 
 		scanColliderBehavior = scanColObj.GetComponent<ScanColliderBehavior>();
 		scanColliderBehavior.GetScanAction(this);

@@ -21,8 +21,9 @@ public class CluesManager : MonoBehaviour
 	bool isCommander = true;
 	void Start()
 	{
-		if(isCommander)
-		//if (MatchingManager.IsCommander)
+		Init();
+		//if(isCommander)
+		if (MatchingManager.IsCommander)
 		{
 			monitorController.Init(this);
 			//poller‚ðŽg‚¤‚Ì‚ÍCommander‚¾‚¯
@@ -32,7 +33,7 @@ public class CluesManager : MonoBehaviour
 			poller.StartLoop();
 
 		}
-		Init();
+
 	}
     private void OnDestroy()
     {

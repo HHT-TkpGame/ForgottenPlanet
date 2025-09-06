@@ -23,7 +23,7 @@ public class Agent : MonoBehaviour,I_PlayerDefaultFunctions, ITransformProvider
 	const int MOVESPEED = 5;
 	const int GRAVITY = 200;
 
-	const int ROTSPEED = 90;
+	const int ROTSPEED = 50;
 
 	float verticalVelocity = 0;
 	float cameraPitch = 0;
@@ -39,8 +39,8 @@ public class Agent : MonoBehaviour,I_PlayerDefaultFunctions, ITransformProvider
 
 		//ÉJÉÅÉâÇé©ï™ÇÃéqãüÇ…Ç∑ÇÈ
 		cameraObj.transform.SetParent(transform);
-        cameraObj.transform.localPosition = Vector3.zero;
-        cameraObj.transform.localEulerAngles = Vector3.zero;
+        cameraObj.transform.localPosition = new Vector3(0, 0.5f, 0);
+		cameraObj.transform.localEulerAngles = Vector3.zero;
 
 		scanAct.SetUp(cameraObj.transform);
 

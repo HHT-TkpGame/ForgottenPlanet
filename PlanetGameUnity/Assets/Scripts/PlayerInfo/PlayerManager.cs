@@ -3,6 +3,7 @@ using System.Security;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+//using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class PlayerManager : MonoBehaviour
     //[SerializeField,Header("両プレイヤーの探す系の行動")]SearchActionController searchController;
 	[SerializeField, Header("コマンダーの探す系の行動")] Com_ZoomAction zoomAction;
     [SerializeField, Header("エージェントの探す系の行動")] Age_ScanAction scanAction;
+    [SerializeField] CursorController cursorController;
 
     SearchActionController searchController;
 
@@ -87,6 +89,20 @@ public class PlayerManager : MonoBehaviour
 		//defaultCanvas.SetActive(true);
 		searchController.OnZoomPerformed(context.control);
     }
+    public void ShowCursor(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+		{
+			cursorController.Show();
+		}
+    }
+	public void LockCursor(InputAction.CallbackContext context)
+	{
+		if (context.performed)
+		{
+			cursorController.Lock();
+		}
+	}
 
 	// Update is called once per frame
 	void Update()
