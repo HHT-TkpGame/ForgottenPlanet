@@ -58,13 +58,20 @@ public class ChatManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         ChatUIController[] controllers = FindObjectsByType<ChatUIController>(FindObjectsSortMode.None);
-        foreach (var ctr in controllers)
+        if (controllers.Length > 1)
         {
-            if (ctr.IsCommander == MatchingManager.IsCommander)
+            foreach (var ctr in controllers)
             {
-                uiController = ctr;
-                break;
+                if (ctr.IsCommander == MatchingManager.IsCommander)
+                {
+                    uiController = ctr;
+                    break;
+                }
             }
+        }
+        else
+        {
+            uiController = controllers[0];
         }
         poller = FindAnyObjectByType<ChatClientPoller>();
         if (uiController != null && poller != null)

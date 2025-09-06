@@ -28,6 +28,9 @@ class GameStateRepository
     
     public function getProgressByRoomId($roomId){
         $gameState = GameState::where('room_id', $roomId)->first();
+        if (is_null($gameState)) {
+            return -1;
+        }
         return $gameState->game_progress->value;
     }
 }

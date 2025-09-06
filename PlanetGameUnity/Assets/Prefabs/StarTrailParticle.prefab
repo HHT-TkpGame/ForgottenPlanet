@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1817960283769098379}
   - component: {fileID: 5054654431543391323}
   - component: {fileID: 8214734920187955233}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: StarTrailParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

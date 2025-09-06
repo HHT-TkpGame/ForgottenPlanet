@@ -20,7 +20,10 @@ public class GameStateRequester
         if (request.result == UnityWebRequest.Result.Success)
         {
             GameStateData json = JsonUtility.FromJson<GameStateData>(request.downloadHandler.text);
-            onSuccess?.Invoke(json);
+            if (json.game_progress != -1)
+            {
+                onSuccess?.Invoke(json);
+            }
         }
         else
         {

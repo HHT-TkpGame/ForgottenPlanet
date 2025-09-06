@@ -10,6 +10,7 @@ use App\Http\Controllers\MatchingController;
 use App\Http\Controllers\RoleSelectionController;
 use App\Http\Controllers\GameStateController;
 use App\Http\Controllers\ClueController;
+use App\Http\Controllers\AnswerController;
 
 
 Route::get('/hello', [ApiTestController::class, 'hello']);
@@ -61,4 +62,8 @@ Route::get('room/{roomId}/clueAndTruth', [ClueController::class, 'getCluesByRoom
 Route::get('room/{roomId}/clueShared', [ClueController::class, 'getClueShared']);
 
 Route::post('room/{roomId}/clueId/{clueId}/clueShared', [ClueController::class, 'postClueShared']);
+
+Route::get('room/{roomId}/answer', [AnswerController::class, 'getAnswer']);
+
+Route::post('room/{roomId}/answer', [AnswerController::class, 'postAnswer']); 
 ?>
