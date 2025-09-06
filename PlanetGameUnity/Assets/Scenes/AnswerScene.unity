@@ -2103,7 +2103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poller: {fileID: 1942452388}
   answerUIController: {fileID: 817163429}
-  timer: {fileID: 0}
+  timer: {fileID: 1038885976}
 --- !u!4 &1010301042
 Transform:
   m_ObjectHideFlags: 0
