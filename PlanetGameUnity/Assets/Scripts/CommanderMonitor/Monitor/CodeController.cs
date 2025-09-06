@@ -38,6 +38,8 @@ public class CodeController : MonoBehaviour
 		int chosen = availableIndices[rand];
 		availableIndices.RemoveAt(rand);
 
+		Debug.Log("選ばれたコードは" + answerArray[chosen]);
+
 		return (cipherArray[chosen], answerArray[chosen]);
 	}
 }

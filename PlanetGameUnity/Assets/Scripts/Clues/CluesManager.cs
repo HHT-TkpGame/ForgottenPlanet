@@ -18,11 +18,11 @@ public class CluesManager : MonoBehaviour
 
 	List<GameObject> devices = new List<GameObject>();
 
-	//bool isCommander = true;
+	bool isCommander = true;
 	void Start()
 	{
-		//if(isCommander)
-		if (MatchingManager.IsCommander)
+		if(isCommander)
+		//if (MatchingManager.IsCommander)
 		{
 			monitorController.Init(this);
 			//poller‚ðŽg‚¤‚Ì‚ÍCommander‚¾‚¯

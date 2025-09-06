@@ -9,18 +9,18 @@ public class MonitorController : MonoBehaviour
     [SerializeField, Header("Fileの配列")] FileBehavior[] files=new FileBehavior[MAXCLUES];
     [SerializeField, Header("InfoのPanelの配列")] GameObject[] infoPanels=new GameObject[MAXCLUES];
 
-    [SerializeField, Header("AIの暴走の配列")]
-    Sprite[] truth1Array;
-	[SerializeField, Header("異星人の配列")]
-	Sprite[] truth2Array;
-	[SerializeField, Header("異常気象の配列")]
-	Sprite[] truth3Array;
-	[SerializeField, Header("パンデミックの配列")]
-	Sprite[] truth4Array;
-	[SerializeField, Header("内乱の配列")]
-	Sprite[] truth5Array;
-	[SerializeField, Header("次元の配列")]
-	Sprite[] truth6Array;
+ //   [SerializeField, Header("AIの暴走の配列")]
+ //   Sprite[] truth1Array;
+	//[SerializeField, Header("異星人の配列")]
+	//Sprite[] truth2Array;
+	//[SerializeField, Header("異常気象の配列")]
+	//Sprite[] truth3Array;
+	//[SerializeField, Header("パンデミックの配列")]
+	//Sprite[] truth4Array;
+	//[SerializeField, Header("内乱の配列")]
+	//Sprite[] truth5Array;
+	//[SerializeField, Header("次元の配列")]
+	//Sprite[] truth6Array;
 
 	[SerializeField] CodeController codeController;
 	[SerializeField] InputFieldManager inputManager;
@@ -30,13 +30,6 @@ public class MonitorController : MonoBehaviour
 
 	CluesManager cluesManager;
 
-	
-
-	/// <summary>
-	/// 後でサーバーからの値に
-	/// rangeにするときに-1したとこから始める
-	/// したらMAXCLUESのあまりで求めれると思う
-	/// </summary>
 	int truth;
     int range;
 
@@ -52,52 +45,39 @@ public class MonitorController : MonoBehaviour
 
 	List<ClueSharedInfo> clueGettingStates=new List<ClueSharedInfo>();
 
+	[SerializeField]int testTruth;
+	[SerializeField]int[] testTruthRange = new int[5];
+
+	[SerializeField]CluesTextSetter setter;
+	[SerializeField] Sprite clueImageOutline;
+
+	
 	public void Init(CluesManager cluesManager)
 	{
 		this.cluesManager = cluesManager;
 
-		truth = 0;
+		truth = 1;
 
 		codeController.SetCodeList();
+
+		//ここの値がサーバーのやつ
+		setter.SetText(testTruth, testTruthRange);
+
 		FileSetup();
-		TruthSetup();
 		PanelSetup();
-
-
-		//for (int i = 0; i < 5; i++)
-		//{
-		//	ClueSharedInfo clueInfo = new ClueSharedInfo();
-		//	//clueIdは1から
-		//	clueInfo.clue_id = i+1;
-		//	clueInfo.is_shared = false;
-		//	clueGettingStates.Add(clueInfo);
-		//}
 
 	}
 
-
 void Start()
 	{
-		/////---------------------------
-		/////ここサーバーの値にする
-		/////rangeにナンバーの最初の値を入れる1,6,11とか
-		/////---------------------------
-		
-		//truth = 0;
+		truth = 1;
 
-		//codeController.SetCodeList();
-		//FileSetup();
+		codeController.SetCodeList();
+		setter.SetText(testTruth, testTruthRange);
+
+		FileSetup();
 		//TruthSetup();
-		//PanelSetup();
-
-
-		//for (int i = 0; i < 5; i++)
-		//{
-		//	ClueSharedInfo clueInfo = new ClueSharedInfo();
-		//	clueInfo.clue_id = i;
-		//	clueInfo.is_shared = false;
-		//	clueGettingStates.Add(clueInfo);
-		//}
+		PanelSetup();
 
 	}
 
@@ -132,12 +112,31 @@ void Start()
 
 	private void Update()
 	{
-		//if (Input.GetKeyDown(KeyCode.Q))
-		//{
-		//	clueGettingStates[3].is_shared=true;
-		//	UpdateUI(clueGettingStates);
-		//	//メソッド
-		//}
+		if (Input.GetKeyDown(KeyCode.Q))
+		{
+			files[0].ActiveInteractable();
+			//メソッド
+		}
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			files[1].ActiveInteractable();
+			//メソッド
+		}
+		if (Input.GetKeyDown(KeyCode.R))
+		{
+			files[2].ActiveInteractable();
+			//メソッド
+		}
+		if (Input.GetKeyDown(KeyCode.T))
+		{
+			files[3].ActiveInteractable();
+			//メソッド
+		}
+		if (Input.GetKeyDown(KeyCode.Z))
+		{
+			files[4].ActiveInteractable();
+			//メソッド
+		}
 	}
 
 	void FileSetup()
@@ -149,31 +148,6 @@ void Start()
 	}
 
 	//引数でサーバーからの値そのまま入れても良さそ
-	void TruthSetup()
-	{
-		//その時の真相に合わせて使う真相の配列を選ぶ
-		switch (truth)
-		{
-			case AI_RAMPAGE:
-				truthArray = truth1Array;
-				break;
-			case ALIEN_INVASION:
-				truthArray = truth2Array;
-				break;
-			case EXTREME_WEATHER:
-				truthArray = truth3Array;
-				break;
-			case PANDEMIC:
-				truthArray = truth4Array;
-				break;
-			case POLITICAL_TURMOIL:
-				truthArray = truth5Array;
-				break;
-			case DIMENSIONS:
-				truthArray = truth6Array;
-				break;
-		}
-	}
 
 	void PanelSetup()
 	{
@@ -181,12 +155,11 @@ void Start()
 		{
 			//暗号のImageと手がかりのImageを手に入れる
 			///i+rangeに変える
-			Sprite clueImage = truthArray[i];
+			Sprite clueImage = clueImageOutline;
 			//Debug.Log(clueImage);
 			var codeData = codeController.SetClueCipher();
 
-
-			infoPanels[i].GetComponent<Com_ClueInfo>().SetPanelImages(clueImage, codeData.Item1, codeData.Item2);
+			infoPanels[i].GetComponent<Com_ClueInfo>().SetPanelImages(clueImage,codeData.Item1, codeData.Item2);
 			infoPanels[i].SetActive(false);
 		}
 
@@ -197,7 +170,7 @@ void Start()
 	//ボタンが押された時に呼ばれるメソッド
     public void DisplayInfoPanel(int num)
     {
-		Debug.Log("num"+num);
+		//Debug.Log("num"+num);
         if (panelObj)
         {
             panelObj.SetActive(false);
@@ -209,7 +182,6 @@ void Start()
 
 	//手がかりをエージェントが入手したらモニターコントローラーのメソッドを呼び出し
 	//その番号のあまり-1の配列番号のボタンのメソッドを呼びInteractableをTrueにする
-
 
 	//InputFieldから送られた答えをInfoの中で比較してBool型の戻り値であってたかどうかを
 	//確認、あってたらInfoのisSolvedをTrueにしてInputFieldのメッセージにうまくいったことをこいつが
@@ -231,5 +203,31 @@ void Start()
         {
             inputManager.SetDisplayText(2);
         }
-    } 
+    }
+
+	//void TruthSetup()
+	//{
+	//	//その時の真相に合わせて使う真相の配列を選ぶ
+	//	switch (truth)
+	//	{
+	//		case AI_RAMPAGE:
+	//			truthArray = truth1Array;
+	//			break;
+	//		case ALIEN_INVASION:
+	//			truthArray = truth2Array;
+	//			break;
+	//		case EXTREME_WEATHER:
+	//			truthArray = truth3Array;
+	//			break;
+	//		case PANDEMIC:
+	//			truthArray = truth4Array;
+	//			break;
+	//		case POLITICAL_TURMOIL:
+	//			truthArray = truth5Array;
+	//			break;
+	//		case DIMENSIONS:
+	//			truthArray = truth6Array;
+	//			break;
+	//	}
+	//}
 }
