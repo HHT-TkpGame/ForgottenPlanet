@@ -19,7 +19,9 @@ public class ScanColliderBehavior : MonoBehaviour
 		}
 		else
 		{
-			scanAct.ResetHold();
+			//別オブジェクトと接触していたらスキャンがリセットされてしまうのでコメントアウト
+			//影響あれば戻す
+			//scanAct.ResetHold();
 		}
 	}
 	private void OnTriggerExit(Collider other)

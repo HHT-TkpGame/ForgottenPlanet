@@ -3,8 +3,7 @@ using UnityEngine;
 public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Instance{ get; private set; }
-    public GameProgress CurrentProgress { get; private set; } = GameProgress.Matching;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameProgress CurrentState { get; private set; } = GameProgress.Matching;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -15,9 +14,10 @@ public class GameStateManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-    public void SetProgress(GameProgress progress)
+    public void SetProgress(GameProgress newState)
     {
-        CurrentProgress = progress;
-        Debug.Log("updateProg: " + progress.ToString());
+        if(CurrentState == newState) return;
+        CurrentState = newState;
+        SceneChanger.Instance.Change(newState);
     }
 }

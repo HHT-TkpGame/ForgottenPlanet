@@ -14,6 +14,9 @@ public class ChatUIController : MonoBehaviour
     RectTransform chatPanelRect;
     float panelDefaultHeight;
     bool isOpen = true;
+    [SerializeField] bool isScalable;
+    [SerializeField] bool isCommander;//commander‚Ítrue,agent‚Ífalse
+    public bool IsCommander => isCommander;
     void Awake()
     {
         chatPanelRect = GetComponent<RectTransform>();
@@ -24,7 +27,10 @@ public class ChatUIController : MonoBehaviour
     }
     void Start()
     {
-        ToggleChatPanel();
+        if (isScalable || !MatchingManager.IsCommander)
+        {
+            ToggleChatPanel();
+        }
     }
     public void ToggleChatPanel()
     {

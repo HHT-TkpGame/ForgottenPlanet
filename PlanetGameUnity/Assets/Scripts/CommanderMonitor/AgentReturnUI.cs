@@ -4,10 +4,13 @@ using UnityEngine;
 public class AgentReturnUI : MonoBehaviour
 {
     bool isLast;
-
+    InGameEnder ender;
     [SerializeField] GameObject returnText;
 	[SerializeField] GameObject returnLastText;
-
+    public void Init(InGameEnder ender)
+    {
+        this.ender = ender;
+    }
 	public void UITextSetting()
     {
         if (!isLast)
@@ -31,8 +34,8 @@ public class AgentReturnUI : MonoBehaviour
         }
         else
         {
-            ///ゲームを終了
-            Debug.Log("ゲーム終了");
+            //ゲームを終了
+            ender.SendRequest();
         }
     }
     public void PushNoButton()

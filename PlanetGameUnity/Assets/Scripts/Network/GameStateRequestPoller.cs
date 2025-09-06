@@ -27,13 +27,10 @@ public class GameStateRequestPoller : MonoBehaviour
         {
             yield return StartCoroutine(requester.GetState(onSuccess: (prog) =>
             {
-                //Debug.Log("svr:"+prog.game_progress);
-                //Debug.Log("loc:"+gameState.CurrentProgress);
                 //ó‘Ô‚ª•Ï‚í‚Á‚½Žž‚¾‚¯”­‰Î
-                if (prog.game_progress != (int)gameState.CurrentProgress)
+                if (prog.game_progress != (int)gameState.CurrentState)
                 {
                     OnStateUpdated?.Invoke();
-                    Debug.Log("Success");
                 }
             },
             onError: (err) =>

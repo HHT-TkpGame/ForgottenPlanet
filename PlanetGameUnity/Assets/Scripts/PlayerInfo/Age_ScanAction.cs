@@ -23,8 +23,9 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	public void SetUp(Transform camera)
 	{
 		scanColObj.transform.SetParent(camera);
-		scanColObj.transform.localPosition = Vector3.zero;
+		scanColObj.transform.localPosition = new Vector3(0, 0.5f, 0);
 		scanColObj.transform.eulerAngles = Vector3.zero;
+		scanModel.transform.SetParent(camera);
 
 		scanColliderBehavior = scanColObj.GetComponent<ScanColliderBehavior>();
 		scanColliderBehavior.GetScanAction(this);
@@ -42,14 +43,12 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 
 	public void OnSearchStarted()
 	{
-		Debug.Log("Agent側でSearchの処理が始まった");
 		scanBoxCollider.enabled = true;
 		scanModel.SetActive(true);
 	}
 
 	public void OnSearchCanceled()
 	{
-		Debug.Log("Agent側でSearchの処理が終わった");
 		scanBoxCollider.enabled = false;
 		scanModel.SetActive(false);
 		ResetHold();
@@ -69,7 +68,7 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	public void Scan(GameObject scanObj)
 	{
 		holdTime += Time.deltaTime;
-		float scanRot = holdTime * SCAN_ROT_RATIO;
+		float scanRot = holdTime * SCAN_ROT_RATIO + 45;
 		//一定時間Scanメソッドが呼び出されたら
 		//actionExecutedはこの後すぐもう一回下のメソッドを呼ぶの防止
 		if (holdTime >= MAX_HOLDTIME && !actionExecuted)
@@ -79,7 +78,7 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 		}
 		if (scanRot > SCAN_ROT_RATIO * 2)
 		{
-			scanModel.transform.localEulerAngles = new Vector3(scanRot, 180, -45);
+			scanModel.transform.localEulerAngles = new Vector3(-scanRot, 0, 0);
 		}
 	}
 
@@ -122,6 +121,6 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 		actionExecuted = false;
 
 		//エフェクトなどになったときはそれ用のエフェクトを再生するなど
-		scanModel.transform.localEulerAngles = new Vector3(0, 180, -45);
+		scanModel.transform.localEulerAngles = new Vector3(-45f, 0, 0);
 	}
 }
