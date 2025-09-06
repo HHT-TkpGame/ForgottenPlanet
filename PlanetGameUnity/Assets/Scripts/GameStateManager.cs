@@ -14,6 +14,11 @@ public class GameStateManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    public void Dispose()
+    {
+        Instance = null;
+        Destroy(gameObject);
+    }
     public void SetProgress(GameProgress newState)
     {
         if(CurrentState == newState) return;

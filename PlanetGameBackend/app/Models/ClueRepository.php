@@ -40,4 +40,13 @@ class ClueRepository
         ->where('clue_id', $clueId)
         ->update(['is_shared' => true]);
     }
+    /**
+     * 指定されたroomIdの共有済み手がかり件数を取得
+     */
+    public function countSharedByRoomId($roomId)
+    {
+        return Clue::where('room_id', $roomId)
+                    ->where('is_shared', true)
+                    ->count();
+    }
 }

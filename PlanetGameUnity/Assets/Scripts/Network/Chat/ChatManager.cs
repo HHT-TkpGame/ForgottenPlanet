@@ -22,7 +22,11 @@ public class ChatManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Client = new ChatClient();
     }
-
+    public void Dispose()
+    {
+        Instance = null;
+        Destroy(gameObject);
+    }
     void Start()
     {
         poller.StartLoop(

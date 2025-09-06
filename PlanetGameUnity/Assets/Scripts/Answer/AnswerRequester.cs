@@ -7,12 +7,12 @@ using UnityEngine.Networking;
 public class AnswerRequester
 {
     /// <summary>
-    /// 現在のゲーム進行を取得
+    /// 入力された答えと見つけた手がかりの数を取得
     /// </summary>
     /// <param name="onSuccess"></param>
     /// <param name="onError"></param>
     /// <returns></returns>
-    public IEnumerator FetchAnswer(Action<int> onSuccess = null, Action onError = null)
+    public IEnumerator FetchAnswerAndFoundClues(Action<int, int> onSuccess = null, Action onError = null)
     {
         string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/answer";
         UnityWebRequest request = new UnityWebRequest(uri, "GET");
@@ -21,7 +21,7 @@ public class AnswerRequester
         if (request.result == UnityWebRequest.Result.Success)
         {
             AnswerData json = JsonUtility.FromJson<AnswerData>(request.downloadHandler.text);
-            onSuccess?.Invoke(json.answer_id);
+            onSuccess?.Invoke(json.answer_id, json.found_clues);
         }
         else
         {
@@ -30,7 +30,7 @@ public class AnswerRequester
         }
     }
     /// <summary>
-    /// ゲーム進行の更新リクエスト
+    /// 選択した答えを送信
     /// </summary>
     /// <param name="data"></param>
     /// <param name="onSuccess"></param>

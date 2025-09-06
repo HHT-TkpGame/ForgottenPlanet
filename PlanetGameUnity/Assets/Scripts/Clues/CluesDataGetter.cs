@@ -15,6 +15,11 @@ public class CluesDataGetter : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         Instance = this;
     }
+    public void Dispose()
+    {
+        Instance = null;
+        Destroy(gameObject);
+    }
     void Start()
     {
         ClueClient = new ClueClient();

@@ -9,9 +9,9 @@ public class GameTimer : MonoBehaviour
     public event Action OnTimerEnded;
     bool isTimerEnded;
     [SerializeField] TMP_Text txtTimer;
-    void Start()
+    void Awake()
     {
-        
+        txtTimer.text = "";
     }
 
     void Update()

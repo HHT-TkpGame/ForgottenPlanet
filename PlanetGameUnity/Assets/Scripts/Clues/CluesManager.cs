@@ -96,6 +96,7 @@ public class CluesManager : MonoBehaviour
         if (target != null)
         {
             MatchClues = new CurrentMatchClues(target.Truth, target.IdNo1, target.IdNo5);
+			AnalyzeSaver.SelectedTruthId = MatchClues.truthId;
         }
     }
 
