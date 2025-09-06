@@ -35,7 +35,7 @@ public class AgentReturnUI : MonoBehaviour
         else
         {
             //ƒQ[ƒ€‚ğI—¹
-            ender.SendRequest();
+            ender.IncrementState();
         }
     }
     public void PushNoButton()

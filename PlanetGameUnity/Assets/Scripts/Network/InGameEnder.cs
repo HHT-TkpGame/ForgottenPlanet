@@ -15,7 +15,7 @@ public class InGameEnder : MonoBehaviour
         StartCoroutine(poller.PollLoop());
         agentReturnUI.Init(this);
         if (MatchingManager.IsCommander) {
-            gameTimer.OnTimerEnded += SendRequest;
+            gameTimer.OnTimerEnded += IncrementState;
         }
         poller.OnStateUpdated += TransitionToAnswer;
     }
@@ -23,11 +23,11 @@ public class InGameEnder : MonoBehaviour
     {
         if (MatchingManager.IsCommander)
         {
-            gameTimer.OnTimerEnded -= SendRequest;
+            gameTimer.OnTimerEnded -= IncrementState;
         }
         poller.OnStateUpdated -= TransitionToAnswer;
     }
-    public void SendRequest()
+    public void IncrementState()
     {
         StartCoroutine(requester.PostState());
     }

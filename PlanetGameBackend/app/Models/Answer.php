@@ -11,7 +11,6 @@ class Answer extends Model
 
     protected $primaryKey = 'id';
 
-    // ホワイトリスト（mass assignment許可カラム）
     protected $fillable = [
         'answer_id',
         'room_id',

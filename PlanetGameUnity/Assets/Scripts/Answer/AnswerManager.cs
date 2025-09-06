@@ -6,6 +6,7 @@ public class AnswerManager : MonoBehaviour
     GameStateRequester stateRequester;
     [SerializeField] GameStateRequestPoller poller;
     [SerializeField] AnswerUIController answerUIController;
+    [SerializeField] GameTimer timer;
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;//前のシーンでlockedの可能性があるので解除する
@@ -15,13 +16,18 @@ public class AnswerManager : MonoBehaviour
         StartCoroutine(poller.PollLoop());
         answerUIController.OnSendButtonClicked += SendAnswer;
         poller.OnStateUpdated += TransitionToResult;
+        timer.OnTimerEnded += IncrementState;
     }
     void OnDestroy()
     {
         answerUIController.OnSendButtonClicked -= SendAnswer;
         poller.OnStateUpdated -= TransitionToResult;
+        timer.OnTimerEnded -= IncrementState;
     }
-
+    void IncrementState()
+    {
+        StartCoroutine(stateRequester.PostState());
+    }
     void SendAnswer(int currentSelected)
     {
         StartCoroutine(answerRequester.PostAnswer(currentSelected,onSuccess: () =>

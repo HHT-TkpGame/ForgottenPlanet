@@ -51,6 +51,7 @@ public class AnswerUIController : MonoBehaviour
     }
     public void SendAnswer()
     {
+        AnswerSaver.answer_id = currentSelected;
         OnSendButtonClicked?.Invoke(currentSelected);
     }
 }

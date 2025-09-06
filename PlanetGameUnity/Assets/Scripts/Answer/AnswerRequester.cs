@@ -39,7 +39,8 @@ public class AnswerRequester
     {
         string uri = ApiConfig.BASE_URI + "/api/room/" + MatchingManager.RoomId + "/answer";
         UnityWebRequest request = new UnityWebRequest(uri, "POST"); 
-        string json = JsonUtility.ToJson(answer);
+        AnswerData data = new AnswerData {answer_id = answer};
+        string json = JsonUtility.ToJson(data);
         byte[] rawData = Encoding.UTF8.GetBytes(json);
         request.uploadHandler = new UploadHandlerRaw(rawData);
         request.downloadHandler = new DownloadHandlerBuffer();
@@ -48,10 +49,12 @@ public class AnswerRequester
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
+            Debug.Log(request.downloadHandler.text);
             onSuccess?.Invoke();
         }
         else
         {
+            Debug.Log(request.error);
             onError?.Invoke();
         }
     }

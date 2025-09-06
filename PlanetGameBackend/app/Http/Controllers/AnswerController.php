@@ -24,5 +24,6 @@ class AnswerController extends Controller
             'answer_id' => ['required','integer','between:1,6'],
         ]);
         $this->answerRepository->postAnswer($roomId, $data['answer_id']);
+        return response()->json(['answerData' => $data]);
     }
 }
