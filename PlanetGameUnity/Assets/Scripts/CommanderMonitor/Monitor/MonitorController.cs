@@ -116,17 +116,9 @@ void Start()
 			//見つからなかったときindexが-1になるから入れたほうがいい気がする
 			//if (index < 0) { return; }
 
-			//一致したIdのローカルのリストのis_sharedがTrueなら
-			if (clueGettingStates[index].is_shared)
-			{
-				//UI更新
-				//配列の要素番号はゼロからだけどClueIdは1からだからその理由から-1
-				files[index].ActiveInteractable();
-			}
-			else
-			{
-				Debug.LogWarning($"ClueId {updated.clue_id}:NotFound");
-			}
+			//UI更新
+			//配列の要素番号はゼロからだけどClueIdは1からだからその理由から-1
+			files[index].ActiveInteractable();
 		}
 	}
 
@@ -197,7 +189,6 @@ void Start()
 	//ボタンが押された時に呼ばれるメソッド
     public void DisplayInfoPanel(int num)
     {
-		Debug.Log("num"+num);
         if (panelObj)
         {
             panelObj.SetActive(false);

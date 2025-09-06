@@ -2,12 +2,18 @@ using UnityEngine;
 
 public class InGameEnder : MonoBehaviour
 {
+    [SerializeField] AgentReturnUI agentReturnUI;
     GameStateRequester requester;
     [SerializeField] GameStateRequestPoller poller;
     [SerializeField] GameTimer gameTimer;
+    GameStateManager state;
     void Start()
     {
         requester = new GameStateRequester();
+        state = GameStateManager.Instance;
+        poller.Initialize(requester, state);
+        StartCoroutine(poller.PollLoop());
+        agentReturnUI.Init(this);
         if (MatchingManager.IsCommander) {
             gameTimer.OnTimerEnded += SendRequest;
         }
@@ -21,7 +27,7 @@ public class InGameEnder : MonoBehaviour
         }
         poller.OnStateUpdated -= TransitionToAnswer;
     }
-    void SendRequest()
+    public void SendRequest()
     {
         StartCoroutine(requester.PostState());
     }

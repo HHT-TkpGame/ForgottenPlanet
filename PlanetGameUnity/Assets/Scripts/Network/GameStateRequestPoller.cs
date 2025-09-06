@@ -31,7 +31,6 @@ public class GameStateRequestPoller : MonoBehaviour
                 if (prog.game_progress != (int)gameState.CurrentState)
                 {
                     OnStateUpdated?.Invoke();
-                    Debug.Log("Success");
                 }
             },
             onError: (err) =>

@@ -18,10 +18,10 @@ public class RoleUIManager : MonoBehaviour
     GameObject selfReadyState;
     [SerializeField] GameObject otherState;
     GameObject otherReadyState;
-    Vector3 selfLeftPos = new Vector3(-400, 250, 0);
-    Vector3 selfRightPos = new Vector3(0, 250, 0);
-    Vector3 otherLeftPos = new Vector3 (-250, 250, 0);
-    Vector3 otherRightPos = new Vector3(150, 250, 0);
+    Vector3 selfLeftPos = new Vector3(-400, 230, 0);
+    Vector3 selfRightPos = new Vector3(-80, 230, 0);
+    Vector3 otherLeftPos = new Vector3 (-250, 230, 0);
+    Vector3 otherRightPos = new Vector3(70, 230, 0);
     /////
 
     RoleSelectManager roleSelectManager;
@@ -130,7 +130,6 @@ public class RoleUIManager : MonoBehaviour
             ChangeState(selfReadyState, IsLocked);
             ChangeButtonVisible(sendButton, false);
             MatchingManager.IsCommander = IsCommander;
-            Debug.Log("¬Œ÷");
         },
         onError: (err) =>
         {
@@ -147,7 +146,6 @@ public class RoleUIManager : MonoBehaviour
         if (!IsLocked) { return; }
         StartCoroutine(roleSelect.PostReselection(onSuccess:()=>
             {
-                Debug.Log("Ä‘I‘ğ");
                 UnlockSelect();
                 ChangeButtonVisible(sendButton, true);
                 ChangeButtonVisible(checkButton, false);
@@ -169,7 +167,6 @@ public class RoleUIManager : MonoBehaviour
         if (!IsLocked) { return; }
         StartCoroutine(roleSelect.GetHasConflict(onSuccess: (result) =>
             {
-                Debug.Log("¬Œ÷");
                 roleSelectManager.HasConflict = result;
                 if (roleSelectManager.HasConflict)
                 {

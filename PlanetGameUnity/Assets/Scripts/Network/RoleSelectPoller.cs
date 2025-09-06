@@ -27,7 +27,6 @@ public class RoleSelectPoller : MonoBehaviour
         {
             yield return StartCoroutine(roleSelect.PostRole(new SelectionData(PlayerIdManager.Id, roleUI.IsCommander), onSuccess: () =>
             {
-                Debug.Log("Success");
             },
             onError: (err) =>
             {

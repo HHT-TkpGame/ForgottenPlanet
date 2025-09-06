@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,7 +25,6 @@ public class ChatManager : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
         poller.StartLoop(
             chatList =>
             {
@@ -35,13 +35,10 @@ public class ChatManager : MonoBehaviour
     public void OnSendChat()
     {
         string msg = uiController.GetInputText();
-        Debug.Log("送信しようとしているメッセージは" + msg);
-        Debug.Log(string.IsNullOrEmpty(msg));
         if (string.IsNullOrEmpty(msg)) return;
-        Debug.Log("送信開始");
         StartCoroutine(Client.SendChatMessage(
             msg,
-            res => Debug.Log("送信成功"),
+            res => { },
             onError: () => { }
         ));
     }
@@ -60,7 +57,15 @@ public class ChatManager : MonoBehaviour
     /// <param name="mode"></param>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        uiController = FindAnyObjectByType<ChatUIController>();
+        ChatUIController[] controllers = FindObjectsByType<ChatUIController>(FindObjectsSortMode.None);
+        foreach (var ctr in controllers)
+        {
+            if (ctr.IsCommander == MatchingManager.IsCommander)
+            {
+                uiController = ctr;
+                break;
+            }
+        }
         poller = FindAnyObjectByType<ChatClientPoller>();
         if (uiController != null && poller != null)
         {

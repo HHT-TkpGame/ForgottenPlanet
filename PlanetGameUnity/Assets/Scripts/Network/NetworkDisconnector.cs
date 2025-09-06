@@ -17,7 +17,6 @@ public class NetworkDisconnector : MonoBehaviour
         yield return request.SendWebRequest();
         if(request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log(request.downloadHandler.text);
             GameStateManager.Instance.SetProgress(GameProgress.Matching);
         }
         else

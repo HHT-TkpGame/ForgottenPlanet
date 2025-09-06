@@ -11,6 +11,7 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 	[SerializeField, Header("モニター画面時のゲームUI")] GameObject gameUIPanel;
 	[SerializeField, Header("Agent側のチャット欄")] GameObject chatUIPanel;
 	[SerializeField, Header("エージェント帰還用UI")] GameObject agentReturnUIPanel;
+	[SerializeField] GameObject agentView;
 
 	Commander commander;
 
@@ -30,6 +31,7 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 		gameUIPanel.SetActive(false);
 		chatUIPanel.SetActive(false);
 		agentReturnUIPanel.SetActive(false);
+		agentView.SetActive(false);
     } 
 
     public void OnSearchStarted()
@@ -37,7 +39,7 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 
 		if (commander.State == Commander.zoomState.ZoomedIn) { return; }
 
-		Debug.Log("Commander側でSearchの処理が始まった");
+		//Debug.Log("Commander側でSearchの処理が始まった");
 		Ray ray = new Ray(commander.Cam.transform.position, commander.Cam.transform.forward);
 
 		if (Physics.Raycast(ray, out RaycastHit hit, rayDistance))
