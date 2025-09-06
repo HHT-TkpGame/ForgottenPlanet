@@ -110,6 +110,42 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Search"",
+                    ""type"": ""Button"",
+                    ""id"": ""bea00582-0acf-410b-9452-67b7fc256bb7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Com_Zoom"",
+                    ""type"": ""Button"",
+                    ""id"": ""c6cd9bcb-afe7-4d68-99ff-03072547d6fb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowCursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""6de632f7-8dfc-4af6-9a25-8f79d39da3ee"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CursorLock"",
+                    ""type"": ""Button"",
+                    ""id"": ""092c2cc4-4552-4537-92bd-05fd8eb08c41"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""6c2ab1b8-8984-453a-af3d-a3c78ae1679a"",
@@ -131,7 +167,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""27c5f898-bc57-4ee1-8800-db469aca5fe3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -140,7 +176,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -149,7 +185,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Previous"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -158,7 +194,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Next"",
                     ""type"": ""Button"",
                     ""id"": ""b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -167,24 +203,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""641cd816-40e6-41b4-8c3d-04687c349290"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Search"",
-                    ""type"": ""Button"",
-                    ""id"": ""bea00582-0acf-410b-9452-67b7fc256bb7"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Com_Zoom"",
-                    ""type"": ""Button"",
-                    ""id"": ""c6cd9bcb-afe7-4d68-99ff-03072547d6fb"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -618,6 +636,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Com_Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72769534-7ad4-477a-b6cd-70628b1e45bf"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ShowCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f25e5b15-19dc-4ebc-a7ba-8cb7405d5b2d"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CursorLock"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1207,6 +1247,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
+        m_Player_Search = m_Player.FindAction("Search", throwIfNotFound: true);
+        m_Player_Com_Zoom = m_Player.FindAction("Com_Zoom", throwIfNotFound: true);
+        m_Player_ShowCursor = m_Player.FindAction("ShowCursor", throwIfNotFound: true);
+        m_Player_CursorLock = m_Player.FindAction("CursorLock", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
@@ -1214,8 +1258,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        m_Player_Search = m_Player.FindAction("Search", throwIfNotFound: true);
-        m_Player_Com_Zoom = m_Player.FindAction("Com_Zoom", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1311,6 +1353,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
+    private readonly InputAction m_Player_Search;
+    private readonly InputAction m_Player_Com_Zoom;
+    private readonly InputAction m_Player_ShowCursor;
+    private readonly InputAction m_Player_CursorLock;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Crouch;
@@ -1318,8 +1364,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Previous;
     private readonly InputAction m_Player_Next;
     private readonly InputAction m_Player_Sprint;
-    private readonly InputAction m_Player_Search;
-    private readonly InputAction m_Player_Com_Zoom;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1339,6 +1383,22 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Look".
         /// </summary>
         public InputAction @Look => m_Wrapper.m_Player_Look;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Search".
+        /// </summary>
+        public InputAction @Search => m_Wrapper.m_Player_Search;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Com_Zoom".
+        /// </summary>
+        public InputAction @Com_Zoom => m_Wrapper.m_Player_Com_Zoom;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/ShowCursor".
+        /// </summary>
+        public InputAction @ShowCursor => m_Wrapper.m_Player_ShowCursor;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/CursorLock".
+        /// </summary>
+        public InputAction @CursorLock => m_Wrapper.m_Player_CursorLock;
         /// <summary>
         /// Provides access to the underlying input action "Player/Attack".
         /// </summary>
@@ -1367,14 +1427,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Sprint".
         /// </summary>
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Search".
-        /// </summary>
-        public InputAction @Search => m_Wrapper.m_Player_Search;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Com_Zoom".
-        /// </summary>
-        public InputAction @Com_Zoom => m_Wrapper.m_Player_Com_Zoom;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1407,6 +1459,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Search.started += instance.OnSearch;
+            @Search.performed += instance.OnSearch;
+            @Search.canceled += instance.OnSearch;
+            @Com_Zoom.started += instance.OnCom_Zoom;
+            @Com_Zoom.performed += instance.OnCom_Zoom;
+            @Com_Zoom.canceled += instance.OnCom_Zoom;
+            @ShowCursor.started += instance.OnShowCursor;
+            @ShowCursor.performed += instance.OnShowCursor;
+            @ShowCursor.canceled += instance.OnShowCursor;
+            @CursorLock.started += instance.OnCursorLock;
+            @CursorLock.performed += instance.OnCursorLock;
+            @CursorLock.canceled += instance.OnCursorLock;
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
@@ -1428,12 +1492,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @Search.started += instance.OnSearch;
-            @Search.performed += instance.OnSearch;
-            @Search.canceled += instance.OnSearch;
-            @Com_Zoom.started += instance.OnCom_Zoom;
-            @Com_Zoom.performed += instance.OnCom_Zoom;
-            @Com_Zoom.canceled += instance.OnCom_Zoom;
         }
 
         /// <summary>
@@ -1451,6 +1509,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Search.started -= instance.OnSearch;
+            @Search.performed -= instance.OnSearch;
+            @Search.canceled -= instance.OnSearch;
+            @Com_Zoom.started -= instance.OnCom_Zoom;
+            @Com_Zoom.performed -= instance.OnCom_Zoom;
+            @Com_Zoom.canceled -= instance.OnCom_Zoom;
+            @ShowCursor.started -= instance.OnShowCursor;
+            @ShowCursor.performed -= instance.OnShowCursor;
+            @ShowCursor.canceled -= instance.OnShowCursor;
+            @CursorLock.started -= instance.OnCursorLock;
+            @CursorLock.performed -= instance.OnCursorLock;
+            @CursorLock.canceled -= instance.OnCursorLock;
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
@@ -1472,12 +1542,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @Search.started -= instance.OnSearch;
-            @Search.performed -= instance.OnSearch;
-            @Search.canceled -= instance.OnSearch;
-            @Com_Zoom.started -= instance.OnCom_Zoom;
-            @Com_Zoom.performed -= instance.OnCom_Zoom;
-            @Com_Zoom.canceled -= instance.OnCom_Zoom;
         }
 
         /// <summary>
@@ -1793,6 +1857,34 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnLook(InputAction.CallbackContext context);
         /// <summary>
+        /// Method invoked when associated input action "Search" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSearch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Com_Zoom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCom_Zoom(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ShowCursor" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShowCursor(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CursorLock" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCursorLock(InputAction.CallbackContext context);
+        /// <summary>
         /// Method invoked when associated input action "Attack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
@@ -1841,20 +1933,6 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSprint(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Search" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSearch(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Com_Zoom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnCom_Zoom(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

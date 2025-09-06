@@ -9,18 +9,18 @@ public class MonitorController : MonoBehaviour
     [SerializeField, Header("Fileの配列")] FileBehavior[] files=new FileBehavior[MAXCLUES];
     [SerializeField, Header("InfoのPanelの配列")] GameObject[] infoPanels=new GameObject[MAXCLUES];
 
-    [SerializeField, Header("AIの暴走の配列")]
-    Sprite[] truth1Array;
-	[SerializeField, Header("異星人の配列")]
-	Sprite[] truth2Array;
-	[SerializeField, Header("異常気象の配列")]
-	Sprite[] truth3Array;
-	[SerializeField, Header("パンデミックの配列")]
-	Sprite[] truth4Array;
-	[SerializeField, Header("内乱の配列")]
-	Sprite[] truth5Array;
-	[SerializeField, Header("次元の配列")]
-	Sprite[] truth6Array;
+ //   [SerializeField, Header("AIの暴走の配列")]
+ //   Sprite[] truth1Array;
+	//[SerializeField, Header("異星人の配列")]
+	//Sprite[] truth2Array;
+	//[SerializeField, Header("異常気象の配列")]
+	//Sprite[] truth3Array;
+	//[SerializeField, Header("パンデミックの配列")]
+	//Sprite[] truth4Array;
+	//[SerializeField, Header("内乱の配列")]
+	//Sprite[] truth5Array;
+	//[SerializeField, Header("次元の配列")]
+	//Sprite[] truth6Array;
 
 	[SerializeField] CodeController codeController;
 	[SerializeField] InputFieldManager inputManager;
@@ -30,74 +30,24 @@ public class MonitorController : MonoBehaviour
 
 	CluesManager cluesManager;
 
-	
 
-	/// <summary>
-	/// 後でサーバーからの値に
-	/// rangeにするときに-1したとこから始める
-	/// したらMAXCLUESのあまりで求めれると思う
-	/// </summary>
-	int truth;
-    int range;
-
-    const int AI_RAMPAGE = 0;
-	const int ALIEN_INVASION = 1;
-	const int EXTREME_WEATHER= 2;
-	const int PANDEMIC = 3;
-	const int POLITICAL_TURMOIL = 4;
-	const int DIMENSIONS = 5;
 
 	//その時の真相に合わせて使う配列
 	Sprite[] truthArray;
 
-	List<ClueSharedInfo> clueGettingStates=new List<ClueSharedInfo>();
+	[SerializeField] CluesTextSetter setter;
+	[SerializeField] Sprite clueImageOutline;
 
 	public void Init(CluesManager cluesManager)
 	{
 		this.cluesManager = cluesManager;
-
-		truth = 0;
+		Debug.Log(this.cluesManager.MatchClues);
 
 		codeController.SetCodeList();
+		setter.SetText(this.cluesManager.MatchClues.truthId,this.cluesManager.MatchClues.clueIds);
 		FileSetup();
-		TruthSetup();
-		PanelSetup();
-
-
-		//for (int i = 0; i < 5; i++)
-		//{
-		//	ClueSharedInfo clueInfo = new ClueSharedInfo();
-		//	//clueIdは1から
-		//	clueInfo.clue_id = i+1;
-		//	clueInfo.is_shared = false;
-		//	clueGettingStates.Add(clueInfo);
-		//}
-
-	}
-
-
-void Start()
-	{
-		/////---------------------------
-		/////ここサーバーの値にする
-		/////rangeにナンバーの最初の値を入れる1,6,11とか
-		/////---------------------------
-		
-		//truth = 0;
-
-		//codeController.SetCodeList();
-		//FileSetup();
 		//TruthSetup();
-		//PanelSetup();
-
-
-		//for (int i = 0; i < 5; i++)
-		//{
-		//	ClueSharedInfo clueInfo = new ClueSharedInfo();
-		//	clueInfo.clue_id = i;
-		//	clueInfo.is_shared = false;
-		//	clueGettingStates.Add(clueInfo);
-		//}
+		PanelSetup();
 
 	}
 
@@ -140,32 +90,32 @@ void Start()
 		}
 	}
 
-	//引数でサーバーからの値そのまま入れても良さそ
-	void TruthSetup()
-	{
-		//その時の真相に合わせて使う真相の配列を選ぶ
-		switch (truth)
-		{
-			case AI_RAMPAGE:
-				truthArray = truth1Array;
-				break;
-			case ALIEN_INVASION:
-				truthArray = truth2Array;
-				break;
-			case EXTREME_WEATHER:
-				truthArray = truth3Array;
-				break;
-			case PANDEMIC:
-				truthArray = truth4Array;
-				break;
-			case POLITICAL_TURMOIL:
-				truthArray = truth5Array;
-				break;
-			case DIMENSIONS:
-				truthArray = truth6Array;
-				break;
-		}
-	}
+	////引数でサーバーからの値そのまま入れても良さそ
+	//void TruthSetup()
+	//{
+	//	//その時の真相に合わせて使う真相の配列を選ぶ
+	//	switch (truth)
+	//	{
+	//		case AI_RAMPAGE:
+	//			truthArray = truth1Array;
+	//			break;
+	//		case ALIEN_INVASION:
+	//			truthArray = truth2Array;
+	//			break;
+	//		case EXTREME_WEATHER:
+	//			truthArray = truth3Array;
+	//			break;
+	//		case PANDEMIC:
+	//			truthArray = truth4Array;
+	//			break;
+	//		case POLITICAL_TURMOIL:
+	//			truthArray = truth5Array;
+	//			break;
+	//		case DIMENSIONS:
+	//			truthArray = truth6Array;
+	//			break;
+	//	}
+	//}
 
 	void PanelSetup()
 	{
@@ -173,7 +123,8 @@ void Start()
 		{
 			//暗号のImageと手がかりのImageを手に入れる
 			///i+rangeに変える
-			Sprite clueImage = truthArray[i];
+			Sprite clueImage = clueImageOutline;
+
 			//Debug.Log(clueImage);
 			var codeData = codeController.SetClueCipher();
 

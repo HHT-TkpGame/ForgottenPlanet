@@ -39,7 +39,7 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 	const int MOVESPEED = 5;
 	const int GRAVITY = 200;
 
-	const int ROTSPEED = 90;
+	const int ROTSPEED = 50;
 
 	const int VIEW_DEFAULT_RATE = 60;
 
@@ -54,10 +54,11 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
     {
 		characterController = GetComponent<CharacterController>();
 
-		cameraObj.transform.position = startPos.position;
+
 
 		//ÉJÉÅÉâÇé©ï™ÇÃéqãüÇ…Ç∑ÇÈ
 		cameraObj.transform.SetParent(transform);
+		cameraObj.transform.localPosition= new Vector3(0, 0.5f, 0);
 		cameraObj.transform.eulerAngles = Vector3.zero;
 
 		cam = cameraObj.GetComponent<Camera>();
