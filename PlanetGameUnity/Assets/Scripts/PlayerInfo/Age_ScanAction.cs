@@ -11,6 +11,7 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	[SerializeField, Header("スキャン用のモデル")] GameObject scanModel;
 	[SerializeField, Header("モニター画面時のゲームUI")] GameObject gameUIPanel;
 	[SerializeField, Header("エージェント帰還用UI")] GameObject agentReturnUIPanel;
+	[SerializeField, Header("表示しないガイドUI")] GameObject com_GuideUI;
 
 	ScanColliderBehavior scanColliderBehavior;
 	BoxCollider scanBoxCollider;
@@ -40,6 +41,7 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 		scanModel.SetActive(false);
 		gameUIPanel.SetActive(false);
 		agentReturnUIPanel.SetActive(false);
+		com_GuideUI.SetActive(false);
 	}
 
 	public void OnSearchStarted()

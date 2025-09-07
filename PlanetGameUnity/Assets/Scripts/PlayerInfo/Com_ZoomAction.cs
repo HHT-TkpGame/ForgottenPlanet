@@ -12,6 +12,8 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 	[SerializeField, Header("Agent側のチャット欄")] GameObject chatUIPanel;
 	[SerializeField, Header("エージェント帰還用UI")] GameObject agentReturnUIPanel;
 	[SerializeField] GameObject agentView;
+	[SerializeField, Header("表示しないガイドUI")] GameObject age_GuideUI;
+	[SerializeField]CursorController cursorController;
 
 	Commander commander;
 
@@ -32,6 +34,7 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 		chatUIPanel.SetActive(false);
 		agentReturnUIPanel.SetActive(false);
 		agentView.SetActive(false);
+		age_GuideUI.SetActive(false);
     } 
 
     public void OnSearchStarted()
@@ -77,6 +80,7 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 		//Debug.Log("keyName" + keyName);
 		//Debug.Log("monitorNum" + monitorNum);
 
+		Debug.Log("dededed");
 		//inputからの信号は1,2,3のどれかしか入力はないのでCastしても大丈夫
 		int keyNum = int.Parse(keyName);
 
@@ -94,6 +98,8 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 
 	private void Zoom()
 	{
+		Debug.Log("dededed");
+		cursorController.Show();
 		///Zoomのボタンが押されたらCameraをそれぞれのモニターの前に移動させて
 		///押されたモニターの番号に応じてゲームのUIの状態を変える
 		commander.ZoomStart(monitorNum);
