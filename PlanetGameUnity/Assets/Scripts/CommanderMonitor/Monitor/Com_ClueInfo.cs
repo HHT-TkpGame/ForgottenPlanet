@@ -8,6 +8,7 @@ public class Com_ClueInfo : MonoBehaviour
 	//bool isSolved=false;
 	[SerializeField,Header("手がかりのテキスト")]TMP_Text clueText;
 
+	[SerializeField] ChatUIController chatUIController;
 	Sprite clueImage;
 	Sprite codeImage;
 
@@ -34,6 +35,7 @@ public class Com_ClueInfo : MonoBehaviour
 		//Debug.Log("正解は" + codeAns + "入力は" + answer);
 		if (codeAns == answer)
 		{
+			chatUIController.DisplayChat("暗号の解読に成功した！");
 			infoImage.sprite = clueImage;
 			clueText.enabled = true;
 			return true;

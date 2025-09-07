@@ -24,7 +24,7 @@ public class MonitorController : MonoBehaviour
 
 	[SerializeField] CodeController codeController;
 	[SerializeField] InputFieldManager inputManager;
-
+	[SerializeField] ChatUIController chatUIController;
 	//表示されているPanelを入れる配列
 	GameObject panelObj;
 
@@ -62,10 +62,10 @@ public class MonitorController : MonoBehaviour
 
 			Debug.Log("MatchClues.clueIds"+cluesManager.MatchClues.clueIds[0]);
 			Debug.Log("index"+index+"clueId"+updated.clue_id);
-			
+
 			//見つからなかったときindexが-1になるから入れたほうがいい気がする
 			//if (index < 0) { return; }
-
+			chatUIController.DisplayChat("エージェントが手がかりを見つけた！");
 			//UI更新
 			//配列の要素番号はゼロからだけどClueIdは1からだからその理由から-1
 			files[index].ActiveInteractable();

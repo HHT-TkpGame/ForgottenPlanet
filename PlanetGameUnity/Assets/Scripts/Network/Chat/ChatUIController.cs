@@ -76,4 +76,8 @@ public class ChatUIController : MonoBehaviour
         }
         return txtMsg.text;
     }
+    public void DisplayChat(string msg)
+    {
+        txtMsg.text += $"{msg}\n";
+    }
 }

@@ -11,6 +11,7 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	[SerializeField, Header("スキャン用のモデル")] GameObject scanModel;
 	[SerializeField, Header("モニター画面時のゲームUI")] GameObject gameUIPanel;
 	[SerializeField, Header("エージェント帰還用UI")] GameObject agentReturnUIPanel;
+	[SerializeField] ChatUIController chatUI;
 
 	ScanColliderBehavior scanColliderBehavior;
 	BoxCollider scanBoxCollider;
@@ -99,6 +100,7 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 				onSuccess: () =>
 				{
 					Debug.Log($"Success: 手がかり番号{clueNum}");
+					chatUI.DisplayChat("手がかりを見つけた！");
 				},
 				onError: (err) =>
 				{

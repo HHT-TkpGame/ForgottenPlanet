@@ -59,7 +59,7 @@ public class ResultUIController : MonoBehaviour
         txtSelectTruth.text = TruthNameConstants.TruthNames[answer-1];
         if (AnalyzeSaver.SelectedTruthId != default)
         {
-            txtTruth.text = TruthNameConstants.TruthNames[AnalyzeSaver.SelectedTruthId];
+            txtTruth.text = TruthNameConstants.TruthNames[AnalyzeSaver.SelectedTruthId-1];
         }
         else
         {
