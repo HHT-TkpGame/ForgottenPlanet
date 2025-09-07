@@ -20,8 +20,9 @@ public class ResultManager : MonoBehaviour
             },
             onError: () =>
             {
-                controller.SetDisplayData(DEFAULT_ANSWER, DEFAULT_ANSWER);
+                controller.SetDisplayData(DEFAULT_ANSWER, 0);
             }));
+        timer.OnTimerEnded += TransitionToTitle;
         controller.onScrollEnded += EnableTimer;
         controller.OnEnded += TransitionToTitle;
     }

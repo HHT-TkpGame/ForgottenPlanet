@@ -13,7 +13,7 @@ public class ResultUIController : MonoBehaviour
     public event Action OnEnded;
     bool canScroll;
     public event Action onScrollEnded;
-    const float SCROLL_SPEED = 120f;
+    const float SCROLL_SPEED = 60f;
     const float BOOST_SPEED = SCROLL_SPEED * 3;
     float boostSpeed;
     [SerializeField] TMP_Text txtClues;
@@ -31,7 +31,8 @@ public class ResultUIController : MonoBehaviour
         if(!canScroll) { return; }
         if(contentRect.anchoredPosition.y < END_POS_Y )
         {
-            contentRect.Translate(0, (SCROLL_SPEED + boostSpeed) * Time.deltaTime, 0);
+            // Translateだと画面のサイズや解像度の影響でスクロール速度が不安定なのでanchoredPositionを使う
+            contentRect.anchoredPosition += Vector2.up * ((SCROLL_SPEED + boostSpeed) * Time.deltaTime);
         }
         else
         {

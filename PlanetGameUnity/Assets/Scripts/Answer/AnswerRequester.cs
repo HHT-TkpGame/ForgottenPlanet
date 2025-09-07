@@ -49,7 +49,6 @@ public class AnswerRequester
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log(request.downloadHandler.text);
             onSuccess?.Invoke();
         }
         else
