@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class ChatUIController : MonoBehaviour
 {
+    [SerializeField] AudioSource se;
     [SerializeField] TMP_InputField inputField;
     [SerializeField] TMP_Text txtMsg;
     [SerializeField] Button sendButton;
@@ -31,6 +32,7 @@ public class ChatUIController : MonoBehaviour
         {
             ToggleChatPanel();
         }
+        
     }
     public void ToggleChatPanel()
     {
@@ -59,10 +61,12 @@ public class ChatUIController : MonoBehaviour
 
     public string GetInputText()
     {
+        Debug.Log("TestClear");
         string text = inputField.text;
         inputField.text = "";
         return text;
     }
+    bool canPlaySound;
     /// <summary>
     /// 取得したチャットをUI上のチャットログに反映
     /// </summary>
@@ -71,8 +75,21 @@ public class ChatUIController : MonoBehaviour
         string sender;
         foreach (var message in chatDataList.messages)
         {
-            sender = message.player_id == PlayerIdManager.Id ? "you" : "partner";
+            if(message.player_id == PlayerIdManager.Id)
+            {
+                sender = "you";
+            }
+            else
+            {
+                sender = "partner";
+                canPlaySound = true;
+            }
             txtMsg.text += $"{sender} : {message.message}\n";
+        }
+        if (canPlaySound)
+        {
+            se.Play();
+            canPlaySound = false;
         }
         return txtMsg.text;
     }

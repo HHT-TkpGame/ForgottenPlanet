@@ -36,6 +36,7 @@ public class ChatManager : MonoBehaviour
             });
     }
 
+
     public void OnSendChat()
     {
         string msg = uiController.GetInputText();

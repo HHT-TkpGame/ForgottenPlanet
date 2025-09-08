@@ -22,7 +22,7 @@ class AnswerController extends Controller
         $ans = $this->answerRepository->getAnswer($roomId);
         $clues = $this->clueRepository->countSharedByRoomId($roomId);
         return response()->json([
-            'answer_id' => $ans->answer_id,
+            'answer_id' => $ans,
             'found_clues' => $clues
         ]);
     }

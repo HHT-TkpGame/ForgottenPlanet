@@ -1,9 +1,11 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TitleController : MonoBehaviour
 {
+    [SerializeField] AudioSource se;
     [SerializeField] Image titleImg;
     [SerializeField] TMP_InputField keywordField;
     [SerializeField] Button matchButton;
@@ -18,6 +20,7 @@ public class TitleController : MonoBehaviour
         titleImg.canvasRenderer.SetAlpha(0f);
         keywordField.gameObject.SetActive(false);
         matchButton.gameObject.SetActive(false);
+        se.Play();
     }
 
     // Update is called once per frame

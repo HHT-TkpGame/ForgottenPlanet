@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class StarTrailController : MonoBehaviour
 {
+    [SerializeField] AudioSource se;
     [SerializeField] Camera cam;
     ParticleSystem particle;
     ParticleSystem.MainModule main;
     ParticleSystem.TrailModule trail;
-    const float MAX_FOV = 90f;
-    const float FOV_CHANGE_SPEED = 2f * 60f;
+    const float MAX_FOV = 120f;
+    const float FOV_CHANGE_SPEED = 2f * 40f;
     const float START_SPEED = 0.2f;
     const float START_TRAIL = 0f;
     const float MAX_SPEED = 30f;
@@ -29,6 +30,7 @@ public class StarTrailController : MonoBehaviour
     }
     public void TransitionToHyperDrive()
     {
+        se.Play();
         isHyperDriving = true;
         SetSpeedAndTrail(MAX_SPEED, MAX_TRAIL);
     }
