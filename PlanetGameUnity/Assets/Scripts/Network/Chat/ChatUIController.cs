@@ -61,7 +61,6 @@ public class ChatUIController : MonoBehaviour
 
     public string GetInputText()
     {
-        Debug.Log("TestClear");
         string text = inputField.text;
         inputField.text = "";
         return text;
