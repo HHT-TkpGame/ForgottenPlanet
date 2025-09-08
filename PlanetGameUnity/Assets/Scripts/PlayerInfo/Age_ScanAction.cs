@@ -22,8 +22,14 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	bool actionExecuted = false;
 	const int SCAN_ROT_RATIO = -90;
 
+	AudioSource se;
+	[SerializeField] AudioClip scanning;
+	[SerializeField] AudioClip scanMiss;
+	[SerializeField] AudioClip scanRight;
+
 	public void SetUp(Transform camera)
 	{
+		se= GetComponent<AudioSource>();
 		scanColObj.transform.SetParent(camera);
 		scanColObj.transform.localPosition = Vector3.zero;
 		scanColObj.transform.eulerAngles = Vector3.zero;
@@ -49,6 +55,8 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	{
 		scanBoxCollider.enabled = true;
 		scanModel.SetActive(true);
+		
+		se.clip = scanning;
 	}
 
 	public void OnSearchCanceled()
@@ -71,6 +79,10 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 	/// <param name="scanObj"></param>
 	public void Scan(GameObject scanObj)
 	{
+		if (!se.isPlaying)
+		{
+			se.Play();
+		}
 		holdTime += Time.deltaTime;
 		float scanRot = holdTime * SCAN_ROT_RATIO + 45;
 		//一定時間Scanメソッドが呼び出されたら
@@ -94,6 +106,9 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 		//Bool値を見てTrueなら
 		if (clue.HasClue)
 		{
+			se.clip = scanRight; 
+			se.Play();
+
 			//手がかりの番号を手に入れる
 			int clueNum = clue.ClueNum;
 			//送るなどする
@@ -112,6 +127,8 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 		}
 		else
 		{
+			se.clip = scanMiss;
+			se.Play();
 			//falseならDebugする
 			Debug.Log("手がかりはなかったようだ....");
 		}
@@ -127,5 +144,8 @@ public class Age_ScanAction : MonoBehaviour, I_SearchAction
 
 		//エフェクトなどになったときはそれ用のエフェクトを再生するなど
 		scanModel.transform.localEulerAngles = new Vector3(-45f, 0, 0);
+
+		se.Stop();
+		se.time = 0;
 	}
 }

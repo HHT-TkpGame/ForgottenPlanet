@@ -11,6 +11,7 @@ public class ChatManager : MonoBehaviour
     public static ChatManager Instance { get; private set; }
     public ChatClient Client { get; private set; }
 
+    [SerializeField]AudioSource se;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -40,6 +41,7 @@ public class ChatManager : MonoBehaviour
     {
         string msg = uiController.GetInputText();
         if (string.IsNullOrEmpty(msg)) return;
+        se.Play();
         StartCoroutine(Client.SendChatMessage(
             msg,
             res => { },

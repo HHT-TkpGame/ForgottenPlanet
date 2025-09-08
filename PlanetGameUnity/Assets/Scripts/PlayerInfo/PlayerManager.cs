@@ -43,8 +43,8 @@ public class PlayerManager : MonoBehaviour
         searchAct = input.actions["Search"];
 
 
-        if (isCommander)
-		//if (MatchingManager.IsCommander)
+        //if (isCommander)
+        if (MatchingManager.IsCommander)
         {
             i_function = commander;
             i_camTrans = bodyCamera;
