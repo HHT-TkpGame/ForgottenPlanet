@@ -8,9 +8,11 @@ public class InputFieldManager : MonoBehaviour
     [SerializeField] TMP_Text displayText;
     MonitorController monitorController;
 
+    AudioSource se;
     public void GetMonitorController(MonitorController monitorController)
     {
         this.monitorController = monitorController;
+        se = GetComponent<AudioSource>();
     }
 
     public void DisplayInputText()
@@ -29,7 +31,8 @@ public class InputFieldManager : MonoBehaviour
 				displayText.text = "ê≥â";
 				break;
             case 2:
-				displayText.text = "ïsê≥â";
+                se.Play();
+                displayText.text = "ïsê≥â";
 				break;
             case 3:
                 displayText.text = "âÒìöçœÇ›";

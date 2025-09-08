@@ -14,6 +14,7 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 	[SerializeField] GameObject agentView;
 	[SerializeField, Header("表示しないガイドUI")] GameObject age_GuideUI;
 	[SerializeField]CursorController cursorController;
+	[SerializeField] GameObject monitorGuidePanel;
 
 	Commander commander;
 
@@ -35,7 +36,8 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 		agentReturnUIPanel.SetActive(false);
 		agentView.SetActive(false);
 		age_GuideUI.SetActive(false);
-    } 
+		monitorGuidePanel.SetActive(false);
+	} 
 
     public void OnSearchStarted()
     {
@@ -53,6 +55,9 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 				commanderUIController.ChangePopUIState(monitorNum,false);
 
 				monitorNum = monitor.Num;
+
+				monitorGuidePanel.SetActive(true);
+				monitorGuidePanel.GetComponent<MonitorGuide>().SetGuideUI(monitorNum);
 
 				commanderUIController.ChangePopUIState(monitorNum, true);
 
@@ -80,7 +85,6 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 		//Debug.Log("keyName" + keyName);
 		//Debug.Log("monitorNum" + monitorNum);
 
-		Debug.Log("dededed");
 		//inputからの信号は1,2,3のどれかしか入力はないのでCastしても大丈夫
 		int keyNum = int.Parse(keyName);
 
@@ -98,7 +102,7 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 
 	private void Zoom()
 	{
-		Debug.Log("dededed");
+		//Debug.Log("dededed");
 		cursorController.Show();
 		///Zoomのボタンが押されたらCameraをそれぞれのモニターの前に移動させて
 		///押されたモニターの番号に応じてゲームのUIの状態を変える
@@ -109,6 +113,8 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 		gameUIPanel.SetActive(true);
 
 		StopCoroutine(selectCoroutine);
+
+		monitorGuidePanel.SetActive(false);
 
 		//ゲームのUIを非表示にする
 		for (int i = 0; i < MAX_MONITORS; i++)
@@ -123,6 +129,8 @@ public class Com_ZoomAction : MonoBehaviour,I_SearchAction
 		yield return new WaitForSeconds(time);
 
 		commander.SetZoomState(Commander.zoomState.Default);
+
+		monitorGuidePanel.SetActive(false);
 
 		for (int i = 0; i < MAX_MONITORS; i++)
 		{

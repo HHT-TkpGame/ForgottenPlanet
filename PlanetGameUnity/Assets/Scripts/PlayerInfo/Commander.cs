@@ -48,6 +48,7 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 
 	bool finSetUp;
 
+	AudioSource se;
 
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	public void Init()
@@ -70,6 +71,8 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 		zoomAct.SetUp(this);
 
 		finSetUp = true;
+
+		se = GetComponent<AudioSource>();
 	}
 
 	public void SetStartPos()
@@ -113,9 +116,18 @@ public class Commander : MonoBehaviour,I_PlayerDefaultFunctions
 			verticalVelocity = -GRAVITY * Time.deltaTime;
 		}
 
+		if ((moveAxis.x != 0 || moveAxis.y != 0))
+		{
+			if (!se.isPlaying)
+			{
+				se.Play();
+			}
+		}
+
 		Vector3 moveDir = new Vector3(moveAxis.x * MOVESPEED, verticalVelocity, moveAxis.y * MOVESPEED);
 		moveDir = transform.TransformDirection(moveDir);
 		characterController.Move(moveDir * Time.deltaTime);
+
 	}
 
 	public void Look(Vector2 lookAxis)

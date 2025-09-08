@@ -30,6 +30,8 @@ public class Agent : MonoBehaviour,I_PlayerDefaultFunctions, ITransformProvider
 
 	bool finSetUp;
 
+	[SerializeField] AgentWalkSe agentWalk;
+
 	// Start is called once before the first execution of Update after the MonoBehaviour is created
 	public void Init()
 	{
@@ -48,6 +50,7 @@ public class Agent : MonoBehaviour,I_PlayerDefaultFunctions, ITransformProvider
 		transform.position = Vector3.zero;
 
 		finSetUp = true;
+
 	}
 	public void SetStartPos()
 	{
@@ -62,6 +65,11 @@ public class Agent : MonoBehaviour,I_PlayerDefaultFunctions, ITransformProvider
 		if (!characterController.isGrounded)
 		{
 			verticalVelocity = -GRAVITY * Time.deltaTime;
+		}
+
+		if ((moveAxis.x != 0 || moveAxis.y != 0))
+		{
+			agentWalk.SeStart();
 		}
 
 		Vector3 moveDir = new Vector3(moveAxis.x * MOVESPEED, verticalVelocity, moveAxis.y * MOVESPEED);
