@@ -19,6 +19,9 @@ public class Com_ClueInfo : MonoBehaviour
 	string codeAns;
 	public string CodeAns => codeAns;
 
+	bool isCleared;
+	public bool IsCleared => isCleared;
+
 	public void SetPanelImages(Sprite clueImage, Sprite codeImage, string codeAns)
 	{
 		this.clueImage = clueImage;
@@ -38,6 +41,7 @@ public class Com_ClueInfo : MonoBehaviour
 			chatUIController.DisplayChat("ˆÃ†‚Ì‰ğ“Ç‚É¬Œ÷‚µ‚½I");
 			infoImage.sprite = clueImage;
 			clueText.enabled = true;
+			isCleared = true;
 			return true;
 		}
 		return false;

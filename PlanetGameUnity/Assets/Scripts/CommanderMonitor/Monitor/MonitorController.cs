@@ -159,19 +159,27 @@ public class MonitorController : MonoBehaviour
 	public void SendCodeText(string message)
 	{
 		//panelObjがNullならDisplayTextをテキストはまだ入力されてないみたいなのにする
-		if (!panelObj) 
-		{ 
+		if (!panelObj)
+		{
 			inputManager.SetDisplayText(0);
 			return;
 		}
-		bool ans = panelObj.GetComponent<Com_ClueInfo>().VerifyAnswer(message);
-		if (ans)
+		Com_ClueInfo clueInfo = panelObj.GetComponent<Com_ClueInfo>();
+		if (!clueInfo.IsCleared)
 		{
-			inputManager.SetDisplayText(1);
+			bool ans = clueInfo.VerifyAnswer(message);
+			if (ans)
+			{
+				inputManager.SetDisplayText(1);
+			}
+			else
+			{
+				inputManager.SetDisplayText(2);
+			}
 		}
-        else
-        {
-            inputManager.SetDisplayText(2);
-        }
-    } 
+		else
+		{
+			inputManager.SetDisplayText(3);
+		}
+	}
 }

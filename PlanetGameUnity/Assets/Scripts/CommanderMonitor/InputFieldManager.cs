@@ -31,6 +31,9 @@ public class InputFieldManager : MonoBehaviour
             case 2:
 				displayText.text = "•s³‰ğ";
 				break;
+            case 3:
+                displayText.text = "‰ñ“šÏ‚İ";
+                break;
         }
     }
 }
